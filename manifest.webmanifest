@@ -1,0 +1,22 @@
+{
+  "name": "Rutinas",
+  "short_name": "Rutinas",
+  "lang": "gl",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#F2F4F3",
+  "theme_color": "#2E5E7E",
+  "icons": [
+    {
+      "src": "icona-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icona-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="gl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chaves para os avisos de Rutinas</title>
+<style>
+body{font:17px/1.5 system-ui,-apple-system,sans-serif;max-width:640px;margin:40px auto;padding:0 18px;color:#1D2B2F;background:#F2F4F3}
+textarea{width:100%;font:14px ui-monospace,monospace;min-height:64px;padding:8px;border:1px solid #D9E0DF;border-radius:8px}
+button{font:inherit;padding:10px 16px;border-radius:10px;border:0;background:#2E5E7E;color:#fff;cursor:pointer}
+h2{font-size:1.05rem;margin:24px 0 4px}
+p{margin:4px 0}
+</style>
+</head>
+<body>
+<h1>Chaves para os avisos de Rutinas</h1>
+<p>Preme o botón unha soa vez e copia os tres valores. Despois borra este ficheiro do repositorio.</p>
+<p><button id="xerar">Xerar chaves</button></p>
+<div id="res" hidden>
+  <h2>Chave pública</h2>
+  <p>Vai en <b>CONFIG.vapid</b> do index.html e no segredo <b>VAPID_PUBLICA</b> de Supabase.</p>
+  <textarea id="pub" readonly></textarea>
+  <h2>Chave privada</h2>
+  <p>Só no segredo <b>VAPID_PRIVADA</b> de Supabase. Non a poñas nunca no index.html.</p>
+  <textarea id="priv" readonly></textarea>
+  <h2>Segredo do cron</h2>
+  <p>No segredo <b>AVISOS_SEGREDO</b> e no ficheiro avisos-cron.sql.</p>
+  <textarea id="seg" readonly></textarea>
+</div>
+<script>
+const b64u = buf => btoa(String.fromCharCode(...new Uint8Array(buf))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+document.getElementById("xerar").onclick = async () => {
+  const k = await crypto.subtle.generateKey({ name:"ECDSA", namedCurve:"P-256" }, true, ["sign","verify"]);
+  document.getElementById("pub").value = b64u(await crypto.subtle.exportKey("raw", k.publicKey));
+  document.getElementById("priv").value = (await crypto.subtle.exportKey("jwk", k.privateKey)).d;
+  document.getElementById("seg").value = b64u(crypto.getRandomValues(new Uint8Array(24)));
+  document.getElementById("res").hidden = false;
+};
+</script>
+</body>
+</html>

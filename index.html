@@ -1,0 +1,1331 @@
+<!doctype html>
+<html lang="gl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F2F4F3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121A1C" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Rutinas">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icona-192.png">
+<title>Rutinas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<style>
+:root{--fondo:#F2F4F3;--superficie:#FFFFFF;--tinta:#1D2B2F;--suave:#5F6F73;--linha:#D9E0DF;--acento:#2E5E7E;--perigo:#B23A3A;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--fondo:#121A1C;--superficie:#1A2427;--tinta:#E4EBEA;--suave:#9AA9AC;--linha:#2B383B;--acento:#86B6D6;--perigo:#E58787;color-scheme:dark}}
+:root[data-theme="dark"]{--fondo:#121A1C;--superficie:#1A2427;--tinta:#E4EBEA;--suave:#9AA9AC;--linha:#2B383B;--acento:#86B6D6;--perigo:#E58787;color-scheme:dark}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%}
+body{margin:0;background:var(--fondo);color:var(--tinta);font:17px/1.5 "Atkinson Hyperlegible",system-ui,-apple-system,sans-serif;min-height:100%;-webkit-text-size-adjust:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--acento);outline-offset:2px}
+[hidden]{display:none!important}
+main{max-width:720px;margin:0 auto;padding:8px 18px calc(120px + env(safe-area-inset-bottom,0px))}
+header.cab{max-width:720px;margin:0 auto;padding:14px 18px 4px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.marca{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:1.35rem;margin:0;letter-spacing:-.01em}
+.cab .data{color:var(--suave);flex:1}
+.sync{font-size:.82rem;color:var(--suave);display:flex;align-items:center;gap:6px}
+.sync i{width:8px;height:8px;border-radius:50%;background:var(--suave);display:inline-block}
+.sync.ok i{background:#3C8A55}.sync.gardando i{background:#C2861F}.sync.erro i{background:var(--perigo)}
+h3{font-size:1.05rem;margin:28px 0 8px;font-weight:700}
+.vacio{color:var(--suave);margin:6px 0}
+.pequeno{font-size:.9rem;color:var(--suave)}
+/* navegación de días */
+.navdia{display:flex;align-items:center;gap:8px;margin:4px 0 10px}
+.navdia .etq{flex:1;text-align:center;font-weight:700}
+.navdia .btn{min-width:44px;font-size:1.2rem;line-height:1}
+/* Agora */
+.agora{--c:var(--acento);background:color-mix(in srgb,var(--c) 13%,var(--superficie));border:1px solid color-mix(in srgb,var(--c) 32%,transparent);border-radius:22px;padding:20px 20px 16px}
+.agora .cat{display:flex;align-items:center;gap:8px;color:var(--suave);font-size:.92rem}
+.punto{width:10px;height:10px;border-radius:50%;background:var(--c);display:inline-block;flex:none}
+.agora h2{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:clamp(2rem,8.5vw,2.9rem);line-height:1.04;margin:.25em 0 .35em;letter-spacing:-.015em}
+.agora p{margin:0 0 12px}
+.progreso{height:7px;background:color-mix(in srgb,var(--c,var(--acento)) 22%,transparent);border-radius:4px;overflow:hidden}
+.progreso i{display:block;height:100%;background:var(--c,var(--acento))}
+.despois{margin-top:14px;padding-top:12px;border-top:1px solid color-mix(in srgb,var(--c) 25%,transparent);color:var(--suave)}
+.despois b{color:var(--tinta)}
+.agora .fila{margin-top:14px}
+.agora .btn{background:color-mix(in srgb,var(--c) 8%,var(--superficie))}
+.agora .btn.primario{background:var(--c);border-color:var(--c);color:#fff}
+.anticipo{margin:12px 2px 0;color:var(--suave)}
+.nota-caixa{background:var(--superficie);border:1px solid var(--linha);border-left:4px solid var(--acento);border-radius:12px;padding:12px 14px;margin-top:14px}
+.nota-caixa p{margin:0}
+.nota-caixa .fila{margin-top:10px}
+.prioridades{white-space:pre-line}
+/* liña do tempo */
+.lt{list-style:none;padding:0;margin:0}
+.lt li{display:grid;grid-template-columns:3.6rem 1fr;gap:12px;padding:9px 0;border-bottom:1px solid var(--linha);cursor:pointer}
+.lt .h{color:var(--suave);font-variant-numeric:tabular-nums;font-size:.95rem;padding-top:1px}
+.lt .t{border-left:4px solid var(--c);padding-left:10px}
+.lt .t small{display:block;color:var(--suave)}
+.lt .t em{font-style:normal;color:var(--acento);font-size:.85rem}
+.lt li.pasado{opacity:.48}
+.lt li.actual .t{font-weight:700}
+.lt li.marca-agora{display:flex;align-items:center;gap:10px;border:0;padding:4px 0;cursor:default;color:var(--acento);font-size:.85rem;font-weight:700}
+.lt li.marca-agora::after{content:"";flex:1;height:2px;background:var(--acento);border-radius:1px}
+.cancelados{margin:8px 0 0;color:var(--suave);font-size:.9rem}
+.cancelados s{margin-right:8px}
+/* tarefas */
+.lista{list-style:none;padding:0;margin:0}
+.tarefa{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--linha)}
+.check{flex:none;width:28px;height:28px;border-radius:50%;border:2px solid var(--c,var(--suave));background:transparent;cursor:pointer;display:grid;place-items:center;padding:0}
+.check.feito{background:var(--c,var(--acento));border-color:var(--c,var(--acento))}
+.check.feito::after{content:"";width:9px;height:14px;border:solid var(--superficie);border-width:0 3px 3px 0;transform:translateY(-2px) rotate(45deg)}
+.tarefa .corpo{flex:1;min-width:0;cursor:pointer}
+.tarefa .meta{color:var(--suave);font-size:.88rem;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.tarefa.feita .tit{text-decoration:line-through;color:var(--suave)}
+.atrasada{color:var(--perigo);font-weight:700}
+.prio-alta{border-left:3px solid var(--perigo);padding-left:6px}
+.grupo{margin:22px 0 4px;font-weight:700;color:var(--suave);font-size:.95rem}
+.grupo.caixa{color:var(--acento)}
+.rapida{display:flex;gap:8px;margin:10px 0 0}
+.rapida input{flex:1;min-width:0}
+.mini{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.mini .btn{min-height:34px;padding:4px 10px;font-size:.88rem}
+/* hábitos */
+.habs-hoxe{display:flex;flex-wrap:wrap;gap:8px}
+.hab-chip{--c:var(--acento);border:1.5px solid color-mix(in srgb,var(--c) 55%,transparent);background:var(--superficie);border-radius:999px;padding:8px 14px;cursor:pointer}
+.hab-chip.feito{background:var(--c);border-color:var(--c);color:#fff}
+.hab{padding:14px 0;border-bottom:1px solid var(--linha);display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:center}
+.hab .nome{font-weight:700;cursor:pointer}
+.hab .info{grid-column:2;color:var(--suave);font-size:.9rem}
+.dias14{grid-column:2;display:flex;gap:4px;margin-top:4px;flex-wrap:wrap}
+.dias14 button,.dias14 span{width:18px;height:18px;border-radius:4px;background:var(--linha);border:0;padding:0}
+.dias14 button{cursor:pointer}
+.dias14 .ok{background:var(--c)}
+.dias14 .libre{background:transparent;border:1px dashed var(--linha)}
+.dias14 .hoxe{box-shadow:0 0 0 2px var(--tinta) inset}
+/* semana */
+.semana{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:8px}
+.col{background:var(--superficie);border:1px solid var(--linha);border-radius:12px;padding:6px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px}
+.col.sel{border-color:var(--acento);box-shadow:0 0 0 2px var(--acento) inset}
+.col-n{font-size:.85rem;font-weight:700}
+.col.hoxe .col-n{color:var(--acento)}
+.col-barra{position:relative;width:100%;height:170px;border-radius:6px;background:color-mix(in srgb,var(--linha) 45%,transparent)}
+.col-barra i{position:absolute;left:3px;right:3px;border-radius:3px}
+.escala{display:flex;justify-content:space-between;color:var(--suave);font-size:.75rem;margin:4px 2px 0}
+.horas{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:6px;color:var(--suave);font-size:.92rem}
+.horas span{display:flex;align-items:center;gap:6px}
+.barra-accions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 0}
+/* revisión */
+.resumo{font-size:1.1rem;line-height:1.6;margin:6px 0 0}
+.resumo b{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:1.25em}
+.barcat{display:grid;grid-template-columns:7rem 1fr 4rem;gap:10px;align-items:center;margin:6px 0;font-size:.92rem}
+.barcat .progreso{height:9px}
+.barcat span:last-child{text-align:right;color:var(--suave)}
+details{border-bottom:1px solid var(--linha);padding:10px 0}
+summary{cursor:pointer;font-weight:700}
+details p{margin:6px 0;white-space:pre-line}
+/* controis */
+.btn{border:1px solid var(--linha);background:var(--superficie);border-radius:10px;padding:9px 14px;cursor:pointer;min-height:42px}
+.btn.primario{background:var(--acento);border-color:var(--acento);color:var(--superficie);font-weight:700}
+.btn.perigo{color:var(--perigo);border-color:color-mix(in srgb,var(--perigo) 45%,transparent)}
+.btn.ligazon{border:0;background:none;color:var(--acento);text-decoration:underline;padding-left:0}
+.filtros{display:flex;gap:6px;margin:8px 0}
+.filtros button{border:1px solid var(--linha);background:var(--superficie);border-radius:999px;padding:6px 14px;cursor:pointer}
+.filtros button.sel{background:var(--tinta);color:var(--fondo);border-color:var(--tinta)}
+input[type=text],input[type=email],input[type=password],input[type=date],input[type=time],input[type=number],select,textarea{width:100%;border:1px solid var(--linha);background:var(--superficie);border-radius:10px;padding:9px 11px;min-height:42px}
+textarea{min-height:76px;resize:vertical}
+label{display:block;margin:10px 0 0;font-size:.92rem;color:var(--suave)}
+label>input,label>select,label>textarea{margin-top:4px;color:var(--tinta)}
+.duas{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.diasel,.opcions{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.diasel label,.opcions label{margin:0}
+.diasel input,.opcions input{position:absolute;opacity:0;pointer-events:none}
+.diasel span,.opcions span{display:inline-block;min-width:42px;text-align:center;padding:7px 10px;border:1px solid var(--linha);border-radius:9px;cursor:pointer;color:var(--tinta);background:var(--superficie)}
+.diasel input:checked+span,.opcions input:checked+span{background:var(--acento);border-color:var(--acento);color:var(--superficie);font-weight:700}
+.diasel input:focus-visible+span,.opcions input:focus-visible+span{outline:3px solid var(--acento);outline-offset:2px}
+.catfila{display:grid;grid-template-columns:48px 1fr;gap:10px;align-items:center;margin-top:8px}
+.catfila input[type=color]{width:48px;height:42px;border:1px solid var(--linha);border-radius:10px;background:none;padding:2px}
+.caixa-ax{background:var(--superficie);border:1px solid var(--linha);border-radius:16px;padding:14px 16px;margin-top:10px}
+.caixa-ax p{margin:4px 0}
+.fila{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;align-items:center}
+.fila.centro{justify-content:center}
+/* modal */
+dialog{border:0;border-radius:18px;padding:0;background:var(--superficie);color:var(--tinta);width:min(520px,calc(100vw - 24px));max-height:calc(100dvh - 40px)}
+dialog::backdrop{background:rgba(10,20,25,.45)}
+.mform{padding:18px 18px 16px;overflow:auto;max-height:calc(100dvh - 40px)}
+.mform h2{margin:0 0 4px;font-family:Fraunces,Georgia,serif;font-weight:600;font-size:1.4rem}
+.maccions{display:flex;gap:8px;margin-top:18px;align-items:center}
+.maccions .sp{flex:1}
+.erro{color:var(--perigo);min-height:1.2em;margin:8px 0 0}
+/* nav e botón flotante */
+nav.abas{position:fixed;left:0;right:0;bottom:0;background:var(--superficie);border-top:1px solid var(--linha);display:flex;justify-content:center;padding:0 4px env(safe-area-inset-bottom,0px);z-index:5}
+nav.abas button{flex:1;max-width:130px;border:0;background:none;padding:12px 2px 13px;cursor:pointer;color:var(--suave);font-size:.9rem;border-top:3px solid transparent}
+nav.abas button.sel{color:var(--tinta);font-weight:700;border-top-color:var(--acento)}
+.fab{position:fixed;right:max(16px,calc(50vw - 344px));bottom:calc(66px + env(safe-area-inset-bottom,0px));width:56px;height:56px;border-radius:50%;border:0;background:var(--acento);color:var(--superficie);font-size:2rem;line-height:1;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.22);z-index:6}
+.toast{position:fixed;left:50%;bottom:calc(132px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--tinta);color:var(--fondo);padding:12px 18px;border-radius:12px;max-width:min(92vw,460px);z-index:50;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+.toast b{display:block}
+/* concentración */
+.capa{position:fixed;inset:0;z-index:30;display:grid;place-items:center;padding:24px;padding-top:calc(24px + env(safe-area-inset-top,0px))}
+#foco{--c:var(--acento);background:color-mix(in srgb,var(--c) 16%,var(--fondo))}
+.foco-in{width:min(520px,100%);text-align:center}
+.foco-in .cat{color:var(--suave);display:flex;gap:8px;align-items:center;justify-content:center}
+.foco-in h2{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:clamp(1.5rem,6vw,2.2rem);margin:.3em 0 .2em;line-height:1.1}
+.reloxo{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:clamp(4.5rem,24vw,9rem);font-variant-numeric:tabular-nums;line-height:1;margin:.15em 0 .25em;letter-spacing:-.02em}
+.foco-in .progreso{height:8px}
+.foco-in .pausado{color:var(--suave);min-height:1.5em;margin:10px 0 0}
+#resp{z-index:40;background:color-mix(in srgb,#4F8E92 18%,var(--fondo))}
+.resp-in{text-align:center;display:grid;justify-items:center;gap:20px}
+.circulo{width:140px;height:140px;border-radius:50%;background:color-mix(in srgb,#4F8E92 55%,transparent);transform:scale(1);transition:transform 4s ease-in-out;margin:60px 0}
+.resp-txt{font-family:Fraunces,Georgia,serif;font-size:2rem;margin:0;min-height:1.3em}
+@media (prefers-reduced-motion:reduce){.circulo{transition:none!important;transform:none!important}}
+.ritmo{display:grid;grid-template-columns:7.5rem 1fr 4.6rem;gap:10px;align-items:center;margin:7px 0;font-size:.92rem}
+.ritmo .progreso{background:color-mix(in srgb,var(--c,var(--acento)) 14%,transparent)}
+.ritmo .enx{height:9px}.ritmo .ani{height:4px;margin-top:3px}
+.ritmo .ani i{background:color-mix(in srgb,var(--c,var(--acento)) 55%,var(--suave))}
+.ritmo span:last-child{text-align:right;color:var(--suave);font-variant-numeric:tabular-nums}
+.escala5 span{min-width:0;padding:7px 9px;font-size:.88rem}
+.modelo{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--linha);flex-wrap:wrap}
+.modelo small{display:block;color:var(--suave)}
+.editando{background:color-mix(in srgb,var(--acento) 12%,var(--superficie));border:1px solid color-mix(in srgb,var(--acento) 35%,transparent);border-radius:16px;padding:14px 16px;margin-top:8px}
+.editando p{margin:0}
+.login{max-width:420px;margin:12vh auto 0}
+.login .marca{font-size:2.6rem}
+@media (min-width:760px){.col-barra{height:220px}}
+@media (prefers-reduced-motion:no-preference){.agora h2{animation:entra .5s ease-out}@keyframes entra{from{opacity:0;transform:translateY(6px)}}}
+</style>
+</head>
+<body>
+<header class="cab" id="cab"></header>
+<main id="vista"></main>
+<button class="fab" id="fab" data-acc="capturar" aria-label="Apuntar algo" hidden>+</button>
+<nav class="abas" id="abas"></nav>
+<div class="capa" id="foco" hidden></div>
+<div class="capa" id="resp" hidden></div>
+<dialog id="modal"></dialog>
+<input type="file" id="ficheiro" accept="application/json" hidden>
+
+<script>
+/* ===================== CONFIGURACIÓN =====================
+   Pega aquí a URL e a chave anon do teu proxecto de Supabase.
+   Se as deixas baleiras, a app funciona só neste dispositivo. */
+const CONFIG = {
+  url: "",
+  chave: "",
+  vapid: ""   // chave pública VAPID para os avisos coa app pechada (opcional)
+};
+const TABOA = "rut_estado";
+/* ========================================================= */
+
+const sb = (CONFIG.url && CONFIG.chave && window.supabase) ? window.supabase.createClient(CONFIG.url, CONFIG.chave) : null;
+const $ = s => document.querySelector(s);
+const DIAS = ["Domingo","Luns","Martes","Mércores","Xoves","Venres","Sábado"];
+const DIAS_C = ["Do","Lu","Ma","Mé","Xo","Ve","Sá"];
+const ORDE = [1,2,3,4,5,6,0];
+const MESES = ["xaneiro","febreiro","marzo","abril","maio","xuño","xullo","agosto","setembro","outubro","novembro","decembro"];
+const NIV_E = ["Moi baixa","Baixa","Normal","Boa","Moi boa"];
+const NIV_A = ["Moi baixo","Baixo","Normal","Bo","Moi bo"];
+const LEMBRAR = [["11:00","Media mañá (11:00)"],["17:00","Tarde (17:00)"],["21:30","Noite (21:30)"]];
+const ZONA = (() => { try { return Intl.DateTimeFormat().resolvedOptions().timeZone || "Europe/Madrid"; } catch { return "Europe/Madrid"; } })();
+const REPETIR = [["","Non se repite"],["diaria","Cada día"],["laborables","De luns a venres"],["semanal","Cada semana"],["mensual","Cada mes"]];
+
+let E = null, sesion = null, temporizador = null, focoTick = null, respT = null;
+const UI = { vista:"hoxe", dia:new Date().getDay(), data:null, filtro:"pend", sync:"local", foco:null, modelo:null };
+const avisados = new Set();
+
+/* ---------- utilidades ---------- */
+const uid = () => Math.random().toString(36).slice(2,10) + Date.now().toString(36).slice(-4);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const pad = n => String(n).padStart(2,"0");
+const isoData = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const hoxeISO = () => isoData(new Date());
+const sumarDias = (iso, n) => { const d = new Date(iso+"T00:00"); d.setDate(d.getDate()+n); return isoData(d); };
+const mins = h => { const [a,b] = (h||"0:0").split(":").map(Number); return a*60 + b; };
+const agoraMin = () => { const d = new Date(); return d.getHours()*60 + d.getMinutes(); };
+const durTxt = m => m < 60 ? `${m} min` : (m % 60 ? `${Math.floor(m/60)} h ${m%60} min` : `${m/60} h`);
+const horasTxt = m => { const h = m/60; return (Number.isInteger(h) ? h : h.toFixed(1).replace(".",",")) + " h"; };
+const dataLonga = d => `${DIAS[d.getDay()]}, ${d.getDate()} de ${MESES[d.getMonth()]}`;
+const diasDesde = iso => Math.round((new Date(iso+"T00:00") - new Date(hoxeISO()+"T00:00")) / 864e5);
+const cat = id => E.categorias.find(c => c.id === id) || { id:"", nome:"Sen categoría", cor:"#7C8B8F" };
+const fonteTipo = () => (UI.modelo && E.plantillas.find(p => p.id === UI.modelo)) || E;
+const bloquesDoDia = d => fonteTipo().bloques.filter(b => b.dias.includes(d)).sort((a,b) => mins(a.ini) - mins(b.ini));
+
+function dataCurta(iso){
+  const n = diasDesde(iso);
+  if (n === 0) return "Hoxe";
+  if (n === 1) return "Mañá";
+  if (n === -1) return "Onte";
+  const d = new Date(iso+"T00:00");
+  if (n > 1 && n < 7) return DIAS[d.getDay()];
+  return `${d.getDate()} de ${MESES[d.getMonth()]}`;
+}
+function semanaISO(dt){
+  const d = new Date(Date.UTC(dt.getFullYear(), dt.getMonth(), dt.getDate()));
+  const dn = d.getUTCDay() || 7; d.setUTCDate(d.getUTCDate() + 4 - dn);
+  const y = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  return `${d.getUTCFullYear()}-S${pad(Math.ceil(((d - y) / 864e5 + 1) / 7))}`;
+}
+function seguinteData(iso, rep){
+  const d = new Date(iso+"T00:00");
+  if (rep === "diaria") d.setDate(d.getDate()+1);
+  else if (rep === "laborables"){ do { d.setDate(d.getDate()+1); } while (d.getDay() === 0 || d.getDay() === 6); }
+  else if (rep === "semanal") d.setDate(d.getDate()+7);
+  else if (rep === "mensual"){ const dia = d.getDate(); d.setDate(1); d.setMonth(d.getMonth()+1); d.setDate(Math.min(dia, new Date(d.getFullYear(), d.getMonth()+1, 0).getDate())); }
+  return isoData(d);
+}
+
+/* Bloques dunha data concreta: semana tipo + cambios dese día */
+function bloquesDaData(iso){
+  const d = new Date(iso+"T00:00").getDay(), ex = E.excepcions[iso] || {};
+  const canc = ex.canceladas || [], mod = ex.mod || {};
+  return E.bloques.filter(b => b.dias.includes(d) && !canc.includes(b.id))
+    .map(b => mod[b.id] ? { ...b, ...mod[b.id], modificado:true } : b)
+    .concat((ex.extra || []).map(b => ({ ...b, extra:true })))
+    .sort((a,b) => mins(a.ini) - mins(b.ini));
+}
+function excepcion(iso){ return E.excepcions[iso] || (E.excepcions[iso] = { canceladas:[], mod:{}, extra:[] }); }
+
+/* ---------- estado ---------- */
+function estadoInicial(){
+  const L = [1,2,3,4,5], FS = [6,0];
+  const b = (dias, ini, fin, titulo, c) => ({ id:uid(), dias, ini, fin, titulo, cat:c, notas:"" });
+  const domingo = new Date(); domingo.setDate(domingo.getDate() + ((7 - domingo.getDay()) % 7));
+  return {
+    v:3, actualizado:null,
+    categorias:[
+      { id:"traballo", nome:"Traballo", cor:"#2E6FA3" },
+      { id:"estudo", nome:"Estudo", cor:"#7A5BA6" },
+      { id:"exercicio", nome:"Exercicio", cor:"#3C8A55" },
+      { id:"lecer", nome:"Lecer", cor:"#C2861F" },
+      { id:"descanso", nome:"Descanso", cor:"#4F8E92" },
+      { id:"persoal", nome:"Persoal", cor:"#8A6F62" }
+    ],
+    bloques:[
+      b(L,"07:30","08:00","Almorzo e preparación","persoal"),
+      b(L,"08:30","14:30","Traballo no centro","traballo"),
+      b(L,"14:30","15:30","Xantar e descanso","descanso"),
+      b(L,"16:30","18:00","Estudo de canto","estudo"),
+      b(L,"18:30","19:15","Exercicio","exercicio"),
+      b(L,"21:00","22:30","Lecer","lecer"),
+      b([0,1,2,3,4,5,6],"23:00","23:30","Desconectar e deitarse","descanso"),
+      b(FS,"10:00","11:00","Exercicio","exercicio"),
+      b(FS,"11:30","13:00","Estudo de repertorio","estudo"),
+      b(FS,"17:00","20:00","Lecer","lecer")
+    ],
+    tarefas:[
+      { id:uid(), titulo:"Planificar a semana que vén", cat:"persoal", data:isoData(domingo), hora:"19:00", prio:"media", aviso:30, repetir:"semanal", feita:false, notas:"" }
+    ],
+    habitos:[
+      { id:uid(), nome:"Vocalizar 15 min", cat:"estudo", dias:[1,2,3,4,5,6], rexistro:{} },
+      { id:uid(), nome:"Camiñar ou moverse", cat:"exercicio", dias:[0,1,2,3,4,5,6], rexistro:{} },
+      { id:uid(), nome:"Pantallas fóra ás 23:00", cat:"descanso", dias:[0,1,2,3,4,5,6], rexistro:{} }
+    ],
+    excepcions:{}, foco:[], revisions:{}, plantillas:[], estados:[],
+    axustes:{ avisoBloque:5, notificacions:false, focoMin:25, lembrarEstado:[], zona:ZONA }
+  };
+}
+function normalizar(d){
+  const base = estadoInicial();
+  d = d && typeof d === "object" ? d : {};
+  const n = {
+    v:3, actualizado:d.actualizado ?? null,
+    categorias: Array.isArray(d.categorias) && d.categorias.length ? d.categorias : base.categorias,
+    bloques: Array.isArray(d.bloques) ? d.bloques : base.bloques,
+    tarefas: Array.isArray(d.tarefas) ? d.tarefas.map(t => ({ repetir:"", ...t })) : base.tarefas,
+    habitos: Array.isArray(d.habitos) ? d.habitos.map(h => ({ rexistro:{}, ...h })) : base.habitos,
+    excepcions: d.excepcions && typeof d.excepcions === "object" ? d.excepcions : {},
+    foco: Array.isArray(d.foco) ? d.foco : [],
+    revisions: d.revisions && typeof d.revisions === "object" ? d.revisions : {},
+    plantillas: Array.isArray(d.plantillas) ? d.plantillas : [],
+    estados: Array.isArray(d.estados) ? d.estados : [],
+    axustes: { ...base.axustes, ...(d.axustes || {}) }
+  };
+  n.v = 3;
+  n.estados = n.estados.filter(x => x.data >= sumarDias(hoxeISO(), -365));
+  const limite = sumarDias(hoxeISO(), -60);
+  Object.keys(n.excepcions).forEach(k => { if (k < limite) delete n.excepcions[k]; });
+  const limiteFoco = sumarDias(hoxeISO(), -180);
+  n.foco = n.foco.filter(f => f.data >= limiteFoco);
+  return n;
+}
+const chaveLocal = () => "rutinas:" + (sesion ? sesion.user.id : (CONFIG.url && !sb && localStorage.getItem("rutinas:ultimoUsuario")) || "local");
+function cargarLocal(){
+  let raw = localStorage.getItem(chaveLocal());
+  if (!raw && sesion){
+    const l = localStorage.getItem("rutinas:local");
+    try { if (l && JSON.parse(l).actualizado) raw = l; } catch {}
+  }
+  try { E = raw ? normalizar(JSON.parse(raw)) : estadoInicial(); } catch { E = estadoInicial(); }
+}
+function gardarLocal(){ try { localStorage.setItem(chaveLocal(), JSON.stringify(E)); } catch {} }
+function gardar(){
+  E.actualizado = new Date().toISOString();
+  gardarLocal();
+  render();
+  if (sb && sesion){
+    marcarSync("gardando");
+    clearTimeout(temporizador);
+    temporizador = setTimeout(subir, 1200);
+  }
+}
+
+/* ---------- sincronización ---------- */
+function marcarSync(s){ UI.sync = s; pintarCabeceira(); }
+async function subir(){
+  if (!sb || !sesion) return;
+  if (!navigator.onLine){ marcarSync("erro"); return; }
+  const { error } = await sb.from(TABOA).upsert({ user_id:sesion.user.id, datos:E, actualizado:E.actualizado || new Date().toISOString() });
+  marcarSync(error ? "erro" : "ok");
+}
+async function baixar(){
+  if (!sb || !sesion) return;
+  const { data, error } = await sb.from(TABOA).select("datos, actualizado").eq("user_id", sesion.user.id).maybeSingle();
+  if (error){ marcarSync("erro"); return; }
+  if (data && (!E.actualizado || new Date(data.actualizado) > new Date(E.actualizado))){
+    E = normalizar(data.datos); E.actualizado = data.actualizado; gardarLocal(); render(); marcarSync("ok");
+  } else if (!data || (E.actualizado && new Date(E.actualizado) > new Date(data.actualizado))){
+    if (!E.actualizado) E.actualizado = new Date().toISOString();
+    subir();
+  } else marcarSync("ok");
+}
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible" && UI.vista !== "login"){ baixar(); render(); } });
+window.addEventListener("online", () => subir());
+
+/* ---------- avisos e son ---------- */
+function toast(titulo, texto){
+  const t = document.createElement("div");
+  t.className = "toast"; t.setAttribute("role","status");
+  t.innerHTML = `<b>${esc(titulo)}</b>${texto ? esc(texto) : ""}`;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 6000);
+}
+function avisar(titulo, texto){
+  toast(titulo, texto);
+  if (E.axustes.notificacions && !pushActivo() && "Notification" in window && Notification.permission === "granted"){
+    try { new Notification(titulo, { body:texto || "" }); } catch {}
+  }
+}
+function son(){
+  try {
+    const a = new (window.AudioContext || window.webkitAudioContext)();
+    [523.25, 659.25, 783.99].forEach((f, i) => {
+      const o = a.createOscillator(), g = a.createGain(), t = a.currentTime + i * 0.28;
+      o.frequency.value = f; o.type = "sine";
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.18, t + 0.03);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.9);
+      o.connect(g).connect(a.destination); o.start(t); o.stop(t + 1);
+    });
+  } catch {}
+}
+function revisarAvisos(){
+  if (!E) return;
+  const ag = new Date(), hk = isoData(ag), m = agoraMin();
+  const antes = Number(E.axustes.avisoBloque);
+  if (antes >= 0 && !UI.foco){
+    bloquesDaData(hk).forEach(b => {
+      const k = "b" + b.id + hk, i = mins(b.ini);
+      if (m >= i - antes && m <= i && !avisados.has(k)){
+        avisados.add(k);
+        avisar(`${b.ini} ${b.titulo}`, i - m > 0 ? `Comeza en ${i - m} min` : "Comeza agora");
+      }
+    });
+  }
+  (E.axustes.lembrarEstado || []).forEach(h => {
+    const k = "e" + h + hk, i = mins(h);
+    const recente = E.estados.some(x => x.data === hk && m - mins(x.hora) >= 0 && m - mins(x.hora) < 90);
+    if (m >= i && m < i + 3 && !recente && !avisados.has(k)){ avisados.add(k); avisar("Como estás agora?", "Rexistra a túa enerxía e o teu ánimo en dez segundos."); }
+  });
+  if (ag.getDay() === 0 && !E.revisions[semanaISO(ag)]){
+    const k = "rev" + hk;
+    if (m >= 1140 && m < 1143 && !avisados.has(k)){ avisados.add(k); avisar("Revisión semanal", "Bo momento para pechar a semana e preparar a seguinte."); }
+  }
+  E.tarefas.forEach(t => {
+    if (t.feita || !t.data || t.aviso === "" || t.aviso == null) return;
+    const limite = new Date(`${t.data}T${t.hora || "09:00"}`);
+    const cando = new Date(limite - Number(t.aviso) * 60000);
+    const k = "t" + t.id + t.data + (t.hora || "");
+    if (ag >= cando && ag <= new Date(+limite + 36e5) && !avisados.has(k)){
+      avisados.add(k);
+      avisar(t.titulo, `Para ${dataCurta(t.data).toLowerCase()}${t.hora ? " ás " + t.hora : ""}`);
+    }
+  });
+}
+
+/* ---------- cálculos ---------- */
+function racha(h){
+  let n = 0; const d = new Date(), hk = isoData(d);
+  for (let i = 0; i < 400; i++){
+    const k = isoData(d);
+    if (h.dias.includes(d.getDay())){
+      if (h.rexistro[k]) n++;
+      else if (k !== hk) break;
+    }
+    d.setDate(d.getDate() - 1);
+  }
+  return n;
+}
+function cumprimento(habitos, dias){
+  let prog = 0, ok = 0;
+  for (let i = 0; i < dias; i++){
+    const d = new Date(); d.setDate(d.getDate() - i);
+    const k = isoData(d);
+    habitos.forEach(h => { if (h.dias.includes(d.getDay())){ prog++; if (h.rexistro[k]) ok++; } });
+  }
+  return prog ? Math.round(ok / prog * 100) : null;
+}
+function tarefasOrdenadas(lista){
+  const p = { alta:0, media:1, baixa:2 };
+  return lista.sort((a,b) => (a.data || "9999").localeCompare(b.data || "9999") || (a.hora || "99").localeCompare(b.hora || "99") || (p[a.prio] ?? 1) - (p[b.prio] ?? 1));
+}
+const minutosFoco = iso => E.foco.filter(f => f.data === iso).reduce((s, f) => s + f.min, 0);
+function prioridadesVixentes(){
+  const desde = sumarDias(hoxeISO(), -8);
+  const r = Object.values(E.revisions).filter(x => x.data >= desde && x.prioridades).sort((a,b) => b.data.localeCompare(a.data))[0];
+  return r ? r.prioridades : "";
+}
+
+/* ---------- ritmo: enerxía e ánimo ---------- */
+const media = (arr, k) => arr.length ? arr.reduce((s, x) => s + x[k], 0) / arr.length : null;
+const num1 = v => v.toFixed(1).replace(".", ",");
+function analiseRitmo(){
+  const desde = sumarDias(hoxeISO(), -30);
+  const l = E.estados.filter(x => x.data >= desde);
+  if (l.length < 5) return { total:l.length };
+  const franxas = [["Mañá",360,720],["Mediodía",720,960],["Tarde",960,1200],["Noite",1200,1440]];
+  const porFranxa = franxas.map(([n,a,z]) => { const g = l.filter(x => { const m = mins(x.hora); return m >= a && m < z; }); return { n, c:g.length, e:media(g,"enerxia"), a:media(g,"animo") }; });
+  const porDia = ORDE.map(d => { const g = l.filter(x => new Date(x.data+"T00:00").getDay() === d); return { n:DIAS[d], c:g.length, e:media(g,"enerxia"), a:media(g,"animo") }; });
+  const grupos = {};
+  l.forEach(x => {
+    const m = mins(x.hora);
+    const b = bloquesDaData(x.data).find(b => mins(b.ini) <= m && m < mins(b.fin));
+    (grupos[b ? b.cat : "_libre"] = grupos[b ? b.cat : "_libre"] || []).push(x);
+  });
+  const porCat = Object.entries(grupos).map(([k,g]) => ({ n: k === "_libre" ? "Tempo libre" : cat(k).nome, cor: k === "_libre" ? "#7C8B8F" : cat(k).cor, c:g.length, e:media(g,"enerxia"), a:media(g,"animo") }));
+  return { total:l.length, porFranxa, porDia, porCat };
+}
+function filasRitmo(lista){
+  return lista.filter(x => x.c).map(x => `<div class="ritmo" ${x.cor ? `style="--c:${x.cor}"` : ""}><span>${esc(x.n)}</span><div><div class="progreso enx"><i style="width:${x.e/5*100}%"></i></div><div class="progreso ani"><i style="width:${x.a/5*100}%"></i></div></div><span>${num1(x.e)} / ${num1(x.a)}</span></div>`).join("");
+}
+function frasesRitmo(r){
+  const v = r.porFranxa.filter(x => x.c >= 2);
+  if (v.length < 2) return "";
+  const max = v.reduce((a,b) => b.e > a.e ? b : a), min = v.reduce((a,b) => b.e < a.e ? b : a);
+  if (max.e - min.e < 0.4) return "<p>A túa enerxía é bastante estable ao longo do día.</p>";
+  const en = { "Mañá":"pola mañá", "Mediodía":"ao mediodía", "Tarde":"pola tarde", "Noite":"pola noite" };
+  const para = { "Mañá":"a mañá", "Mediodía":"o mediodía", "Tarde":"a tarde", "Noite":"a noite" };
+  return `<p>Adoitas ter máis enerxía ${en[max.n]} e menos ${en[min.n]}. Cando poidas, reserva o máis esixente para ${para[max.n]} e deixa o rutineiro para ${para[min.n]}.</p>`;
+}
+
+/* ---------- avisos coa app pechada (Web Push) ---------- */
+const pushActivo = () => localStorage.getItem("rutinas:push") === "1";
+const pushPosible = () => "serviceWorker" in navigator && "PushManager" in window && "Notification" in window;
+function b64aBytes(b){ const p = "=".repeat((4 - b.length % 4) % 4); const t = atob((b + p).replace(/-/g,"+").replace(/_/g,"/")); return Uint8Array.from(t, c => c.charCodeAt(0)); }
+async function activarPush(){
+  if (!sb || !sesion){ toast("Necesitas entrar coa túa conta", "Os avisos coa app pechada usan a sincronización."); return; }
+  if (!CONFIG.vapid){ toast("Falta a chave pública de avisos", "Énchea en CONFIG.vapid no ficheiro."); return; }
+  if (!pushPosible()){ toast("Este navegador non admite avisos coa app pechada", "No iPhone ou iPad, abre Rutinas desde a icona da pantalla de inicio."); return; }
+  const p = await Notification.requestPermission();
+  if (p !== "granted"){ toast("Notificacións bloqueadas", "Permíteas nos axustes do navegador."); return; }
+  try {
+    const reg = await navigator.serviceWorker.ready;
+    const sub = await reg.pushManager.subscribe({ userVisibleOnly:true, applicationServerKey:b64aBytes(CONFIG.vapid) });
+    const j = sub.toJSON();
+    const { error } = await sb.from("rut_subscricions").upsert({ endpoint:j.endpoint, user_id:sesion.user.id, sub:j, dispositivo:navigator.userAgent.slice(0,140) });
+    if (error) throw error;
+    localStorage.setItem("rutinas:push", "1");
+    E.axustes.zona = ZONA; gardar();
+    toast("Avisos activados", "Chegarán a este dispositivo aínda que a app estea pechada.");
+  } catch (e){ toast("Non se puideron activar os avisos", e.message || String(e)); }
+}
+async function desactivarPush(){
+  try {
+    const reg = await navigator.serviceWorker.ready;
+    const sub = await reg.pushManager.getSubscription();
+    if (sub){ if (sb) await sb.from("rut_subscricions").delete().eq("endpoint", sub.endpoint); await sub.unsubscribe(); }
+  } catch {}
+  localStorage.removeItem("rutinas:push"); render();
+  toast("Avisos desactivados neste dispositivo");
+}
+
+/* ---------- pintado ---------- */
+function pintarCabeceira(){
+  const txt = { local:"Só neste dispositivo", ok:"Sincronizado", gardando:"Gardando…", erro:"Sen conexión, gardado aquí" };
+  const estado = (sb && sesion) ? UI.sync : "local";
+  $("#cab").innerHTML = UI.vista === "login" ? "" :
+    `<h1 class="marca">Rutinas</h1><span class="data">${esc(dataLonga(new Date()))}</span><span class="sync ${estado}"><i></i>${txt[estado]}</span>`;
+}
+function pintarAbas(){
+  $("#fab").hidden = UI.vista === "login";
+  if (UI.vista === "login"){ $("#abas").innerHTML = ""; return; }
+  const activa = UI.vista === "revision" ? "semana" : UI.vista;
+  const abas = [["hoxe","Hoxe"],["semana","Semana"],["tarefas","Tarefas"],["habitos","Hábitos"],["axustes","Axustes"]];
+  $("#abas").innerHTML = abas.map(([k,n]) => `<button data-acc="aba" data-id="${k}" class="${activa===k?"sel":""}" ${activa===k?'aria-current="page"':""}>${n}</button>`).join("");
+}
+function render(){
+  pintarCabeceira(); pintarAbas();
+  const v = { hoxe:vistaHoxe, semana:vistaSemana, tarefas:vistaTarefas, habitos:vistaHabitos, axustes:vistaAxustes, revision:vistaRevision, login:vistaLogin }[UI.vista];
+  $("#vista").innerHTML = v();
+}
+
+function filaTarefa(t, accions){
+  const c = cat(t.cat), n = t.data ? diasDesde(t.data) : null;
+  const atrasada = !t.feita && n !== null && n < 0;
+  const rep = REPETIR.find(r => r[0] === t.repetir);
+  return `<li class="tarefa ${t.feita?"feita":""}" style="--c:${c.cor}">
+    <button class="check ${t.feita?"feito":""}" data-acc="tarefaFeita" data-id="${t.id}" aria-label="${t.feita?"Marcar como pendente":"Marcar como feita"}: ${esc(t.titulo)}"></button>
+    <div class="corpo">
+      <div data-acc="editarTarefa" data-id="${t.id}">
+        <div class="tit ${t.prio==="alta"&&!t.feita?"prio-alta":""}">${esc(t.titulo)}</div>
+        <div class="meta">${t.data ? `<span class="${atrasada?"atrasada":""}">${atrasada?"Atrasada: ":""}${esc(dataCurta(t.data))}${t.hora?" ás "+t.hora:""}</span>` : ""}${t.cat ? `<span><span class="punto"></span> ${esc(c.nome)}</span>` : ""}${t.repetir && rep ? `<span>${esc(rep[1])}</span>` : ""}${t.prio==="alta"?"<span>Prioridade alta</span>":""}</div>
+      </div>
+      ${accions ? `<div class="mini">${accions}</div>` : ""}
+    </div></li>`;
+}
+const accionsMover = t => `<button class="btn" data-acc="moverTarefa" data-id="${t.id}" data-k="0">Hoxe</button><button class="btn" data-acc="moverTarefa" data-id="${t.id}" data-k="1">Mañá</button><button class="btn" data-acc="moverTarefa" data-id="${t.id}" data-k="7">Nunha semana</button><button class="btn" data-acc="moverTarefa" data-id="${t.id}" data-k="sen">Sen data</button>`;
+
+function vistaHoxe(){
+  const hk = hoxeISO(), iso = UI.data || hk, eHoxe = iso === hk;
+  const dt = new Date(iso+"T00:00"), m = eHoxe ? agoraMin() : -1;
+  const bl = bloquesDaData(iso);
+  const navdia = `<div class="navdia"><button class="btn" data-acc="moverDia" data-id="-1" aria-label="Día anterior">‹</button><span class="etq">${eHoxe ? "Hoxe" : esc(dataLonga(dt))}</span><button class="btn" data-acc="moverDia" data-id="1" aria-label="Día seguinte">›</button></div>${eHoxe ? "" : `<button class="btn ligazon" data-acc="irHoxe">Volver a hoxe</button>`}`;
+
+  let heroe = "", extraHoxe = "";
+  if (eHoxe){
+    const actual = bl.filter(b => mins(b.ini) <= m && m < mins(b.fin)).pop();
+    const seguinte = bl.find(b => mins(b.ini) > m);
+    const botons = `<div class="fila"><button class="btn primario" data-acc="foco" data-id="${actual ? actual.id : ""}">Concentrarme</button><button class="btn" data-acc="respirar">Respirar un minuto</button></div>`;
+    if (actual){
+      const c = cat(actual.cat), i = mins(actual.ini), f = mins(actual.fin);
+      const pct = Math.round((m - i) / (f - i) * 100);
+      heroe = `<section class="agora" style="--c:${c.cor}">
+        <div class="cat"><span class="punto"></span>${esc(c.nome)}, agora</div>
+        <h2>${esc(actual.titulo)}</h2>
+        <p>Ata as ${actual.fin}. Quedan ${durTxt(f - m)}.</p>
+        <div class="progreso" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div>
+        ${actual.notas ? `<p style="margin:12px 0 0">${esc(actual.notas)}</p>` : ""}
+        ${botons}
+        ${seguinte ? `<div class="despois">Despois, ás ${seguinte.ini}: <b>${esc(seguinte.titulo)}</b></div>` : `<div class="despois">É o último bloque do día.</div>`}
+      </section>`;
+    } else {
+      heroe = `<section class="agora">
+        <div class="cat">Agora</div>
+        <h2>Tempo libre</h2>
+        <p>${seguinte ? `Seguinte, ás ${seguinte.ini}: <b>${esc(seguinte.titulo)}</b> (en ${durTxt(mins(seguinte.ini) - m)}).` : "Non hai máis bloques hoxe."}</p>
+        ${botons}
+      </section>`;
+    }
+    const fm = minutosFoco(hk);
+    const manha = bloquesDaData(sumarDias(hk, 1))[0];
+    if (fm) extraHoxe += `<p class="anticipo">Hoxe levas ${durTxt(fm)} de concentración.</p>`;
+    const ult = E.estados.filter(x => x.data === hk).slice(-1)[0];
+    extraHoxe += `<div class="nota-caixa estado-caixa"><p>${ult ? `Ás ${ult.hora}: enerxía ${NIV_E[ult.enerxia-1].toLowerCase()}, ánimo ${NIV_A[ult.animo-1].toLowerCase()}.` : "Como estás agora?"}</p><div class="fila"><button class="btn" data-acc="estado">${ult ? "Rexistrar de novo" : "Rexistrar enerxía e ánimo"}</button></div></div>`;
+    if (manha) extraHoxe += `<p class="anticipo">Mañá comezas ás ${manha.ini} con ${esc(manha.titulo.toLowerCase())}.</p>`;
+    const prio = prioridadesVixentes();
+    if (prio) extraHoxe += `<div class="nota-caixa"><p class="pequeno">As túas prioridades desta semana</p><p class="prioridades">${esc(prio)}</p></div>`;
+    if (new Date().getDay() === 0 && !E.revisions[semanaISO(new Date())])
+      extraHoxe += `<div class="nota-caixa"><p>É domingo: bo momento para pechar a semana e preparar a seguinte.</p><div class="fila"><button class="btn primario" data-acc="aba" data-id="revision">Facer a revisión semanal</button></div></div>`;
+    const caixa = E.tarefas.filter(t => t.caixa && !t.data && !t.feita).length;
+    if (caixa) extraHoxe += `<div class="nota-caixa"><p>Tes ${caixa} ${caixa===1?"cousa":"cousas"} sen organizar na caixa de entrada.</p><div class="fila"><button class="btn" data-acc="aba" data-id="tarefas">Organizalas</button></div></div>`;
+  }
+
+  // liña do tempo
+  let lt = "", marcaPosta = false;
+  bl.forEach(b => {
+    const i = mins(b.ini), f = mins(b.fin);
+    if (eHoxe && !marcaPosta && i > m && !(bl.some(x => mins(x.ini) <= m && m < mins(x.fin)))){
+      lt += `<li class="marca-agora">${pad(new Date().getHours())}:${pad(new Date().getMinutes())}</li>`; marcaPosta = true;
+    }
+    const est = eHoxe ? (f <= m ? "pasado" : (i <= m && m < f ? "actual" : "")) : "";
+    const etiqueta = b.extra ? "<em>só este día</em>" : (b.modificado ? "<em>cambiado este día</em>" : "");
+    lt += `<li class="${est}" data-acc="editarBloque" data-id="${b.id}" style="--c:${cat(b.cat).cor}"><span class="h">${b.ini}</span><span class="t">${esc(b.titulo)}<small>ata as ${b.fin} ${etiqueta}</small></span></li>`;
+  });
+  const ex = E.excepcions[iso];
+  const canc = ex ? (ex.canceladas || []).map(id => E.bloques.find(b => b.id === id)).filter(Boolean) : [];
+  const temCambios = ex && ((ex.canceladas||[]).length || Object.keys(ex.mod||{}).length || (ex.extra||[]).length);
+
+  const deHoxe = eHoxe
+    ? tarefasOrdenadas(E.tarefas.filter(t => t.data && diasDesde(t.data) <= 0 && (!t.feita || t.feitaEn === hk)))
+    : tarefasOrdenadas(E.tarefas.filter(t => t.data === iso));
+  const haiAtrasadas = eHoxe && deHoxe.some(t => !t.feita && diasDesde(t.data) < 0);
+  const proximas = eHoxe ? tarefasOrdenadas(E.tarefas.filter(t => !t.feita && t.data && diasDesde(t.data) >= 1 && diasDesde(t.data) <= 7)) : [];
+  const habs = E.habitos.filter(h => h.dias.includes(dt.getDay()));
+  const habsVisibles = diasDesde(iso) <= 0;
+
+  return `${navdia}${heroe}${extraHoxe}
+    <h3>${eHoxe ? "Tarefas para hoxe" : "Tarefas deste día"}</h3>
+    ${deHoxe.length ? `<ul class="lista">${deHoxe.map(t => filaTarefa(t)).join("")}</ul>` : `<p class="vacio">Non tes nada pendente ${eHoxe ? "para hoxe" : "este día"}.</p>`}
+    ${haiAtrasadas ? `<div class="barra-accions"><button class="btn" data-acc="atrasadasHoxe">Pasar as atrasadas a hoxe</button></div>` : ""}
+    <form class="rapida" data-form="rapida"><input type="text" name="t" placeholder="Engadir tarefa ${eHoxe ? "para hoxe" : "a este día"}" aria-label="Nova tarefa"><button class="btn primario" type="submit">Engadir</button></form>
+    ${habs.length && habsVisibles ? `<h3>Hábitos ${eHoxe ? "de hoxe" : "deste día"}</h3><div class="habs-hoxe">${habs.map(h => `<button class="hab-chip ${h.rexistro[iso]?"feito":""}" style="--c:${cat(h.cat).cor}" data-acc="habitoData" data-id="${h.id}" data-k="${iso}" aria-pressed="${!!h.rexistro[iso]}">${esc(h.nome)}</button>`).join("")}</div>` : ""}
+    <h3>${eHoxe ? "O teu día" : "Plan deste día"}</h3>
+    ${ex && ex.modelo ? `<p class="pequeno" style="margin:0 0 6px">Este día segue o modelo «${esc(ex.modelo)}».</p>` : ""}
+    ${bl.length ? `<ul class="lt">${lt}</ul>` : `<p class="vacio">Non hai bloques este día.</p>`}
+    ${canc.length ? `<p class="cancelados">Cancelado este día: ${canc.map(b => `<s>${esc(b.titulo)}</s>`).join("")}</p>` : ""}
+    <div class="barra-accions"><button class="btn" data-acc="novoBloqueDia">Engadir bloque a este día</button>${temCambios ? `<button class="btn" data-acc="desfacerDia">Volver á semana tipo</button>` : ""}</div>
+    ${proximas.length ? `<h3>Nos próximos días</h3><ul class="lista">${proximas.map(t => filaTarefa(t)).join("")}</ul>` : ""}`;
+}
+
+function vistaSemana(){
+  const sel = UI.dia, hoxe = new Date().getDay();
+  const cols = ORDE.map(d => {
+    const barras = bloquesDoDia(d).map(b => {
+      const a = Math.max(mins(b.ini), 360), z = Math.min(mins(b.fin), 1440);
+      return z > a ? `<i style="top:${(a-360)/10.8}%;height:${(z-a)/10.8}%;background:${cat(b.cat).cor}"></i>` : "";
+    }).join("");
+    return `<button class="col ${d===sel?"sel":""} ${d===hoxe?"hoxe":""}" data-acc="dia" data-id="${d}" aria-label="${DIAS[d]}"><span class="col-n">${DIAS_C[d]}</span><span class="col-barra">${barras}</span></button>`;
+  }).join("");
+  const tot = {};
+  const modelo = UI.modelo ? fonteTipo() : null;
+  fonteTipo().bloques.forEach(b => { tot[b.cat] = (tot[b.cat] || 0) + Math.max(0, mins(b.fin) - mins(b.ini)) * b.dias.length; });
+  const horas = E.categorias.filter(c => tot[c.id]).map(c => `<span style="--c:${c.cor}"><span class="punto"></span>${esc(c.nome)} ${horasTxt(tot[c.id])}</span>`).join("");
+  const bl = bloquesDoDia(sel);
+  const cabeceira = modelo
+    ? `<div class="editando"><p>Estás editando o modelo <b>«${esc(modelo.nome)}»</b>. Os cambios non afectan á túa semana tipo.</p><div class="fila"><button class="btn primario" data-acc="rematarModelo">Rematar edición</button></div></div>`
+    : `<h3 style="margin-top:8px">A túa semana tipo</h3><p class="pequeno" style="margin:0">É o plan que se repite cada semana. Os cambios dun día concreto fanse desde Hoxe.</p>`;
+  return `${cabeceira}
+    <div class="semana">${cols}</div>
+    <div class="escala"><span>6:00</span><span>12:00</span><span>18:00</span><span>24:00</span></div>
+    <div class="horas" aria-label="Horas á semana por categoría">${horas}</div>
+    <h3>${DIAS[sel]}</h3>
+    ${bl.length ? `<ul class="lt">${bl.map(b => `<li data-acc="editarBloqueTipo" data-id="${b.id}" style="--c:${cat(b.cat).cor}"><span class="h">${b.ini}</span><span class="t">${esc(b.titulo)}<small>ata as ${b.fin}, ${esc(cat(b.cat).nome.toLowerCase())}${b.dias.length>1?`, tamén ${b.dias.filter(x=>x!==sel).sort((x,y)=>ORDE.indexOf(x)-ORDE.indexOf(y)).map(x=>DIAS_C[x]).join(" ")}`:""}</small></span></li>`).join("")}</ul>` : `<p class="vacio">Este día está baleiro. Engade un bloque para empezar.</p>`}
+    <div class="barra-accions"><button class="btn primario" data-acc="novoBloque">Engadir bloque</button>${bl.length?`<button class="btn" data-acc="copiarDia">Copiar este día a…</button>`:""}</div>
+    ${modelo ? "" : seccionModelos()}
+    ${modelo ? "" : `<h3>Revisión semanal</h3>
+    <p class="vacio">Mira como foi a semana, recoloca o que quedou pendente e escolle as túas prioridades.</p>
+    <div class="barra-accions"><button class="btn" data-acc="aba" data-id="revision">Abrir a revisión</button></div>`}`;
+}
+function rangoTxt(a, z){
+  const f = iso => { const d = new Date(iso+"T00:00"); return `${d.getDate()} de ${MESES[d.getMonth()]}`; };
+  return a === z ? `o ${f(a)}` : `do ${f(a)} ao ${f(z)}`;
+}
+function seccionModelos(){
+  const hk = hoxeISO(), aplicados = {};
+  Object.entries(E.excepcions).filter(([k,x]) => x.modelo && k >= hk).forEach(([k,x]) => { (aplicados[x.modelo] = aplicados[x.modelo] || []).push(k); });
+  const ap = Object.entries(aplicados).map(([n, ds]) => { ds.sort(); return `<li class="modelo"><span><b>${esc(n)}</b><small>${rangoTxt(ds[0], ds[ds.length-1])}</small></span><button class="btn" data-acc="quitarModelo" data-id="${esc(n)}">Quitar</button></li>`; }).join("");
+  const lista = E.plantillas.map(p => {
+    const tot = p.bloques.reduce((s,b) => s + Math.max(0, mins(b.fin) - mins(b.ini)) * b.dias.length, 0);
+    return `<li class="modelo"><span data-acc="opcionsModelo" data-id="${p.id}" style="cursor:pointer"><b>${esc(p.nome)}</b><small>${p.bloques.length} bloques, ${horasTxt(tot)} á semana</small></span><span class="mini" style="margin:0"><button class="btn" data-acc="editarModelo" data-id="${p.id}">Editar</button><button class="btn primario" data-acc="aplicarModelo" data-id="${p.id}">Aplicar</button></span></li>`;
+  }).join("");
+  return `<h3>Modelos de semana</h3>
+    <p class="vacio">Garda semanas distintas (exames, vacacións, concertos) e aplícaas a unhas datas sen tocar a túa semana tipo.</p>
+    ${lista ? `<ul class="lista">${lista}</ul>` : ""}
+    <div class="barra-accions"><button class="btn" data-acc="gardarModelo">Gardar a semana tipo como modelo</button><button class="btn" data-acc="novoModelo">Novo modelo baleiro</button></div>
+    ${ap ? `<h3>Modelos aplicados</h3><ul class="lista">${ap}</ul>` : ""}`;
+}
+
+function vistaTarefas(){
+  const f = UI.filtro;
+  let lista = tarefasOrdenadas(E.tarefas.filter(t => f === "todas" || (f === "pend" ? !t.feita : t.feita)));
+  const grupos = [
+    ["Caixa de entrada", t => t.caixa && !t.data, "caixa"],
+    ["Atrasadas", t => t.data && diasDesde(t.data) < 0 && !t.feita],
+    ["Hoxe", t => t.data && diasDesde(t.data) === 0],
+    ["Mañá", t => t.data && diasDesde(t.data) === 1],
+    ["Esta semana", t => t.data && diasDesde(t.data) > 1 && diasDesde(t.data) <= 7],
+    ["Máis adiante", t => t.data && diasDesde(t.data) > 7],
+    ["Pasadas", t => t.data && diasDesde(t.data) < 0 && t.feita],
+    ["Sen data", t => !t.data]
+  ];
+  const usadas = new Set();
+  const html = grupos.map(([n, fn, cls]) => {
+    const g = lista.filter(t => !usadas.has(t.id) && fn(t));
+    g.forEach(t => usadas.add(t.id));
+    if (!g.length) return "";
+    const enCaixa = cls === "caixa";
+    return `<div class="grupo ${cls||""}">${n}</div>${enCaixa ? `<p class="pequeno" style="margin:0">Dálle data a cada cousa ou bórraa.</p>` : ""}<ul class="lista">${g.map(t => filaTarefa(t, (enCaixa || n === "Atrasadas") && !t.feita ? accionsMover(t) : "")).join("")}</ul>`;
+  }).join("");
+  return `<div class="filtros" role="group" aria-label="Filtrar tarefas">${[["pend","Pendentes"],["feitas","Feitas"],["todas","Todas"]].map(([k,n])=>`<button data-acc="filtro" data-id="${k}" class="${f===k?"sel":""}" aria-pressed="${f===k}">${n}</button>`).join("")}</div>
+    ${html || `<p class="vacio">${f==="feitas"?"Aínda non marcaches ningunha tarefa como feita.":"Non tes tarefas pendentes. Engade a primeira."}</p>`}
+    <div class="barra-accions"><button class="btn primario" data-acc="novaTarefa">Engadir tarefa</button>${E.tarefas.some(t=>t.feita)?`<button class="btn" data-acc="limparFeitas">Borrar as feitas</button>`:""}</div>`;
+}
+
+function vistaHabitos(){
+  const hk = hoxeISO();
+  const html = E.habitos.map(h => {
+    const c = cat(h.cat), r = racha(h), p30 = cumprimento([h], 30);
+    const cadros = [];
+    for (let i = 13; i >= 0; i--){
+      const d = new Date(); d.setDate(d.getDate() - i);
+      const k = isoData(d);
+      if (!h.dias.includes(d.getDay())) cadros.push(`<span class="libre" title="${esc(dataCurta(k))}: non toca"></span>`);
+      else cadros.push(`<button class="${h.rexistro[k]?"ok":""} ${k===hk?"hoxe":""}" data-acc="habitoData" data-id="${h.id}" data-k="${k}" aria-label="${esc(dataCurta(k))}: ${h.rexistro[k]?"feito":"sen facer"}" aria-pressed="${!!h.rexistro[k]}"></button>`);
+    }
+    const hoxeProg = h.dias.includes(new Date().getDay());
+    return `<div class="hab" style="--c:${c.cor}">
+      ${hoxeProg ? `<button class="check ${h.rexistro[hk]?"feito":""}" data-acc="habitoData" data-id="${h.id}" data-k="${hk}" aria-label="Feito hoxe: ${esc(h.nome)}"></button>` : `<span style="width:28px"></span>`}
+      <span class="nome" data-acc="editarHabito" data-id="${h.id}">${esc(h.nome)}</span>
+      <span class="info">${r ? `Racha de ${r} ${r===1?"día":"días"}` : "Sen racha aínda"}${p30 !== null ? `, ${p30} % nos últimos 30 días` : ""}${hoxeProg?"":". Hoxe non toca"}${h.dias.length<7?`. Días: ${ORDE.filter(x=>h.dias.includes(x)).map(x=>DIAS_C[x]).join(" ")}`:""}</span>
+      <div class="dias14" aria-label="Últimos 14 días">${cadros.join("")}</div>
+    </div>`;
+  }).join("");
+  return `<h3 style="margin-top:8px">Os teus hábitos</h3>
+    ${E.habitos.length ? `<p class="pequeno" style="margin:0">Toca un cadro para marcar un día pasado que esqueciches.</p>` : ""}
+    ${html || `<p class="vacio">Engade un hábito pequeno e concreto, como «camiñar 20 minutos».</p>`}
+    <div class="barra-accions"><button class="btn primario" data-acc="novoHabito">Engadir hábito</button></div>`;
+}
+
+function vistaRevision(){
+  const hoxe = new Date(), chave = semanaISO(hoxe), r = E.revisions[chave] || {};
+  const hk = hoxeISO(), desde = sumarDias(hk, -6);
+  const feitas = E.tarefas.filter(t => t.feita && t.feitaEn && t.feitaEn >= desde && t.feitaEn <= hk).length;
+  const pc = cumprimento(E.habitos, 7);
+  const foco = E.foco.filter(f => f.data >= desde);
+  const focoTot = foco.reduce((s, f) => s + f.min, 0);
+  const porCat = {}; foco.forEach(f => { porCat[f.cat] = (porCat[f.cat] || 0) + f.min; });
+  const maxCat = Math.max(1, ...Object.values(porCat));
+  const habsDet = E.habitos.map(h => { const p = cumprimento([h], 7); return p === null ? "" : `<div class="barcat" style="--c:${cat(h.cat).cor}"><span>${esc(h.nome)}</span><div class="progreso"><i style="width:${p}%"></i></div><span>${p} %</span></div>`; }).join("");
+  const atrasadas = tarefasOrdenadas(E.tarefas.filter(t => !t.feita && t.data && diasDesde(t.data) < 0));
+  const proximas = tarefasOrdenadas(E.tarefas.filter(t => !t.feita && t.data && diasDesde(t.data) >= 0 && diasDesde(t.data) <= 7));
+  const anteriores = Object.entries(E.revisions).filter(([k]) => k !== chave).sort((a,b) => b[0].localeCompare(a[0])).slice(0, 6);
+
+  return `<button class="btn ligazon" data-acc="aba" data-id="semana">Volver á semana</button>
+    <h3 style="margin-top:4px">Revisión da semana</h3>
+    <p class="resumo">Nos últimos sete días completaches <b>${feitas}</b> ${feitas===1?"tarefa":"tarefas"}${pc !== null ? `, cumpriches o <b>${pc} %</b> dos teus hábitos` : ""}${focoTot ? ` e concentrácheste <b>${durTxt(focoTot)}</b>` : ""}.</p>
+    ${habsDet ? `<h3>Hábitos</h3>${habsDet}` : ""}
+    ${focoTot ? `<h3>Tempo de concentración</h3>${Object.entries(porCat).sort((a,b)=>b[1]-a[1]).map(([c,mn]) => `<div class="barcat" style="--c:${cat(c).cor}"><span>${esc(cat(c).nome)}</span><div class="progreso"><i style="width:${mn/maxCat*100}%"></i></div><span>${durTxt(mn)}</span></div>`).join("")}` : ""}
+    <h3>O teu ritmo</h3>
+    ${(() => {
+      const r = analiseRitmo();
+      if (!r.porFranxa) return `<p class="vacio">Cando teñas polo menos cinco rexistros de enerxía e ánimo (levas ${r.total}), aquí verás en que momentos rendes mellor.</p>`;
+      return `<p class="pequeno" style="margin:0">Últimos 30 días, ${r.total} rexistros. Barra grosa: enerxía. Barra fina: ánimo. Escala do 1 ao 5.</p>
+        ${frasesRitmo(r)}
+        <div class="grupo">Por momento do día</div>${filasRitmo(r.porFranxa)}
+        <div class="grupo">Segundo o que estabas facendo</div>${filasRitmo(r.porCat)}
+        <div class="grupo">Por día da semana</div>${filasRitmo(r.porDia)}`;
+    })()}
+    <h3>O que quedou pendente</h3>
+    ${atrasadas.length ? `<p class="pequeno" style="margin:0">Decide para cando, sen culpa: recolocar tamén é planificar.</p><ul class="lista">${atrasadas.map(t => filaTarefa(t, accionsMover(t) + `<button class="btn perigo" data-acc="borrarTarefa" data-id="${t.id}">Borrar</button>`)).join("")}</ul>` : `<p class="vacio">Non tes nada atrasado.</p>`}
+    ${proximas.length ? `<h3>O que vén</h3><ul class="lista">${proximas.map(t => filaTarefa(t)).join("")}</ul>` : ""}
+    <h3>Pechar a semana</h3>
+    <form data-form="revision">
+      <label>Que saíu ben?<textarea name="ben">${esc(r.ben)}</textarea></label>
+      <label>Que che custou ou che xerou tensión?<textarea name="custou">${esc(r.custou)}</textarea></label>
+      <label>Tres prioridades para a próxima semana<textarea name="prioridades" placeholder="Unha por liña">${esc(r.prioridades)}</textarea></label>
+      <div class="barra-accions"><button class="btn primario" type="submit">${E.revisions[chave] ? "Actualizar revisión" : "Gardar revisión"}</button></div>
+    </form>
+    ${anteriores.length ? `<h3>Revisións anteriores</h3>${anteriores.map(([k, x]) => `<details><summary>Semana do ${esc(dataCurta(sumarDias(x.data, -6)))}</summary>${x.ben?`<p><b>Saíu ben:</b> ${esc(x.ben)}</p>`:""}${x.custou?`<p><b>Custou:</b> ${esc(x.custou)}</p>`:""}${x.prioridades?`<p><b>Prioridades:</b> ${esc(x.prioridades)}</p>`:""}</details>`).join("")}` : ""}`;
+}
+
+function vistaAxustes(){
+  const a = E.axustes;
+  const conta = !sb
+    ? `<p>A sincronización non está configurada: os datos gárdanse só neste dispositivo. Para usala no móbil e no ordenador, completa a configuración de Supabase no ficheiro.</p>`
+    : sesion
+      ? `<p>Conta: <b>${esc(sesion.user.email)}</b></p><div class="fila"><button class="btn" data-acc="sincronizar">Sincronizar agora</button><button class="btn" data-acc="sair">Saír</button></div>`
+      : `<p>Estás a usar a app só neste dispositivo.</p><div class="fila"><button class="btn primario" data-acc="irLogin">Entrar ou crear conta</button></div>`;
+  return `<h3 style="margin-top:8px">Conta e sincronización</h3><div class="caixa-ax">${conta}</div>
+    <h3>Avisos</h3>
+    <div class="caixa-ax">
+      <label>Avisar dos bloques
+        <select data-axuste="avisoBloque">
+          ${[[-1,"Sen aviso"],[0,"Ao comezar"],[5,"5 min antes"],[10,"10 min antes"],[15,"15 min antes"]].map(([v,n])=>`<option value="${v}" ${Number(a.avisoBloque)===v?"selected":""}>${n}</option>`).join("")}
+        </select></label>
+      <div class="fila"><button class="btn" data-acc="notificacions">${a.notificacions && "Notification" in window && Notification.permission==="granted" ? "Desactivar notificacións do sistema" : "Activar notificacións do sistema"}</button></div>
+      <p class="pequeno">Estes avisos funcionan mentres a app está aberta.</p>
+    </div>
+    <h3>Avisos coa app pechada</h3>
+    <div class="caixa-ax">
+      ${pushActivo()
+        ? `<p>Activados neste dispositivo.</p><div class="fila"><button class="btn" data-acc="pushOff">Desactivar neste dispositivo</button></div>`
+        : `<p>Recibe os avisos de bloques, tarefas e lembranzas aínda que non teñas a app aberta.</p><div class="fila"><button class="btn primario" data-acc="pushOn">Activar neste dispositivo</button></div>`}
+      <p class="pequeno">Necesita a túa conta e a configuración de avisos en Supabase. No iPhone ou iPad, abre Rutinas desde a icona da pantalla de inicio.</p>
+    </div>
+    <h3>Enerxía e ánimo</h3>
+    <div class="caixa-ax">
+      <p>Lembrarme rexistrar como estou:</p>
+      <div class="opcions">${LEMBRAR.map(([h,n]) => `<label><input type="checkbox" data-lembrar="${h}" ${(a.lembrarEstado||[]).includes(h)?"checked":""}><span>${n}</span></label>`).join("")}</div>
+      <p class="pequeno">Se xa rexistraches algo na última hora e media, non te avisa.</p>
+    </div>
+    <h3>Concentración</h3>
+    <div class="caixa-ax">
+      <label>Duración habitual dunha sesión
+        <select data-axuste="focoMin">${[15,25,45,60,90].map(v=>`<option value="${v}" ${Number(a.focoMin)===v?"selected":""}>${v} min</option>`).join("")}</select></label>
+    </div>
+    <h3>Categorías</h3>
+    <div class="caixa-ax">${E.categorias.map(c=>`<div class="catfila"><input type="color" value="${esc(c.cor)}" data-cat-cor="${c.id}" aria-label="Cor de ${esc(c.nome)}"><input type="text" value="${esc(c.nome)}" data-cat-nome="${c.id}" aria-label="Nome da categoría"></div>`).join("")}
+      <div class="fila"><button class="btn" data-acc="novaCategoria">Engadir categoría</button></div></div>
+    <h3>Copias</h3>
+    <div class="caixa-ax"><div class="fila" style="margin-top:0"><button class="btn" data-acc="exportar">Exportar copia</button><button class="btn" data-acc="importar">Importar copia</button><button class="btn perigo" data-acc="baleirar">Empezar de cero</button></div></div>`;
+}
+
+function vistaLogin(){
+  return `<section class="login">
+    <h1 class="marca">Rutinas</h1>
+    <p>Entra para ter as túas rutinas no móbil e no ordenador.</p>
+    <form data-form="login">
+      <label>Correo<input type="email" name="correo" autocomplete="email" required></label>
+      <label>Contrasinal<input type="password" name="clave" autocomplete="current-password" minlength="6" required></label>
+      <p class="erro" id="lerro" role="alert"></p>
+      <div class="fila"><button class="btn primario" type="submit" name="modo" value="entrar">Entrar</button><button class="btn" type="submit" name="modo" value="rexistro">Crear conta</button></div>
+    </form>
+    <div class="fila"><button class="btn ligazon" data-acc="senConta">Usar só neste dispositivo</button></div>
+  </section>`;
+}
+
+/* ---------- concentración e respiración ---------- */
+function cargarFoco(){ try { UI.foco = JSON.parse(localStorage.getItem("rutinas:foco")); } catch { UI.foco = null; } }
+function gardarFoco(){ if (UI.foco) localStorage.setItem("rutinas:foco", JSON.stringify(UI.foco)); else localStorage.removeItem("rutinas:foco"); }
+const restante = () => UI.foco.pausa != null ? UI.foco.pausa : Math.max(0, UI.foco.fin - Date.now());
+function iniciarFoco(titulo, c, min){
+  UI.foco = { titulo, cat:c, total:min, fin:Date.now() + min*60000, pausa:null };
+  gardarFoco(); pintarFoco();
+}
+function pintarFoco(){
+  const o = $("#foco");
+  if (!UI.foco){ o.hidden = true; o.innerHTML = ""; clearInterval(focoTick); focoTick = null; return; }
+  const f = UI.foco, c = cat(f.cat);
+  o.style.setProperty("--c", c.cor);
+  o.hidden = false;
+  o.innerHTML = `<div class="foco-in" role="dialog" aria-label="Modo concentración">
+    <p class="cat"><span class="punto"></span>${esc(c.nome)}</p>
+    <h2>${esc(f.titulo)}</h2>
+    <div class="reloxo" id="reloxo"></div>
+    <div class="progreso"><i id="focobarra"></i></div>
+    <p class="pausado" id="pausado"></p>
+    <div class="fila centro"><button class="btn" data-acc="focoPausa" id="focoPausa"></button><button class="btn primario" data-acc="focoRematar">Rematar</button></div>
+    <div class="fila centro"><button class="btn ligazon" data-acc="respirar">Respirar un minuto</button></div>
+  </div>`;
+  actualizarReloxo();
+  if (!focoTick) focoTick = setInterval(() => {
+    if (!UI.foco) return;
+    if (UI.foco.pausa == null && restante() <= 0) completarFoco(true);
+    else actualizarReloxo();
+  }, 1000);
+}
+function actualizarReloxo(){
+  if (!UI.foco || !$("#reloxo")) return;
+  const r = restante(), s = Math.ceil(r / 1000);
+  $("#reloxo").textContent = `${pad(Math.floor(s/60))}:${pad(s%60)}`;
+  $("#focobarra").style.width = `${100 - r / (UI.foco.total*60000) * 100}%`;
+  $("#focoPausa").textContent = UI.foco.pausa != null ? "Continuar" : "Pausar";
+  $("#pausado").textContent = UI.foco.pausa != null ? "En pausa" : "";
+  document.title = `${pad(Math.floor(s/60))}:${pad(s%60)} · Rutinas`;
+}
+function completarFoco(completo){
+  const f = UI.foco; if (!f) return;
+  const min = completo ? f.total : Math.round((f.total*60000 - restante()) / 60000);
+  UI.foco = null; gardarFoco(); pintarFoco(); document.title = "Rutinas";
+  if (min >= 1) E.foco.push({ data:hoxeISO(), min, cat:f.cat, titulo:f.titulo });
+  gardar();
+  if (completo){ son(); avisar("Sesión rematada", `${durTxt(min)} de concentración. Levántate, bebe auga e estira un pouco.`); }
+  else if (min >= 1) toast("Sesión gardada", `${durTxt(min)} de concentración.`);
+}
+function respirar(){
+  const o = $("#resp");
+  clearTimeout(respT);
+  o.hidden = false;
+  o.innerHTML = `<div class="resp-in" role="dialog" aria-label="Respiración"><div class="circulo" id="circ"></div><p class="resp-txt" id="rtxt" aria-live="polite">Ponte cómodo</p><p class="pequeno" id="rciclo"></p><button class="btn" data-acc="pecharResp">Pechar</button></div>`;
+  const fases = [["Inspira", 4000, 1.6], ["Mantén", 2000, 1.6], ["Expira", 6000, 1]];
+  let ciclo = 0, i = 0;
+  const paso = () => {
+    if (o.hidden) return;
+    if (ciclo >= 5){ $("#rtxt").textContent = "Ben feito"; $("#rciclo").textContent = ""; return; }
+    const [t, ms, esc_] = fases[i];
+    $("#rtxt").textContent = t;
+    $("#rciclo").textContent = `Respiración ${ciclo + 1} de 5`;
+    const c = $("#circ"); c.style.transitionDuration = ms + "ms"; c.style.transform = `scale(${esc_})`;
+    i++; if (i === fases.length){ i = 0; ciclo++; }
+    respT = setTimeout(paso, ms);
+  };
+  respT = setTimeout(paso, 1200);
+}
+
+/* ---------- formularios ---------- */
+function abrirModal(titulo, corpo, onGardar, onBorrar, opts = {}){
+  const d = $("#modal");
+  d.innerHTML = `<form class="mform"><h2>${esc(titulo)}</h2>${corpo}<p class="erro" id="merro" role="alert"></p>
+    <div class="maccions">${onBorrar?`<button type="button" class="btn perigo" data-m="borrar">${opts.textoBorrar || "Borrar"}</button>`:""}<span class="sp"></span><button type="button" class="btn" data-m="cancelar">Cancelar</button><button type="submit" class="btn primario">${opts.textoGardar || "Gardar"}</button></div></form>`;
+  const f = d.querySelector("form");
+  f.onsubmit = e => { e.preventDefault(); const r = onGardar(f); if (r === true) d.close(); else if (typeof r === "string") $("#merro").textContent = r; };
+  f.querySelector('[data-m="cancelar"]').onclick = () => d.close();
+  if (onBorrar) f.querySelector('[data-m="borrar"]').onclick = () => { if (confirm(opts.confirmar || "Seguro que queres borralo?")){ onBorrar(f); d.close(); } };
+  if (opts.trasAbrir) opts.trasAbrir(f);
+  d.showModal();
+  const p = f.querySelector("input[type=text]"); if (p && !p.value) p.focus();
+}
+const optsCat = (sel, baleiro) => (baleiro ? `<option value="">Sen categoría</option>` : "") + E.categorias.map(c => `<option value="${c.id}" ${c.id===sel?"selected":""}>${esc(c.nome)}</option>`).join("");
+const selDias = sel => `<div class="diasel">${ORDE.map(d => `<label><input type="checkbox" name="dias" value="${d}" ${sel.includes(d)?"checked":""}><span>${DIAS_C[d]}</span></label>`).join("")}</div>`;
+const diasForm = f => [...f.querySelectorAll('input[name="dias"]:checked')].map(i => Number(i.value));
+const valorRadio = (f, n) => (f.querySelector(`input[name="${n}"]:checked`) || {}).value;
+
+/* Editar un bloque. iso = data concreta (desde Hoxe) ou null (semana tipo). */
+function editarBloque(id, iso){
+  const extra = iso ? (E.excepcions[iso]?.extra || []).find(b => b.id === id) : null;
+  const fonte = iso ? E : fonteTipo();
+  const tipo = fonte.bloques.find(b => b.id === id);
+  const novo = !extra && !tipo;
+  const diaSemana = iso ? new Date(iso+"T00:00").getDay() : UI.dia;
+  const mod = iso && tipo ? (E.excepcions[iso]?.mod || {})[id] : null;
+  const b = extra || (tipo ? { ...tipo, ...(mod || {}) } : { id:uid(), dias:[diaSemana], ini:"09:00", fin:"10:00", titulo:"", cat:E.categorias[0].id, notas:"" });
+  const conAlcance = iso && !extra;
+  const etData = iso ? dataCurta(iso).toLowerCase() : "";
+  const alcance = conAlcance ? `<label>Aplicar a</label><div class="opcions">
+      <label><input type="radio" name="alcance" value="dia" checked><span>Só ${etData === "hoxe" || etData === "mañá" || etData === "onte" ? etData : "o " + esc(etData)}</span></label>
+      <label><input type="radio" name="alcance" value="sempre"><span>Todas as semanas</span></label></div>` : "";
+  abrirModal(novo ? "Novo bloque" : "Editar bloque", `
+    ${alcance}
+    <label>Que vas facer<input type="text" name="titulo" value="${esc(b.titulo)}" required></label>
+    <label>Categoría<select name="cat">${optsCat(b.cat)}</select></label>
+    <div class="duas"><label>Comeza<input type="time" name="ini" value="${b.ini}" required></label><label>Remata<input type="time" name="fin" value="${b.fin}" required></label></div>
+    <div id="camposDias"><label>Días</label>${selDias(b.dias || [diaSemana])}</div>
+    <label>Notas<textarea name="notas">${esc(b.notas)}</textarea></label>`,
+    f => {
+      const ini = f.ini.value, fin = f.fin.value;
+      if (mins(fin) <= mins(ini)) return "A hora de remate ten que ser posterior á de comezo (os bloques non poden pasar da medianoite).";
+      const datos = { titulo:f.titulo.value.trim(), cat:f.cat.value, ini, fin, notas:f.notas.value.trim() };
+      const al = conAlcance ? valorRadio(f, "alcance") : (extra ? "dia" : "sempre");
+      if (al === "dia"){
+        const ex = excepcion(iso);
+        if (extra) Object.assign(extra, datos);
+        else if (novo) ex.extra.push({ id:b.id, ...datos });
+        else ex.mod[id] = datos;
+      } else {
+        const dias = diasForm(f);
+        if (!dias.length) return "Escolle polo menos un día.";
+        if (novo) fonte.bloques.push({ id:b.id, dias, ...datos });
+        else { Object.assign(tipo, datos, { dias }); if (iso && E.excepcions[iso]?.mod) delete E.excepcions[iso].mod[id]; }
+      }
+      gardar(); return true;
+    },
+    novo ? null : f => {
+      const al = conAlcance ? valorRadio(f, "alcance") : (extra ? "dia" : "sempre");
+      if (extra){ const ex = excepcion(iso); ex.extra = ex.extra.filter(x => x.id !== id); }
+      else if (al === "dia"){ const ex = excepcion(iso); if (!ex.canceladas.includes(id)) ex.canceladas.push(id); delete ex.mod[id]; }
+      else fonte.bloques = fonte.bloques.filter(x => x.id !== id);
+      gardar();
+    },
+    {
+      textoBorrar: conAlcance ? "Quitar" : "Borrar",
+      confirmar: conAlcance ? "Quitar este bloque? Se escolliches «Todas as semanas», bórrase da semana tipo." : "Seguro que queres borralo?",
+      trasAbrir: f => {
+        const cd = f.querySelector("#camposDias");
+        const actualizar = () => { cd.hidden = conAlcance ? valorRadio(f, "alcance") === "dia" : !!extra; };
+        f.querySelectorAll('input[name="alcance"]').forEach(r => r.addEventListener("change", actualizar));
+        actualizar();
+      }
+    });
+}
+function editarTarefa(t, base = {}){
+  const novo = !t;
+  t = t || { id:uid(), titulo:"", cat:"", data:hoxeISO(), hora:"", prio:"media", aviso:"", repetir:"", feita:false, notas:"", ...base };
+  abrirModal(novo ? "Nova tarefa" : "Editar tarefa", `
+    <label>Tarefa<input type="text" name="titulo" value="${esc(t.titulo)}" required></label>
+    <div class="duas"><label>Data<input type="date" name="data" value="${t.data||""}"></label><label>Hora<input type="time" name="hora" value="${t.hora||""}"></label></div>
+    <div class="duas"><label>Prioridade<select name="prio">${[["alta","Alta"],["media","Media"],["baixa","Baixa"]].map(([v,n])=>`<option value="${v}" ${t.prio===v?"selected":""}>${n}</option>`).join("")}</select></label>
+    <label>Categoría<select name="cat">${optsCat(t.cat, true)}</select></label></div>
+    <div class="duas"><label>Repetir<select name="repetir">${REPETIR.map(([v,n])=>`<option value="${v}" ${(t.repetir||"")===v?"selected":""}>${n}</option>`).join("")}</select></label>
+    <label>Aviso<select name="aviso">${[["","Sen aviso"],["0","Á hora"],["15","15 min antes"],["60","1 hora antes"],["1440","O día anterior"],["10080","Unha semana antes"]].map(([v,n])=>`<option value="${v}" ${String(t.aviso)===v?"selected":""}>${n}</option>`).join("")}</select></label></div>
+    <label>Notas<textarea name="notas">${esc(t.notas)}</textarea></label>`,
+    f => {
+      if (f.repetir.value && !f.data.value) return "Para repetir unha tarefa, ponlle unha data de inicio.";
+      Object.assign(t, { titulo:f.titulo.value.trim(), data:f.data.value, hora:f.hora.value, prio:f.prio.value, cat:f.cat.value, repetir:f.repetir.value, aviso:f.aviso.value === "" ? "" : Number(f.aviso.value), notas:f.notas.value.trim() });
+      if (t.data) t.caixa = false;
+      if (novo) E.tarefas.push(t);
+      gardar(); return true;
+    },
+    novo ? null : () => { E.tarefas = E.tarefas.filter(x => x.id !== t.id); gardar(); });
+}
+function editarHabito(h){
+  const novo = !h;
+  h = h || { id:uid(), nome:"", cat:E.categorias[0].id, dias:[0,1,2,3,4,5,6], rexistro:{} };
+  abrirModal(novo ? "Novo hábito" : "Editar hábito", `
+    <label>Hábito<input type="text" name="nome" value="${esc(h.nome)}" required placeholder="Por exemplo, ler 10 páxinas"></label>
+    <label>Categoría<select name="cat">${optsCat(h.cat)}</select></label>
+    <label>Que días toca</label>${selDias(h.dias)}`,
+    f => {
+      const dias = diasForm(f);
+      if (!dias.length) return "Escolle polo menos un día.";
+      Object.assign(h, { nome:f.nome.value.trim(), cat:f.cat.value, dias });
+      if (novo) E.habitos.push(h);
+      gardar(); return true;
+    },
+    novo ? null : () => { E.habitos = E.habitos.filter(x => x.id !== h.id); gardar(); });
+}
+function copiarDia(){
+  const orixe = UI.dia;
+  abrirModal(`Copiar ${DIAS[orixe].toLowerCase()} a…`, `<p class="vacio">Os bloques deses días substitúense polos de ${DIAS[orixe].toLowerCase()}.</p>${selDias([])}`,
+    f => {
+      const dest = diasForm(f).filter(d => d !== orixe);
+      if (!dest.length) return "Escolle polo menos un día.";
+      const fonte = fonteTipo();
+      fonte.bloques.forEach(b => { b.dias = b.dias.filter(d => !dest.includes(d)); });
+      fonte.bloques = fonte.bloques.filter(b => b.dias.length);
+      fonte.bloques.filter(b => b.dias.includes(orixe)).forEach(b => { b.dias = [...new Set([...b.dias, ...dest])]; });
+      gardar(); toast("Día copiado", `A ${dest.length} ${dest.length===1?"día":"días"}.`); return true;
+    });
+}
+function capturar(){
+  abrirModal("Apuntar algo", `
+    <label>Que tes na cabeza?<input type="text" name="texto" required placeholder="Unha tarefa, unha idea, algo que te preocupa"></label>
+    <label>Onde o gardo</label>
+    <div class="opcions">
+      <label><input type="radio" name="onde" value="caixa" checked><span>Caixa de entrada</span></label>
+      <label><input type="radio" name="onde" value="0"><span>Para hoxe</span></label>
+      <label><input type="radio" name="onde" value="1"><span>Para mañá</span></label>
+    </div>
+    <p class="pequeno">Na caixa de entrada queda gardado ata que decidas que facer con el. Non tes que resolvelo agora.</p>`,
+    f => {
+      const onde = valorRadio(f, "onde"), texto = f.texto.value.trim();
+      if (!texto) return "Escribe algo.";
+      E.tarefas.push({ id:uid(), titulo:texto, cat:"", data: onde === "caixa" ? "" : sumarDias(hoxeISO(), Number(onde)), hora:"", prio:"media", aviso:"", repetir:"", feita:false, notas:"", caixa: onde === "caixa" });
+      gardar(); toast("Apuntado", onde === "caixa" ? "Está na caixa de entrada." : ""); return true;
+    }, null, { textoGardar:"Apuntar" });
+}
+function prepararFoco(idBloque){
+  const b = idBloque ? bloquesDaData(hoxeISO()).find(x => x.id === idBloque) : null;
+  const quedan = b ? mins(b.fin) - agoraMin() : 0;
+  const durs = [15, 25, 45, 60, 90];
+  const pref = Number(E.axustes.focoMin) || 25;
+  abrirModal("Concentrarme", `
+    <label>En que vas traballar<input type="text" name="titulo" value="${esc(b ? b.titulo : "")}" required></label>
+    <label>Categoría<select name="cat">${optsCat(b ? b.cat : "estudo")}</select></label>
+    <label>Canto tempo</label>
+    <div class="opcions">${durs.map(v => `<label><input type="radio" name="min" value="${v}" ${v===pref && !(b && quedan>0 && quedan<pref) ?"checked":""}><span>${v} min</span></label>`).join("")}
+      ${b && quedan > 0 ? `<label><input type="radio" name="min" value="${quedan}" ${quedan<pref?"checked":""}><span>Ata as ${b.fin}</span></label>` : ""}</div>
+    <p class="pequeno">Silencia o móbil e deixa á man só o que necesitas.</p>`,
+    f => {
+      const min = Number(valorRadio(f, "min"));
+      if (!min) return "Escolle canto tempo.";
+      iniciarFoco(f.titulo.value.trim(), f.cat.value, min); return true;
+    }, null, { textoGardar:"Comezar" });
+}
+
+function rexistrarEstado(){
+  const escala = (nome, niveis) => `<div class="opcions escala5">${niveis.map((n,i) => `<label><input type="radio" name="${nome}" value="${i+1}" ${i===2?"checked":""}><span>${n}</span></label>`).join("")}</div>`;
+  abrirModal("Como estás agora?", `
+    <label>Enerxía</label>${escala("enerxia", NIV_E)}
+    <label>Ánimo</label>${escala("animo", NIV_A)}
+    <label>Algo que influíu? (opcional)<input type="text" name="nota" placeholder="Durmín pouco, ensaio longo, día tranquilo…"></label>`,
+    f => {
+      const d = new Date();
+      E.estados.push({ id:uid(), data:isoData(d), hora:`${pad(d.getHours())}:${pad(d.getMinutes())}`, enerxia:Number(valorRadio(f,"enerxia")), animo:Number(valorRadio(f,"animo")), nota:f.nota.value.trim() });
+      gardar(); toast("Rexistrado", "Na revisión semanal verás como varía ao longo dos días."); return true;
+    }, null, { textoGardar:"Rexistrar" });
+}
+const clonarBloques = l => l.map(b => ({ ...b, id:uid(), dias:[...b.dias] }));
+function opcionsModelo(p){
+  const novo = !p;
+  abrirModal(novo ? "Novo modelo" : "Modelo", `<label>Nome<input type="text" name="nome" value="${esc(p ? p.nome : "")}" required placeholder="Semana de exames, vacacións…"></label>`,
+    f => {
+      const nome = f.nome.value.trim();
+      if (novo){ const m = { id:uid(), nome, bloques:p === null && opcionsModelo.copiar ? clonarBloques(E.bloques) : [] }; E.plantillas.push(m); if (!m.bloques.length){ UI.modelo = m.id; } }
+      else p.nome = nome;
+      gardar(); return true;
+    },
+    novo ? null : () => { E.plantillas = E.plantillas.filter(x => x.id !== p.id); if (UI.modelo === p.id) UI.modelo = null; gardar(); });
+}
+function aplicarModelo(p){
+  const hk = hoxeISO();
+  abrirModal(`Aplicar «${p.nome}»`, `
+    <div class="opcions">
+      <label><input type="radio" name="modo" value="datas" checked><span>A unhas datas</span></label>
+      <label><input type="radio" name="modo" value="tipo"><span>Como nova semana tipo</span></label>
+    </div>
+    <div id="camposDatas" class="duas"><label>Desde<input type="date" name="desde" value="${hk}"></label><label>Ata<input type="date" name="ata" value="${sumarDias(hk, 6)}"></label></div>
+    <p class="pequeno" id="axudaModo">Eses días seguirán este modelo en lugar da semana tipo. Se xa tiñan cambios, substitúense.</p>`,
+    f => {
+      if (valorRadio(f, "modo") === "tipo"){
+        if (!confirm("A túa semana tipo actual gardarase como modelo e substituirase por esta. Continuar?")) return false;
+        const d = new Date();
+        E.plantillas.push({ id:uid(), nome:`Semana tipo gardada o ${d.getDate()} de ${MESES[d.getMonth()]}`, bloques:clonarBloques(E.bloques) });
+        E.bloques = clonarBloques(p.bloques);
+        gardar(); toast("Semana tipo cambiada", "A anterior quedou gardada como modelo."); return true;
+      }
+      const a = f.desde.value, z = f.ata.value;
+      if (!a || !z || z < a) return "Revisa as datas: a data final ten que ser igual ou posterior á inicial.";
+      if (diasDesde(z) - diasDesde(a) > 90) return "Como máximo, 90 días de cada vez.";
+      for (let iso = a; iso <= z; iso = sumarDias(iso, 1)){
+        const dw = new Date(iso+"T00:00").getDay();
+        E.excepcions[iso] = {
+          canceladas: E.bloques.filter(b => b.dias.includes(dw)).map(b => b.id),
+          mod:{},
+          extra: p.bloques.filter(b => b.dias.includes(dw)).map(({ dias, ...b }) => ({ ...b, id:uid() })),
+          modelo: p.nome
+        };
+      }
+      gardar(); toast("Modelo aplicado", rangoTxt(a, z)); return true;
+    }, null, {
+      textoGardar:"Aplicar",
+      trasAbrir: f => {
+        const act = () => { const t = valorRadio(f, "modo") === "tipo"; f.querySelector("#camposDatas").hidden = t; f.querySelector("#axudaModo").textContent = t ? "Este modelo pasará a ser o plan que se repite cada semana." : "Eses días seguirán este modelo en lugar da semana tipo. Se xa tiñan cambios, substitúense."; };
+        f.querySelectorAll('input[name="modo"]').forEach(r => r.addEventListener("change", act));
+      }
+    });
+}
+
+/* ---------- accións ---------- */
+const ACC = {
+  aba: id => { UI.vista = id; if (id === "hoxe") UI.data = null; if (id !== "semana") UI.modelo = null; render(); window.scrollTo(0,0); },
+  estado: () => rexistrarEstado(),
+  gardarModelo: () => { opcionsModelo.copiar = true; opcionsModelo(null); },
+  novoModelo: () => { opcionsModelo.copiar = false; opcionsModelo(null); },
+  opcionsModelo: id => opcionsModelo(E.plantillas.find(p => p.id === id)),
+  editarModelo: id => { UI.modelo = id; render(); window.scrollTo(0,0); },
+  rematarModelo: () => { UI.modelo = null; render(); },
+  aplicarModelo: id => aplicarModelo(E.plantillas.find(p => p.id === id)),
+  quitarModelo: nome => { if (!confirm(`Quitar «${nome}» das próximas datas e volver á semana tipo?`)) return; const hk = hoxeISO(); Object.keys(E.excepcions).forEach(k => { if (k >= hk && E.excepcions[k].modelo === nome) delete E.excepcions[k]; }); gardar(); },
+  pushOn: () => activarPush(),
+  pushOff: () => desactivarPush(),
+  dia: id => { UI.dia = Number(id); render(); },
+  moverDia: id => { UI.data = sumarDias(UI.data || hoxeISO(), Number(id)); if (UI.data === hoxeISO()) UI.data = null; render(); },
+  irHoxe: () => { UI.data = null; render(); },
+  filtro: id => { UI.filtro = id; render(); },
+  editarBloque: id => editarBloque(id, UI.data || hoxeISO()),
+  editarBloqueTipo: id => editarBloque(id, null),
+  novoBloque: () => editarBloque(null, null),
+  novoBloqueDia: () => editarBloque(null, UI.data || hoxeISO()),
+  desfacerDia: () => { if (confirm("Desfacer os cambios deste día e volver á semana tipo?")){ delete E.excepcions[UI.data || hoxeISO()]; gardar(); } },
+  copiarDia: () => copiarDia(),
+  editarTarefa: id => editarTarefa(E.tarefas.find(t => t.id === id)),
+  novaTarefa: () => editarTarefa(null),
+  borrarTarefa: id => { if (confirm("Borrar esta tarefa?")){ E.tarefas = E.tarefas.filter(t => t.id !== id); gardar(); } },
+  tarefaFeita: id => {
+    const t = E.tarefas.find(x => x.id === id);
+    t.feita = !t.feita; t.feitaEn = t.feita ? hoxeISO() : null;
+    if (t.feita && t.repetir && t.data && !t.xerada){
+      let n = seguinteData(t.data, t.repetir);
+      while (diasDesde(n) < 0) n = seguinteData(n, t.repetir);
+      const nova = { ...t, id:uid(), data:n, feita:false, feitaEn:null, xerada:null };
+      E.tarefas.push(nova); t.xerada = nova.id;
+      toast("Feita", `Volve aparecer: ${dataCurta(n).toLowerCase()}.`);
+    }
+    if (!t.feita && t.xerada){
+      const x = E.tarefas.find(y => y.id === t.xerada);
+      if (x && !x.feita) E.tarefas = E.tarefas.filter(y => y.id !== t.xerada);
+      t.xerada = null;
+    }
+    gardar();
+  },
+  moverTarefa: (id, el) => {
+    const t = E.tarefas.find(x => x.id === id), k = el.dataset.k;
+    if (k === "sen"){ t.data = ""; t.caixa = false; }
+    else { t.data = sumarDias(hoxeISO(), Number(k)); t.caixa = false; }
+    gardar();
+  },
+  atrasadasHoxe: () => { E.tarefas.forEach(t => { if (!t.feita && t.data && diasDesde(t.data) < 0) t.data = hoxeISO(); }); gardar(); toast("Feito", "As tarefas atrasadas están agora en hoxe."); },
+  limparFeitas: () => { if (confirm("Borrar todas as tarefas feitas?")){ E.tarefas = E.tarefas.filter(t => !t.feita); gardar(); } },
+  editarHabito: id => editarHabito(E.habitos.find(h => h.id === id)),
+  novoHabito: () => editarHabito(null),
+  habitoData: (id, el) => { const h = E.habitos.find(x => x.id === id), k = el.dataset.k; if (h.rexistro[k]) delete h.rexistro[k]; else h.rexistro[k] = true; gardar(); },
+  capturar: () => capturar(),
+  foco: id => prepararFoco(id),
+  focoPausa: () => { const f = UI.foco; if (f.pausa == null) f.pausa = restante(); else { f.fin = Date.now() + f.pausa; f.pausa = null; } gardarFoco(); actualizarReloxo(); },
+  focoRematar: () => { if (confirm("Rematar a sesión agora? Gárdase o tempo que levas.")) completarFoco(false); },
+  respirar: () => respirar(),
+  pecharResp: () => { clearTimeout(respT); $("#resp").hidden = true; $("#resp").innerHTML = ""; },
+  novaCategoria: () => { E.categorias.push({ id:uid(), nome:"Nova categoría", cor:"#6B7F86" }); gardar(); },
+  notificacions: async () => {
+    if (!("Notification" in window)){ toast("Este navegador non permite notificacións", "No iPhone ou iPad, engade a app á pantalla de inicio."); return; }
+    if (E.axustes.notificacions && Notification.permission === "granted"){ E.axustes.notificacions = false; gardar(); return; }
+    const p = await Notification.requestPermission();
+    E.axustes.notificacions = p === "granted";
+    if (p !== "granted") toast("Notificacións bloqueadas", "Permíteas nos axustes do navegador.");
+    gardar();
+  },
+  exportar: () => {
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(E, null, 2)], { type:"application/json" }));
+    a.download = `rutinas-${hoxeISO()}.json`; a.click();
+  },
+  importar: () => $("#ficheiro").click(),
+  baleirar: () => {
+    if (!confirm("Isto borra todos os bloques, tarefas, hábitos e revisións. Seguro?")) return;
+    const cats = E.categorias, ax = E.axustes;
+    E = { ...estadoInicial(), categorias:cats, axustes:ax, bloques:[], tarefas:[], habitos:[] };
+    gardar();
+  },
+  sincronizar: async () => { marcarSync("gardando"); await baixar(); toast("Sincronizado"); },
+  sair: async () => { if (pushActivo()) await desactivarPush(); await sb.auth.signOut(); sesion = null; localStorage.removeItem("rutinas:ultimoUsuario"); UI.vista = "login"; render(); },
+  irLogin: () => { localStorage.removeItem("rutinas:modo"); UI.vista = "login"; render(); },
+  senConta: () => { localStorage.setItem("rutinas:modo", "local"); cargarLocal(); UI.vista = "hoxe"; render(); }
+};
+document.addEventListener("click", e => {
+  const el = e.target.closest("[data-acc]");
+  if (!el || el.closest("dialog")) return;
+  ACC[el.dataset.acc]?.(el.dataset.id, el);
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && !$("#resp").hidden) ACC.pecharResp();
+});
+document.addEventListener("submit", async e => {
+  const f = e.target;
+  if (f.dataset.form === "rapida"){
+    e.preventDefault();
+    const t = f.t.value.trim(); if (!t) return;
+    E.tarefas.push({ id:uid(), titulo:t, cat:"", data:UI.data || hoxeISO(), hora:"", prio:"media", aviso:"", repetir:"", feita:false, notas:"" });
+    gardar(); setTimeout(() => $('[data-form="rapida"] input')?.focus(), 0);
+  }
+  if (f.dataset.form === "revision"){
+    e.preventDefault();
+    E.revisions[semanaISO(new Date())] = { data:hoxeISO(), ben:f.ben.value.trim(), custou:f.custou.value.trim(), prioridades:f.prioridades.value.trim() };
+    gardar(); toast("Revisión gardada", "As túas prioridades aparecerán en Hoxe durante a semana.");
+  }
+  if (f.dataset.form === "login"){
+    e.preventDefault();
+    const rexistro = e.submitter?.value === "rexistro";
+    const correo = f.correo.value.trim(), clave = f.clave.value;
+    $("#lerro").textContent = "";
+    const { data, error } = rexistro
+      ? await sb.auth.signUp({ email:correo, password:clave })
+      : await sb.auth.signInWithPassword({ email:correo, password:clave });
+    if (error){ $("#lerro").textContent = /invalid/i.test(error.message) ? "O correo ou o contrasinal non son correctos." : error.message; return; }
+    if (!data.session){ $("#lerro").textContent = "Mandámosche un correo para confirmar a conta. Confírmaa e despois entra."; return; }
+    sesion = data.session; localStorage.removeItem("rutinas:modo"); localStorage.setItem("rutinas:ultimoUsuario", sesion.user.id);
+    cargarLocal(); UI.vista = "hoxe"; render(); baixar();
+  }
+});
+document.addEventListener("change", e => {
+  const t = e.target;
+  if (t.dataset.axuste){ E.axustes[t.dataset.axuste] = Number(t.value); gardar(); }
+  if (t.dataset.lembrar){ const l = new Set(E.axustes.lembrarEstado || []); if (t.checked) l.add(t.dataset.lembrar); else l.delete(t.dataset.lembrar); E.axustes.lembrarEstado = [...l]; E.axustes.zona = ZONA; gardar(); }
+  if (t.dataset.catNome){ const c = E.categorias.find(x => x.id === t.dataset.catNome); c.nome = t.value.trim() || c.nome; gardar(); }
+  if (t.dataset.catCor){ const c = E.categorias.find(x => x.id === t.dataset.catCor); c.cor = t.value; gardar(); }
+  if (t.id === "ficheiro" && t.files[0]){
+    const r = new FileReader();
+    r.onload = () => {
+      try { const d = JSON.parse(r.result); if (!Array.isArray(d.bloques)) throw 0; if (!confirm("Isto substitúe os teus datos actuais pola copia. Continuar?")) return; E = normalizar(d); gardar(); toast("Copia importada"); }
+      catch { toast("Non se puido importar", "O ficheiro non é unha copia de Rutinas."); }
+      t.value = "";
+    };
+    r.readAsText(t.files[0]);
+  }
+});
+
+/* ---------- arranque ---------- */
+/* Trae os datos gardados co nome anterior da app, se os houbese */
+function migrarNomeAntigo(){
+  try {
+    for (let i = 0; i < localStorage.length; i++){
+      const k = localStorage.key(i);
+      if (k && k.startsWith("compas:")){
+        const novo = "rutinas:" + k.slice(7);
+        if (localStorage.getItem(novo) === null) localStorage.setItem(novo, localStorage.getItem(k));
+      }
+    }
+  } catch {}
+}
+async function init(){
+  migrarNomeAntigo();
+  if (sb){
+    try { const { data } = await sb.auth.getSession(); sesion = data.session; } catch {}
+    sb.auth.onAuthStateChange((_ev, s) => { if (s) sesion = s; });
+  }
+  if (sesion){ cargarLocal(); UI.vista = "hoxe"; render(); baixar(); }
+  else if (!sb || localStorage.getItem("rutinas:modo") === "local"){ cargarLocal(); UI.vista = "hoxe"; render(); }
+  else { cargarLocal(); UI.vista = "login"; render(); }
+  if (sesion) localStorage.setItem("rutinas:ultimoUsuario", sesion.user.id);
+  if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
+  const params = new URLSearchParams(location.search);
+  if (params.get("accion") === "estado" && UI.vista !== "login"){ history.replaceState(null, "", location.pathname); setTimeout(rexistrarEstado, 300); }
+  if (E.axustes.zona !== ZONA && sesion){ E.axustes.zona = ZONA; gardar(); }
+  cargarFoco();
+  if (UI.foco){ if (UI.foco.pausa == null && restante() <= 0) completarFoco(true); else pintarFoco(); }
+  setInterval(() => {
+    revisarAvisos();
+    const escribindo = document.activeElement && $("#vista").contains(document.activeElement) && /INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName);
+    if ((UI.vista === "hoxe" || UI.vista === "semana") && !$("#modal").open && !escribindo) render();
+  }, 30000);
+  setTimeout(revisarAvisos, 1500);
+}
+init();
+</script>
+</body>
+</html>
