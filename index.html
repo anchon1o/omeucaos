@@ -207,13 +207,14 @@ nav.abas button.sel{color:var(--tinta);font-weight:700;border-top-color:var(--ac
    Pega aquí a URL e a chave anon do teu proxecto de Supabase.
    Se as deixas baleiras, a app funciona só neste dispositivo. */
 const CONFIG = {
-  url: "https://pmvbllviitutbnoqpnrs.supabase.co",
-  chave: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBtdmJsbHZpaXR1dGJub3FwbnJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4MTE3NTAsImV4cCI6MjEwNTM4Nzc1MH0.5WMnLv9oY3PXXLjCrxukt6qu2xkNwOvrkbcxYqUrdgo",
+  url: "",
+  chave: "",
   vapid: ""   // chave pública VAPID para os avisos coa app pechada (opcional)
 };
 const TABOA = "rut_estado";
 /* ========================================================= */
 
+const recuperando = /type=recovery/.test(location.hash + location.search);
 const sb = (CONFIG.url && CONFIG.chave && window.supabase) ? window.supabase.createClient(CONFIG.url, CONFIG.chave) : null;
 const $ = s => document.querySelector(s);
 const DIAS = ["Domingo","Luns","Martes","Mércores","Xoves","Venres","Sábado"];
@@ -299,21 +300,21 @@ function estadoInicial(){
     ],
     bloques:[
       b(L,"07:30","08:00","Almorzo e preparación","persoal"),
-      b(L,"08:30","14:30","Traballo no centro","traballo"),
+      b(L,"08:30","14:30","Traballo","traballo"),
       b(L,"14:30","15:30","Xantar e descanso","descanso"),
-      b(L,"16:30","18:00","Estudo de canto","estudo"),
+      b(L,"16:30","18:00","Estudo","estudo"),
       b(L,"18:30","19:15","Exercicio","exercicio"),
       b(L,"21:00","22:30","Lecer","lecer"),
       b([0,1,2,3,4,5,6],"23:00","23:30","Desconectar e deitarse","descanso"),
       b(FS,"10:00","11:00","Exercicio","exercicio"),
-      b(FS,"11:30","13:00","Estudo de repertorio","estudo"),
+      b(FS,"11:30","13:00","Proxecto persoal","estudo"),
       b(FS,"17:00","20:00","Lecer","lecer")
     ],
     tarefas:[
       { id:uid(), titulo:"Planificar a semana que vén", cat:"persoal", data:isoData(domingo), hora:"19:00", prio:"media", aviso:30, repetir:"semanal", feita:false, notas:"" }
     ],
     habitos:[
-      { id:uid(), nome:"Vocalizar 15 min", cat:"estudo", dias:[1,2,3,4,5,6], rexistro:{} },
+      { id:uid(), nome:"Ler 15 minutos", cat:"estudo", dias:[1,2,3,4,5,6], rexistro:{} },
       { id:uid(), nome:"Camiñar ou moverse", cat:"exercicio", dias:[0,1,2,3,4,5,6], rexistro:{} },
       { id:uid(), nome:"Pantallas fóra ás 23:00", cat:"descanso", dias:[0,1,2,3,4,5,6], rexistro:{} }
     ],
@@ -334,7 +335,8 @@ function normalizar(d){
     foco: Array.isArray(d.foco) ? d.foco : [],
     revisions: d.revisions && typeof d.revisions === "object" ? d.revisions : {},
     plantillas: Array.isArray(d.plantillas) ? d.plantillas : [],
-    estados: Array.isArray(d.estados) ? d.estados : [],
+    animo: d.animo && d.animo.sal ? d.animo : null,
+    estados: d.animo && d.animo.sal ? [] : (Array.isArray(d.estados) ? d.estados : []),
     axustes: { ...base.axustes, ...(d.axustes || {}) }
   };
   n.v = 3;
@@ -353,8 +355,11 @@ function cargarLocal(){
     try { if (l && JSON.parse(l).actualizado) raw = l; } catch {}
   }
   try { E = raw ? normalizar(JSON.parse(raw)) : estadoInicial(); } catch { E = estadoInicial(); }
+  abrirAnimo();
 }
-function gardarLocal(){ try { localStorage.setItem(chaveLocal(), JSON.stringify(E)); } catch {} }
+/* O que se garda: se o ánimo está cifrado, os rexistros en claro non saen nunca da memoria */
+function persistible(){ if (!E.animo) return E; const { estados, ...resto } = E; return resto; }
+function gardarLocal(){ try { localStorage.setItem(chaveLocal(), JSON.stringify(persistible())); } catch {} }
 function gardar(){
   E.actualizado = new Date().toISOString();
   gardarLocal();
@@ -371,7 +376,7 @@ function marcarSync(s){ UI.sync = s; pintarCabeceira(); }
 async function subir(){
   if (!sb || !sesion) return;
   if (!navigator.onLine){ marcarSync("erro"); return; }
-  const { error } = await sb.from(TABOA).upsert({ user_id:sesion.user.id, datos:E, actualizado:E.actualizado || new Date().toISOString() });
+  const { error } = await sb.from(TABOA).upsert({ user_id:sesion.user.id, datos:persistible(), actualizado:E.actualizado || new Date().toISOString() });
   marcarSync(error ? "erro" : "ok");
 }
 async function baixar(){
@@ -379,7 +384,7 @@ async function baixar(){
   const { data, error } = await sb.from(TABOA).select("datos, actualizado").eq("user_id", sesion.user.id).maybeSingle();
   if (error){ marcarSync("erro"); return; }
   if (data && (!E.actualizado || new Date(data.actualizado) > new Date(E.actualizado))){
-    E = normalizar(data.datos); E.actualizado = data.actualizado; gardarLocal(); render(); marcarSync("ok");
+    E = normalizar(data.datos); E.actualizado = data.actualizado; gardarLocal(); render(); marcarSync("ok"); abrirAnimo();
   } else if (!data || (E.actualizado && new Date(E.actualizado) > new Date(data.actualizado))){
     if (!E.actualizado) E.actualizado = new Date().toISOString();
     subir();
@@ -480,6 +485,82 @@ function prioridadesVixentes(){
   const desde = sumarDias(hoxeISO(), -8);
   const r = Object.values(E.revisions).filter(x => x.data >= desde && x.prioridades).sort((a,b) => b.data.localeCompare(a.data))[0];
   return r ? r.prioridades : "";
+}
+
+/* ---------- cifrado do rexistro de ánimo ----------
+   Os rexistros de enerxía e ánimo cífranse no dispositivo (AES-GCM) cunha chave
+   derivada dunha frase que só sabe a persoa usuaria. Na base de datos só hai texto cifrado. */
+const te = new TextEncoder(), td = new TextDecoder();
+const b64 = buf => { let t = ""; new Uint8Array(buf).forEach(c => t += String.fromCharCode(c)); return btoa(t); };
+const deb64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+let chaveAnimo = null, animoBloqueado = false;
+const chaveAnimoLS = () => "rutinas:animo:" + (sesion ? sesion.user.id : "local");
+async function derivarChave(frase, sal){
+  const base = await crypto.subtle.importKey("raw", te.encode(frase), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({ name:"PBKDF2", salt:sal, iterations:310000, hash:"SHA-256" }, base, { name:"AES-GCM", length:256 }, true, ["encrypt","decrypt"]);
+}
+async function cifrarEstados(){
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = await crypto.subtle.encrypt({ name:"AES-GCM", iv }, chaveAnimo, te.encode(JSON.stringify(E.estados)));
+  E.animo = { sal:E.animo.sal, iv:b64(iv), datos:b64(ct) };
+}
+async function descifrarEstados(k){
+  if (!E.animo.datos) return [];
+  const pt = await crypto.subtle.decrypt({ name:"AES-GCM", iv:deb64(E.animo.iv) }, k, deb64(E.animo.datos));
+  return JSON.parse(td.decode(pt));
+}
+async function abrirAnimo(){
+  if (!E || !E.animo){ animoBloqueado = false; chaveAnimo = null; return; }
+  try {
+    const r = localStorage.getItem(chaveAnimoLS());
+    if (!r) throw 0;
+    const k = await crypto.subtle.importKey("raw", deb64(r), "AES-GCM", true, ["encrypt","decrypt"]);
+    E.estados = await descifrarEstados(k);
+    chaveAnimo = k; animoBloqueado = false;
+  } catch { chaveAnimo = null; E.estados = []; animoBloqueado = true; }
+  if (UI.vista !== "login") render();
+}
+async function lembrarChaveNeste(k){ localStorage.setItem(chaveAnimoLS(), b64(await crypto.subtle.exportKey("raw", k))); }
+function configurarAnimo(despois){
+  abrirModal("Protexe o teu rexistro de ánimo", `
+    <p>A túa enerxía e o teu ánimo gárdanse <b>cifrados cunha chave que só sabes ti</b>. Ninguén máis pode lelos, tampouco quen administra a app.</p>
+    <p class="pequeno">Pedirase só unha vez en cada dispositivo. Se a esqueces, pérdese o historial de ánimo (o resto da app non se toca).</p>
+    <label>Inventa unha chave<input type="password" name="c1" minlength="6" autocomplete="new-password" required></label>
+    <label>Repítea<input type="password" name="c2" minlength="6" autocomplete="new-password" required></label>`,
+    f => {
+      if (f.c1.value !== f.c2.value) return "As dúas chaves non coinciden.";
+      (async () => {
+        const sal = crypto.getRandomValues(new Uint8Array(16));
+        chaveAnimo = await derivarChave(f.c1.value, sal);
+        E.animo = { sal:b64(sal) };
+        await cifrarEstados();
+        await lembrarChaveNeste(chaveAnimo);
+        animoBloqueado = false;
+        gardar();
+        if (despois) setTimeout(despois, 200);
+      })();
+      return true;
+    }, null, { textoGardar:"Gardar chave" });
+}
+function desbloquearAnimo(despois){
+  abrirModal("Abrir o rexistro de ánimo", `
+    <p>Escribe a chave que creaches para o teu rexistro de ánimo. Neste dispositivo só cha pedirei esta vez.</p>
+    <label>Chave<input type="password" name="c" autocomplete="current-password" required></label>`,
+    f => {
+      (async () => {
+        try {
+          const k = await derivarChave(f.c.value, deb64(E.animo.sal));
+          E.estados = await descifrarEstados(k);
+          chaveAnimo = k; animoBloqueado = false;
+          await lembrarChaveNeste(k);
+          $("#modal").close(); render();
+          if (despois) setTimeout(despois, 200);
+        } catch { $("#merro").textContent = "Esa chave non é correcta."; }
+      })();
+      return false;
+    },
+    () => { E.animo = null; E.estados = []; chaveAnimo = null; animoBloqueado = false; localStorage.removeItem(chaveAnimoLS()); gardar(); setTimeout(() => configurarAnimo(despois), 200); },
+    { textoGardar:"Abrir", textoBorrar:"Esquecín a chave", confirmar:"Borrarase o historial de enerxía e ánimo e crearás unha chave nova. O resto da app non se toca. Continuar?" });
 }
 
 /* ---------- ritmo: enerxía e ánimo ---------- */
@@ -587,7 +668,10 @@ function vistaHoxe(){
   const bl = bloquesDaData(iso);
   const navdia = `<div class="navdia"><button class="btn" data-acc="moverDia" data-id="-1" aria-label="Día anterior">‹</button><span class="etq">${eHoxe ? "Hoxe" : esc(dataLonga(dt))}</span><button class="btn" data-acc="moverDia" data-id="1" aria-label="Día seguinte">›</button></div>${eHoxe ? "" : `<button class="btn ligazon" data-acc="irHoxe">Volver a hoxe</button>`}`;
 
-  let heroe = "", extraHoxe = "";
+  let heroe = "", extraHoxe = "", benvida = "";
+  if (eHoxe && !E.actualizado && !E.axustes.benvidaVista){
+    benvida = `<div class="editando" style="margin-bottom:14px"><p><b>Benvida a Rutinas.</b> O que ves é unha semana de exemplo para que entendas como funciona. Podes adaptala ou empezar cun plan baleiro.</p><div class="fila"><button class="btn primario" data-acc="benvidaAdaptar">Adaptar o exemplo</button><button class="btn" data-acc="benvidaBaleiro">Empezar de cero</button></div></div>`;
+  }
   if (eHoxe){
     const actual = bl.filter(b => mins(b.ini) <= m && m < mins(b.fin)).pop();
     const seguinte = bl.find(b => mins(b.ini) > m);
@@ -616,7 +700,8 @@ function vistaHoxe(){
     const manha = bloquesDaData(sumarDias(hk, 1))[0];
     if (fm) extraHoxe += `<p class="anticipo">Hoxe levas ${durTxt(fm)} de concentración.</p>`;
     const ult = E.estados.filter(x => x.data === hk).slice(-1)[0];
-    extraHoxe += `<div class="nota-caixa estado-caixa"><p>${ult ? `Ás ${ult.hora}: enerxía ${NIV_E[ult.enerxia-1].toLowerCase()}, ánimo ${NIV_A[ult.animo-1].toLowerCase()}.` : "Como estás agora?"}</p><div class="fila"><button class="btn" data-acc="estado">${ult ? "Rexistrar de novo" : "Rexistrar enerxía e ánimo"}</button></div></div>`;
+    if (animoBloqueado) extraHoxe += `<div class="nota-caixa estado-caixa"><p>O teu rexistro de ánimo está pechado neste dispositivo.</p><div class="fila"><button class="btn" data-acc="desbloquearAnimo">Abrilo</button></div></div>`;
+    else extraHoxe += `<div class="nota-caixa estado-caixa"><p>${ult ? `Ás ${ult.hora}: enerxía ${NIV_E[ult.enerxia-1].toLowerCase()}, ánimo ${NIV_A[ult.animo-1].toLowerCase()}.` : "Como estás agora?"}</p><div class="fila"><button class="btn" data-acc="estado">${ult ? "Rexistrar de novo" : "Rexistrar enerxía e ánimo"}</button></div></div>`;
     if (manha) extraHoxe += `<p class="anticipo">Mañá comezas ás ${manha.ini} con ${esc(manha.titulo.toLowerCase())}.</p>`;
     const prio = prioridadesVixentes();
     if (prio) extraHoxe += `<div class="nota-caixa"><p class="pequeno">As túas prioridades desta semana</p><p class="prioridades">${esc(prio)}</p></div>`;
@@ -649,7 +734,7 @@ function vistaHoxe(){
   const habs = E.habitos.filter(h => h.dias.includes(dt.getDay()));
   const habsVisibles = diasDesde(iso) <= 0;
 
-  return `${navdia}${heroe}${extraHoxe}
+  return `${navdia}${benvida}${heroe}${extraHoxe}
     <h3>${eHoxe ? "Tarefas para hoxe" : "Tarefas deste día"}</h3>
     ${deHoxe.length ? `<ul class="lista">${deHoxe.map(t => filaTarefa(t)).join("")}</ul>` : `<p class="vacio">Non tes nada pendente ${eHoxe ? "para hoxe" : "este día"}.</p>`}
     ${haiAtrasadas ? `<div class="barra-accions"><button class="btn" data-acc="atrasadasHoxe">Pasar as atrasadas a hoxe</button></div>` : ""}
@@ -784,6 +869,7 @@ function vistaRevision(){
     <h3>O teu ritmo</h3>
     ${(() => {
       const r = analiseRitmo();
+      if (animoBloqueado) return `<p class="vacio">O teu rexistro de ánimo está pechado neste dispositivo.</p><div class="barra-accions"><button class="btn" data-acc="desbloquearAnimo">Abrilo</button></div>`;
       if (!r.porFranxa) return `<p class="vacio">Cando teñas polo menos cinco rexistros de enerxía e ánimo (levas ${r.total}), aquí verás en que momentos rendes mellor.</p>`;
       return `<p class="pequeno" style="margin:0">Últimos 30 días, ${r.total} rexistros. Barra grosa: enerxía. Barra fina: ánimo. Escala do 1 ao 5.</p>
         ${frasesRitmo(r)}
@@ -830,6 +916,8 @@ function vistaAxustes(){
     </div>
     <h3>Enerxía e ánimo</h3>
     <div class="caixa-ax">
+      <p>${!E.animo ? "Cando fagas o primeiro rexistro crearás unha chave persoal para cifralo." : animoBloqueado ? "Cifrado coa túa chave. Pechado neste dispositivo." : "Cifrado coa túa chave persoal: ninguén máis pode lelo."}</p>
+      ${E.animo ? `<div class="fila" style="margin-top:6px">${animoBloqueado ? `<button class="btn" data-acc="desbloquearAnimo">Abrir</button>` : `<button class="btn" data-acc="pecharAnimo">Esquecer a chave neste dispositivo</button>`}</div>` : ""}
       <p>Lembrarme rexistrar como estou:</p>
       <div class="opcions">${LEMBRAR.map(([h,n]) => `<label><input type="checkbox" data-lembrar="${h}" ${(a.lembrarEstado||[]).includes(h)?"checked":""}><span>${n}</span></label>`).join("")}</div>
       <p class="pequeno">Se xa rexistraches algo na última hora e media, non te avisa.</p>
@@ -856,7 +944,8 @@ function vistaLogin(){
       <p class="erro" id="lerro" role="alert"></p>
       <div class="fila"><button class="btn primario" type="submit" name="modo" value="entrar">Entrar</button><button class="btn" type="submit" name="modo" value="rexistro">Crear conta</button></div>
     </form>
-    <div class="fila"><button class="btn ligazon" data-acc="senConta">Usar só neste dispositivo</button></div>
+    <div class="fila"><button class="btn ligazon" data-acc="recuperar">Esquecín o contrasinal</button></div>
+    <div class="fila" style="margin-top:4px"><button class="btn ligazon" data-acc="senConta">Usar só neste dispositivo</button></div>
   </section>`;
 }
 
@@ -1089,6 +1178,7 @@ function prepararFoco(idBloque){
 }
 
 function rexistrarEstado(){
+  if (!chaveAnimo){ if (E.animo) return desbloquearAnimo(rexistrarEstado); return configurarAnimo(rexistrarEstado); }
   const escala = (nome, niveis) => `<div class="opcions escala5">${niveis.map((n,i) => `<label><input type="radio" name="${nome}" value="${i+1}" ${i===2?"checked":""}><span>${n}</span></label>`).join("")}</div>`;
   abrirModal("Como estás agora?", `
     <label>Enerxía</label>${escala("enerxia", NIV_E)}
@@ -1097,7 +1187,8 @@ function rexistrarEstado(){
     f => {
       const d = new Date();
       E.estados.push({ id:uid(), data:isoData(d), hora:`${pad(d.getHours())}:${pad(d.getMinutes())}`, enerxia:Number(valorRadio(f,"enerxia")), animo:Number(valorRadio(f,"animo")), nota:f.nota.value.trim() });
-      gardar(); toast("Rexistrado", "Na revisión semanal verás como varía ao longo dos días."); return true;
+      cifrarEstados().then(() => { gardar(); toast("Rexistrado", "Gardado cifrado. Na revisión semanal verás como varía."); });
+      return true;
     }, null, { textoGardar:"Rexistrar" });
 }
 const clonarBloques = l => l.map(b => ({ ...b, id:uid(), dias:[...b.dias] }));
@@ -1151,10 +1242,32 @@ function aplicarModelo(p){
     });
 }
 
+function pedirContrasinalNovo(){
+  if ($("#modal").open) return;
+  abrirModal("Contrasinal novo", `<label>Escribe o contrasinal novo<input type="password" name="clave" minlength="6" autocomplete="new-password" required></label>`,
+    f => {
+      sb.auth.updateUser({ password:f.clave.value }).then(({ error }) => {
+        if (error) toast("Non se puido cambiar", error.message); else toast("Contrasinal cambiado", "Xa podes usalo en todos os teus dispositivos.");
+      });
+      history.replaceState(null, "", location.pathname);
+      return true;
+    }, null, { textoGardar:"Gardar" });
+}
+
 /* ---------- accións ---------- */
 const ACC = {
   aba: id => { UI.vista = id; if (id === "hoxe") UI.data = null; if (id !== "semana") UI.modelo = null; render(); window.scrollTo(0,0); },
   estado: () => rexistrarEstado(),
+  desbloquearAnimo: () => desbloquearAnimo(),
+  pecharAnimo: () => { localStorage.removeItem(chaveAnimoLS()); chaveAnimo = null; E.estados = []; animoBloqueado = true; render(); toast("Feito", "Neste dispositivo pedirase a chave outra vez."); },
+  benvidaAdaptar: () => { E.axustes.benvidaVista = true; UI.vista = "semana"; gardar(); toast("Toca un bloque para cambialo", "Ou engade os teus co botón «Engadir bloque»."); },
+  benvidaBaleiro: () => { E.bloques = []; E.tarefas = []; E.habitos = []; E.axustes.benvidaVista = true; UI.vista = "semana"; gardar(); },
+  recuperar: async () => {
+    const correo = (document.querySelector('[data-form="login"] input[name="correo"]')?.value || "").trim();
+    if (!correo){ $("#lerro").textContent = "Escribe primeiro o teu correo."; return; }
+    const { error } = await sb.auth.resetPasswordForEmail(correo, { redirectTo: location.origin + location.pathname });
+    $("#lerro").textContent = error ? error.message : "Mandámosche un correo para crear un contrasinal novo.";
+  },
   gardarModelo: () => { opcionsModelo.copiar = true; opcionsModelo(null); },
   novoModelo: () => { opcionsModelo.copiar = false; opcionsModelo(null); },
   opcionsModelo: id => opcionsModelo(E.plantillas.find(p => p.id === id)),
@@ -1222,7 +1335,7 @@ const ACC = {
   },
   exportar: () => {
     const a = document.createElement("a");
-    a.href = URL.createObjectURL(new Blob([JSON.stringify(E, null, 2)], { type:"application/json" }));
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(persistible(), null, 2)], { type:"application/json" }));
     a.download = `rutinas-${hoxeISO()}.json`; a.click();
   },
   importar: () => $("#ficheiro").click(),
@@ -1233,7 +1346,7 @@ const ACC = {
     gardar();
   },
   sincronizar: async () => { marcarSync("gardando"); await baixar(); toast("Sincronizado"); },
-  sair: async () => { if (pushActivo()) await desactivarPush(); await sb.auth.signOut(); sesion = null; localStorage.removeItem("rutinas:ultimoUsuario"); UI.vista = "login"; render(); },
+  sair: async () => { if (pushActivo()) await desactivarPush(); localStorage.removeItem(chaveAnimoLS()); chaveAnimo = null; await sb.auth.signOut(); sesion = null; localStorage.removeItem("rutinas:ultimoUsuario"); UI.vista = "login"; render(); },
   irLogin: () => { localStorage.removeItem("rutinas:modo"); UI.vista = "login"; render(); },
   senConta: () => { localStorage.setItem("rutinas:modo", "local"); cargarLocal(); UI.vista = "hoxe"; render(); }
 };
@@ -1264,7 +1377,7 @@ document.addEventListener("submit", async e => {
     const correo = f.correo.value.trim(), clave = f.clave.value;
     $("#lerro").textContent = "";
     const { data, error } = rexistro
-      ? await sb.auth.signUp({ email:correo, password:clave })
+      ? await sb.auth.signUp({ email:correo, password:clave, options:{ emailRedirectTo: location.origin + location.pathname } })
       : await sb.auth.signInWithPassword({ email:correo, password:clave });
     if (error){ $("#lerro").textContent = /invalid/i.test(error.message) ? "O correo ou o contrasinal non son correctos." : error.message; return; }
     if (!data.session){ $("#lerro").textContent = "Mandámosche un correo para confirmar a conta. Confírmaa e despois entra."; return; }
@@ -1281,7 +1394,7 @@ document.addEventListener("change", e => {
   if (t.id === "ficheiro" && t.files[0]){
     const r = new FileReader();
     r.onload = () => {
-      try { const d = JSON.parse(r.result); if (!Array.isArray(d.bloques)) throw 0; if (!confirm("Isto substitúe os teus datos actuais pola copia. Continuar?")) return; E = normalizar(d); gardar(); toast("Copia importada"); }
+      try { const d = JSON.parse(r.result); if (!Array.isArray(d.bloques)) throw 0; if (!confirm("Isto substitúe os teus datos actuais pola copia. Continuar?")) return; E = normalizar(d); gardar(); abrirAnimo(); toast("Copia importada"); }
       catch { toast("Non se puido importar", "O ficheiro non é unha copia de Rutinas."); }
       t.value = "";
     };
@@ -1312,6 +1425,8 @@ async function init(){
   else if (!sb || localStorage.getItem("rutinas:modo") === "local"){ cargarLocal(); UI.vista = "hoxe"; render(); }
   else { cargarLocal(); UI.vista = "login"; render(); }
   if (sesion) localStorage.setItem("rutinas:ultimoUsuario", sesion.user.id);
+  if (sb){ sb.auth.onAuthStateChange((ev) => { if (ev === "PASSWORD_RECOVERY") setTimeout(pedirContrasinalNovo, 300); }); }
+  if (recuperando && sesion) setTimeout(pedirContrasinalNovo, 300);
   if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
   const params = new URLSearchParams(location.search);
   if (params.get("accion") === "estado" && UI.vista !== "login"){ history.replaceState(null, "", location.pathname); setTimeout(rexistrarEstado, 300); }
