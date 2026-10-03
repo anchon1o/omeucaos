@@ -9,7 +9,7 @@ select cron.unschedule('rut-avisos') where exists (select 1 from cron.job where 
 select cron.schedule('rut-avisos', '* * * * *', $$
   select net.http_post(
     url     := 'https://pmvbllviitutbnoqpnrs.supabase.co/functions/v1/rut-avisos',
-    headers := '{"Content-Type":"application/json","x-rut-segredo":"O_TEU_SEGREDO"}'::jsonb,
+    headers := '{"Content-Type":"application/json","x-rut-segredo":"TNCd9AvWpCDax-PJHKw-QS63uQcDwDEq"}'::jsonb,
     body    := '{}'::jsonb
   );
 $$);
