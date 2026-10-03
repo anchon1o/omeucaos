@@ -6,14 +6,14 @@
 <meta name="theme-color" content="#F2F4F3" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#121A1C" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Rutinas">
+<meta name="apple-mobile-web-app-title" content="O meu caos">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="icona-192.png">
-<title>Rutinas</title>
+<title>O meu caos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <style>
 :root{--fondo:#F2F4F3;--superficie:#FFFFFF;--tinta:#1D2B2F;--suave:#5F6F73;--linha:#D9E0DF;--acento:#2E5E7E;--perigo:#B23A3A;color-scheme:light}
@@ -28,7 +28,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 [hidden]{display:none!important}
 main{max-width:720px;margin:0 auto;padding:8px 18px calc(120px + env(safe-area-inset-bottom,0px))}
 header.cab{max-width:720px;margin:0 auto;padding:14px 18px 4px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
-.marca{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:1.35rem;margin:0;letter-spacing:-.01em}
+.marca{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:600;font-size:1.35rem;margin:0;letter-spacing:-.01em}
 .cab .data{color:var(--suave);flex:1}
 .sync{font-size:.82rem;color:var(--suave);display:flex;align-items:center;gap:6px}
 .sync i{width:8px;height:8px;border-radius:50%;background:var(--suave);display:inline-block}
@@ -44,7 +44,7 @@ h3{font-size:1.05rem;margin:28px 0 8px;font-weight:700}
 .agora{--c:var(--acento);background:color-mix(in srgb,var(--c) 13%,var(--superficie));border:1px solid color-mix(in srgb,var(--c) 32%,transparent);border-radius:22px;padding:20px 20px 16px}
 .agora .cat{display:flex;align-items:center;gap:8px;color:var(--suave);font-size:.92rem}
 .punto{width:10px;height:10px;border-radius:50%;background:var(--c);display:inline-block;flex:none}
-.agora h2{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:clamp(2rem,8.5vw,2.9rem);line-height:1.04;margin:.25em 0 .35em;letter-spacing:-.015em}
+.agora h2{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:600;font-size:clamp(2rem,8.5vw,2.9rem);line-height:1.04;margin:.25em 0 .35em;letter-spacing:-.015em}
 .agora p{margin:0 0 12px}
 .progreso{height:7px;background:color-mix(in srgb,var(--c,var(--acento)) 22%,transparent);border-radius:4px;overflow:hidden}
 .progreso i{display:block;height:100%;background:var(--c,var(--acento))}
@@ -115,7 +115,7 @@ h3{font-size:1.05rem;margin:28px 0 8px;font-weight:700}
 .barra-accions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 0}
 /* revisión */
 .resumo{font-size:1.1rem;line-height:1.6;margin:6px 0 0}
-.resumo b{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:1.25em}
+.resumo b{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:600;font-size:1.25em}
 .barcat{display:grid;grid-template-columns:7rem 1fr 4rem;gap:10px;align-items:center;margin:6px 0;font-size:.92rem}
 .barcat .progreso{height:9px}
 .barcat span:last-child{text-align:right;color:var(--suave)}
@@ -151,7 +151,7 @@ label>input,label>select,label>textarea{margin-top:4px;color:var(--tinta)}
 dialog{border:0;border-radius:18px;padding:0;background:var(--superficie);color:var(--tinta);width:min(520px,calc(100vw - 24px));max-height:calc(100dvh - 40px)}
 dialog::backdrop{background:rgba(10,20,25,.45)}
 .mform{padding:18px 18px 16px;overflow:auto;max-height:calc(100dvh - 40px)}
-.mform h2{margin:0 0 4px;font-family:Fraunces,Georgia,serif;font-weight:600;font-size:1.4rem}
+.mform h2{margin:0 0 4px;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:600;font-size:1.4rem}
 .maccions{display:flex;gap:8px;margin-top:18px;align-items:center}
 .maccions .sp{flex:1}
 .erro{color:var(--perigo);min-height:1.2em;margin:8px 0 0}
@@ -167,14 +167,14 @@ nav.abas button.sel{color:var(--tinta);font-weight:700;border-top-color:var(--ac
 #foco{--c:var(--acento);background:color-mix(in srgb,var(--c) 16%,var(--fondo))}
 .foco-in{width:min(520px,100%);text-align:center}
 .foco-in .cat{color:var(--suave);display:flex;gap:8px;align-items:center;justify-content:center}
-.foco-in h2{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:clamp(1.5rem,6vw,2.2rem);margin:.3em 0 .2em;line-height:1.1}
-.reloxo{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:clamp(4.5rem,24vw,9rem);font-variant-numeric:tabular-nums;line-height:1;margin:.15em 0 .25em;letter-spacing:-.02em}
+.foco-in h2{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:600;font-size:clamp(1.5rem,6vw,2.2rem);margin:.3em 0 .2em;line-height:1.1}
+.reloxo{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:500;font-size:clamp(4.5rem,24vw,9rem);font-variant-numeric:tabular-nums;line-height:1;margin:.15em 0 .25em;letter-spacing:-.02em}
 .foco-in .progreso{height:8px}
 .foco-in .pausado{color:var(--suave);min-height:1.5em;margin:10px 0 0}
 #resp{z-index:40;background:color-mix(in srgb,#4F8E92 18%,var(--fondo))}
 .resp-in{text-align:center;display:grid;justify-items:center;gap:20px}
 .circulo{width:140px;height:140px;border-radius:50%;background:color-mix(in srgb,#4F8E92 55%,transparent);transform:scale(1);transition:transform 4s ease-in-out;margin:60px 0}
-.resp-txt{font-family:Fraunces,Georgia,serif;font-size:2rem;margin:0;min-height:1.3em}
+.resp-txt{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:2rem;margin:0;min-height:1.3em}
 @media (prefers-reduced-motion:reduce){.circulo{transition:none!important;transform:none!important}}
 .ritmo{display:grid;grid-template-columns:7.5rem 1fr 4.6rem;gap:10px;align-items:center;margin:7px 0;font-size:.92rem}
 .ritmo .progreso{background:color-mix(in srgb,var(--c,var(--acento)) 14%,transparent)}
@@ -186,6 +186,77 @@ nav.abas button.sel{color:var(--tinta);font-weight:700;border-top-color:var(--ac
 .modelo small{display:block;color:var(--suave)}
 .editando{background:color-mix(in srgb,var(--acento) 12%,var(--superficie));border:1px solid color-mix(in srgb,var(--acento) 35%,transparent);border-radius:16px;padding:14px 16px;margin-top:8px}
 .editando p{margin:0}
+/* ===== cor ===== */
+:root[data-tema="lavanda"]{--acento:#6D4AFF;--fondo:#F3F0FF;--linha:#DED7F5}
+:root[data-tema="oceano"]{--acento:#1662D8;--fondo:#EDF3FC;--linha:#D3DFF1}
+:root[data-tema="maza"]{--acento:#D6334A;--fondo:#FFF1F0;--linha:#F2D8D6}
+:root[data-tema="herba"]{--acento:#14805A;--fondo:#EDF7F1;--linha:#D2E7DA}
+:root[data-tema="sol"]{--acento:#B85A00;--fondo:#FFF5E6;--linha:#F0E0C6}
+@media (prefers-color-scheme:dark){
+  :root[data-tema="lavanda"]{--acento:#A994FF;--fondo:#14111E;--superficie:#1E1A2B;--linha:#342D49}
+  :root[data-tema="oceano"]{--acento:#7FB0FF;--fondo:#0F141D;--superficie:#18202D;--linha:#2A3547}
+  :root[data-tema="maza"]{--acento:#FF8A96;--fondo:#1A1112;--superficie:#261A1C;--linha:#43292D}
+  :root[data-tema="herba"]{--acento:#6FD3A5;--fondo:#0F1713;--superficie:#17221C;--linha:#29392F}
+  :root[data-tema="sol"]{--acento:#FFB45C;--fondo:#19140D;--superficie:#241D14;--linha:#40331F}
+}
+.marca{color:var(--acento);font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:1.45rem;letter-spacing:-.02em;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+.marca>span>span{display:inline-block;transform:rotate(var(--r)) translateY(var(--y))}
+.marca .esp{width:.28em}
+.marca.orde>span>span{transform:none}
+@media (prefers-reduced-motion:no-preference){.marca>span>span{transition:transform .8s cubic-bezier(.25,1.6,.4,1) var(--d)}}
+.marca.grande{font-size:clamp(2.8rem,13vw,3.6rem);line-height:1;margin-bottom:12px}
+.agora h2{font-weight:800;letter-spacing:-.025em}
+.reloxo{font-weight:700}
+h3::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--acento);margin-right:8px;vertical-align:2px}
+/* O momento de agora: o único elemento de cor plena */
+.agora{position:relative;overflow:hidden;background:var(--c);border:0;color:#fff;box-shadow:0 14px 34px -16px var(--c)}
+.agora::before{content:"";position:absolute;width:260px;height:260px;border-radius:50%;right:-90px;top:-110px;border:34px solid rgba(255,255,255,.13);pointer-events:none}
+.agora>*{position:relative}
+.agora .cat,.agora .despois{color:rgba(255,255,255,.85)}
+.agora .despois{border-top-color:rgba(255,255,255,.28)}
+.agora .despois b{color:#fff}
+.agora .punto{background:#fff}
+.agora .progreso{background:rgba(255,255,255,.28)}
+.agora .progreso i{background:#fff}
+.agora .btn{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.4);color:#fff}
+.agora .btn.primario{background:#fff;border-color:#fff;color:var(--c)}
+/* liña do tempo con cor de categoría */
+.lt li{border-bottom:0;padding:4px 0}
+.lt .t{background:color-mix(in srgb,var(--c) 11%,var(--superficie));border-left:5px solid var(--c);border-radius:4px 12px 12px 4px;padding:8px 12px}
+.lt .h{padding-top:9px}
+.lt li.actual .t{background:color-mix(in srgb,var(--c) 22%,var(--superficie))}
+/* hábitos e tarefas */
+.hab-chip{background:color-mix(in srgb,var(--c) 10%,var(--superficie))}
+.nota-caixa{border-left-color:var(--acento);background:color-mix(in srgb,var(--acento) 6%,var(--superficie))}
+.col.sel{background:color-mix(in srgb,var(--acento) 10%,var(--superficie))}
+nav.abas button{border-top:0;border-radius:12px;margin:6px 2px;padding:8px 2px}
+nav.abas button.sel{background:color-mix(in srgb,var(--acento) 14%,transparent);color:var(--acento)}
+.filtros button.sel{background:var(--acento);border-color:var(--acento);color:var(--superficie)}
+.resumo b{color:var(--acento)}
+/* selector de cor */
+.temas{display:flex;gap:8px;flex-wrap:wrap}
+.tema{display:flex;align-items:center;gap:8px;border:1.5px solid var(--linha);background:var(--superficie);border-radius:999px;padding:6px 14px 6px 6px;cursor:pointer}
+.tema i{width:26px;height:26px;border-radius:50%;background:var(--t)}
+.tema.sel{border-color:var(--t);box-shadow:0 0 0 2px var(--t) inset;font-weight:700}
+/* rachas compartidas */
+.gcard{background:var(--superficie);border:1px solid var(--linha);border-radius:18px;padding:16px;margin-top:10px}
+.gcard .pequeno{margin:10px 0 4px}
+.gcab{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.gtit{font-size:1.1rem}
+.gracha{text-align:center;min-width:70px}
+.gracha span{display:block;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:2.3rem;line-height:1;color:var(--acento)}
+.gracha small{color:var(--suave);font-size:.8rem}
+.avatares{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap}
+.avatar{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:.85rem;border:2px solid var(--c);color:var(--c);background:var(--superficie)}
+.avatar.ok{background:var(--c);color:#fff}
+.gfila{display:grid;grid-template-columns:minmax(0,7rem) 1fr;gap:10px;align-items:center;margin-top:6px}
+.gfila .dias14{grid-column:auto;margin:0}
+.cab-dias .dias14 span{background:none!important;border:0;font-size:.7rem;color:var(--suave);text-align:center;line-height:18px}
+.gnome{font-size:.88rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hab-chip.compartido{--c:var(--acento);border-style:dashed}
+.hab-chip.compartido.feito{border-style:solid}
+.hab-chip small{opacity:.8;margin-left:4px}
+.codigo{font-family:ui-monospace,monospace;font-size:1.15rem;letter-spacing:.12em}
 .login{max-width:420px;margin:12vh auto 0}
 .login .marca{font-size:2.6rem}
 @media (min-width:760px){.col-barra{height:220px}}
@@ -207,8 +278,8 @@ nav.abas button.sel{color:var(--tinta);font-weight:700;border-top-color:var(--ac
    Pega aquí a URL e a chave anon do teu proxecto de Supabase.
    Se as deixas baleiras, a app funciona só neste dispositivo. */
 const CONFIG = {
-  url: "https://pmvbllviitutbnoqpnrs.supabase.co",
-  chave: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBtdmJsbHZpaXR1dGJub3FwbnJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4MTE3NTAsImV4cCI6MjEwNTM4Nzc1MH0.5WMnLv9oY3PXXLjCrxukt6qu2xkNwOvrkbcxYqUrdgo",
+  url: "",
+  chave: "",
   vapid: ""   // chave pública VAPID para os avisos coa app pechada (opcional)
 };
 const TABOA = "rut_estado";
@@ -225,6 +296,7 @@ const NIV_E = ["Moi baixa","Baixa","Normal","Boa","Moi boa"];
 const NIV_A = ["Moi baixo","Baixo","Normal","Bo","Moi bo"];
 const LEMBRAR = [["11:00","Media mañá (11:00)"],["17:00","Tarde (17:00)"],["21:30","Noite (21:30)"]];
 const ZONA = (() => { try { return Intl.DateTimeFormat().resolvedOptions().timeZone || "Europe/Madrid"; } catch { return "Europe/Madrid"; } })();
+const TEMAS = [["lavanda","Lavanda","#6D4AFF"],["oceano","Océano","#1662D8"],["maza","Mazá","#D6334A"],["herba","Herba","#14805A"],["sol","Sol","#B85A00"]];
 const REPETIR = [["","Non se repite"],["diaria","Cada día"],["laborables","De luns a venres"],["semanal","Cada semana"],["mensual","Cada mes"]];
 
 let E = null, sesion = null, temporizador = null, focoTick = null, respT = null;
@@ -291,12 +363,12 @@ function estadoInicial(){
   return {
     v:3, actualizado:null,
     categorias:[
-      { id:"traballo", nome:"Traballo", cor:"#2E6FA3" },
-      { id:"estudo", nome:"Estudo", cor:"#7A5BA6" },
-      { id:"exercicio", nome:"Exercicio", cor:"#3C8A55" },
-      { id:"lecer", nome:"Lecer", cor:"#C2861F" },
-      { id:"descanso", nome:"Descanso", cor:"#4F8E92" },
-      { id:"persoal", nome:"Persoal", cor:"#8A6F62" }
+      { id:"traballo", nome:"Traballo", cor:"#2563EB" },
+      { id:"estudo", nome:"Estudo", cor:"#7C3AED" },
+      { id:"exercicio", nome:"Exercicio", cor:"#15803D" },
+      { id:"lecer", nome:"Lecer", cor:"#B45309" },
+      { id:"descanso", nome:"Descanso", cor:"#0F766E" },
+      { id:"persoal", nome:"Persoal", cor:"#BE185D" }
     ],
     bloques:[
       b(L,"07:30","08:00","Almorzo e preparación","persoal"),
@@ -319,7 +391,7 @@ function estadoInicial(){
       { id:uid(), nome:"Pantallas fóra ás 23:00", cat:"descanso", dias:[0,1,2,3,4,5,6], rexistro:{} }
     ],
     excepcions:{}, foco:[], revisions:{}, plantillas:[], estados:[],
-    axustes:{ avisoBloque:5, notificacions:false, focoMin:25, lembrarEstado:[], zona:ZONA }
+    axustes:{ avisoBloque:5, notificacions:false, focoMin:25, lembrarEstado:[], zona:ZONA, tema:"lavanda" }
   };
 }
 function normalizar(d){
@@ -340,6 +412,9 @@ function normalizar(d){
     axustes: { ...base.axustes, ...(d.axustes || {}) }
   };
   n.v = 3;
+  const CORES_NOVAS = { "#2E6FA3":"#2563EB", "#7A5BA6":"#7C3AED", "#3C8A55":"#15803D", "#C2861F":"#B45309", "#4F8E92":"#0F766E", "#8A6F62":"#BE185D" };
+  n.categorias.forEach(c => { if (CORES_NOVAS[(c.cor||"").toUpperCase()]) c.cor = CORES_NOVAS[c.cor.toUpperCase()]; });
+  if (!n.axustes.tema) n.axustes.tema = "lavanda";
   n.estados = n.estados.filter(x => x.data >= sumarDias(hoxeISO(), -365));
   const limite = sumarDias(hoxeISO(), -60);
   Object.keys(n.excepcions).forEach(k => { if (k < limite) delete n.excepcions[k]; });
@@ -390,7 +465,7 @@ async function baixar(){
     subir();
   } else marcarSync("ok");
 }
-document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible" && UI.vista !== "login"){ baixar(); render(); } });
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible" && UI.vista !== "login"){ baixar(); render(); cargarGrupos(); } });
 window.addEventListener("online", () => subir());
 
 /* ---------- avisos e son ---------- */
@@ -563,6 +638,208 @@ function desbloquearAnimo(despois){
     { textoGardar:"Abrir", textoBorrar:"Esquecín a chave", confirmar:"Borrarase o historial de enerxía e ánimo e crearás unha chave nova. O resto da app non se toca. Continuar?" });
 }
 
+/* ---------- rachas compartidas ----------
+   Táboas separadas (rut_grupos, rut_grupo_membros, rut_grupo_marcas): só se comparte
+   o nome do hábito, o alcume e os días marcados. O resto da app segue sendo privado. */
+const CORES_MEMBROS = ["#7C3AED","#2563EB","#15803D","#B45309","#BE185D","#0F766E","#DC2626","#4338CA","#A16207","#0369A1","#9333EA","#047857"];
+let canalMarcas = null, tGrupos = null;
+const eu = () => sesion && sesion.user.id;
+const marcou = (g, uid, k) => g.marcas.has(uid + "|" + k);
+const corMembro = (g, uid) => CORES_MEMBROS[[...String(uid)].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7) % CORES_MEMBROS.length];
+const unidoEn = m => isoData(new Date(m.unido));
+const activosEn = (g, k) => g.membros.filter(m => unidoEn(m) <= k);
+const alcumeInicial = () => E.axustes.alcume || ((sesion && sesion.user.email) || "").split("@")[0].slice(0, 30);
+function rachaGrupo(g){
+  let n = 0; const d = new Date(), hk = hoxeISO();
+  for (let i = 0; i < 365; i++){
+    const k = isoData(d);
+    if (g.dias.includes(d.getDay())){
+      const act = activosEn(g, k);
+      if (!act.length) break;
+      if (act.every(m => marcou(g, m.user_id, k))) n++;
+      else if (k !== hk) break;
+    }
+    d.setDate(d.getDate() - 1);
+  }
+  return n;
+}
+async function cargarGrupos(){
+  if (!sb || !sesion) return;
+  const { data:gs, error } = await sb.from("rut_grupos").select("*");
+  if (error){ UI.grupos = []; UI.gruposErro = /does not exist|schema cache/i.test(error.message) ? "falta-sql" : error.message; render(); return; }
+  UI.gruposErro = null;
+  const ids = gs.map(g => g.id);
+  let ms = [], mk = [];
+  if (ids.length){
+    const [r1, r2] = await Promise.all([
+      sb.from("rut_grupo_membros").select("*").in("grupo_id", ids),
+      sb.from("rut_grupo_marcas").select("grupo_id,user_id,data").in("grupo_id", ids).gte("data", sumarDias(hoxeISO(), -400))
+    ]);
+    ms = r1.data || []; mk = r2.data || [];
+  }
+  UI.grupos = gs.map(g => ({ ...g,
+    membros: ms.filter(m => m.grupo_id === g.id).sort((a,b) => a.unido.localeCompare(b.unido)),
+    marcas: new Set(mk.filter(x => x.grupo_id === g.id).map(x => x.user_id + "|" + x.data)) }))
+    .sort((a,b) => a.creado.localeCompare(b.creado));
+  subscribirMarcas();
+  const escribindo = document.activeElement && /INPUT|TEXTAREA/.test(document.activeElement.tagName);
+  if (["habitos","hoxe"].includes(UI.vista) && !$("#modal").open && !escribindo) render();
+}
+function subscribirMarcas(){
+  if (canalMarcas || !sb || !sesion) return;
+  canalMarcas = sb.channel("rut-marcas").on("postgres_changes", { event:"*", schema:"public", table:"rut_grupo_marcas" }, p => {
+    const r = (p.new && p.new.user_id) ? p.new : p.old;
+    if (!r || r.user_id === eu()) return;
+    clearTimeout(tGrupos);
+    tGrupos = setTimeout(async () => {
+      const antes = (UI.grupos || []).map(g => [g.id, rachaGrupo(g)]);
+      await cargarGrupos();
+      if (p.eventType !== "INSERT" || p.new.data !== hoxeISO()) return;
+      const g = (UI.grupos || []).find(x => x.id === p.new.grupo_id);
+      const m = g && g.membros.find(x => x.user_id === p.new.user_id);
+      if (!g || !m) return;
+      const todos = activosEn(g, hoxeISO()).every(x => marcou(g, x.user_id, hoxeISO()));
+      avisar(`${m.alcume} xa fixo «${g.nome}»`, todos ? `Todo o grupo o fixo hoxe. Racha do grupo: ${rachaGrupo(g)} días.` : (marcou(g, eu(), hoxeISO()) ? "" : "Agora tócache a ti."));
+    }, 500);
+  }).subscribe();
+}
+async function marcarGrupo(gid, k){
+  const g = (UI.grupos || []).find(x => x.id === gid); if (!g) return;
+  const chave = eu() + "|" + k;
+  if (g.marcas.has(chave)){
+    g.marcas.delete(chave); render();
+    const { error } = await sb.from("rut_grupo_marcas").delete().match({ grupo_id:gid, user_id:eu(), data:k });
+    if (error){ toast("Non se puido desmarcar", error.message); cargarGrupos(); }
+    return;
+  }
+  g.marcas.add(chave); render();
+  const { error } = await sb.from("rut_grupo_marcas").insert({ grupo_id:gid, user_id:eu(), data:k });
+  if (error){ toast("Non se puido marcar", error.message); cargarGrupos(); return; }
+  if (k === hoxeISO()){
+    const act = activosEn(g, k);
+    if (act.length > 1 && act.every(m => marcou(g, m.user_id, k))) { son(); toast("Todo o grupo o fixo hoxe", `Racha do grupo: ${rachaGrupo(g)} ${rachaGrupo(g)===1?"día":"días"}.`); }
+    else if (act.length > 1) toast("Marcado", `Faltan ${act.filter(m => !marcou(g, m.user_id, k)).length} para completar o día.`);
+  }
+}
+function revisarConvite(){
+  const c = localStorage.getItem("rutinas:convite");
+  if (c && sesion) setTimeout(() => unirseGrupo(c), 600);
+}
+function crearGrupo(){
+  abrirModal("Nova racha compartida", `
+    <p class="pequeno">Un hábito para facer en compañía. A racha do grupo só sobe os días en que o fai todo o mundo.</p>
+    <label>Que ides facer<input type="text" name="nome" maxlength="80" required placeholder="Camiñar 30 minutos, ler antes de durmir…"></label>
+    <label>Que días toca</label>${selDias([0,1,2,3,4,5,6])}
+    <label>O teu nome no grupo<input type="text" name="alcume" maxlength="30" required value="${esc(alcumeInicial())}"></label>`,
+    f => {
+      const dias = diasForm(f);
+      if (!dias.length) return "Escolle polo menos un día.";
+      const nome = f.nome.value.trim(), alcume = f.alcume.value.trim();
+      (async () => {
+        const { data, error } = await sb.rpc("rut_crear_grupo", { p_nome:nome, p_dias:dias, p_alcume:alcume });
+        if (error){ toast("Non se puido crear", error.message); return; }
+        E.axustes.alcume = alcume; gardar();
+        await cargarGrupos();
+        const g = UI.grupos.find(x => x.id === data.id);
+        if (g) setTimeout(() => convidarGrupo(g), 300);
+      })();
+      return true;
+    }, null, { textoGardar:"Crear" });
+}
+function unirseGrupo(codigo){
+  if (!sb || !sesion){ toast("Necesitas entrar coa túa conta", "Despois poderás unirte á racha."); return; }
+  abrirModal("Unirme a unha racha", `
+    <label>Código<input type="text" name="codigo" maxlength="10" required value="${esc(codigo || "")}" autocapitalize="characters" style="text-transform:uppercase;letter-spacing:.12em"></label>
+    <label>O teu nome no grupo<input type="text" name="alcume" maxlength="30" required value="${esc(alcumeInicial())}"></label>
+    <p class="pequeno">As outras persoas do grupo verán este nome e os días que marques neste hábito. Nada máis da túa app.</p>`,
+    f => {
+      const cod = f.codigo.value.trim().toUpperCase(), alcume = f.alcume.value.trim();
+      (async () => {
+        const { data, error } = await sb.rpc("rut_unirse", { p_codigo:cod, p_alcume:alcume });
+        if (error){ $("#merro").textContent = error.message; return; }
+        localStorage.removeItem("rutinas:convite");
+        E.axustes.alcume = alcume;
+        $("#modal").close(); gardar();
+        toast("Dentro!", `Xa formas parte de «${data.nome}».`);
+        UI.vista = "habitos"; await cargarGrupos(); render();
+      })();
+      return false;
+    }, null, { textoGardar:"Unirme" });
+}
+async function convidarGrupo(g){
+  const url = `${location.origin}${location.pathname}?unirse=${g.codigo}`;
+  const texto = `Fai comigo a racha «${g.nome}» en O meu caos. Código: ${g.codigo}`;
+  abrirModal("Convidar", `
+    <p>Manda esta ligazón ás persoas coas que queres facer «${esc(g.nome)}»:</p>
+    <input type="text" readonly value="${esc(url)}" onclick="this.select()">
+    <p>Ou dálles o código <b class="codigo">${esc(g.codigo)}</b>. Teñen que entrar na app coa súa conta e ir a Hábitos → «Unirme cun código».</p>`,
+    f => {
+      (async () => {
+        if (navigator.share){ try { await navigator.share({ title:"O meu caos", text:texto, url }); return; } catch (e){ if (e.name === "AbortError") return; } }
+        try { await navigator.clipboard.writeText(`${texto}\n${url}`); toast("Ligazón copiada", "Pégaa onde queiras."); } catch { toast("Copia a ligazón a man"); }
+      })();
+      return true;
+    }, null, { textoGardar: navigator.share ? "Compartir" : "Copiar ligazón" });
+}
+function opcionsGrupo(g){
+  const creador = g.creado_por === eu();
+  abrirModal(g.nome, `
+    <p>Código para convidar: <b class="codigo">${esc(g.codigo)}</b></p>
+    <p class="pequeno">${g.membros.length} ${g.membros.length===1?"persoa":"persoas"}: ${g.membros.map(m => esc(m.alcume)).join(", ")}.</p>
+    <label>O teu nome no grupo<input type="text" name="alcume" maxlength="30" required value="${esc((g.membros.find(m => m.user_id === eu()) || {}).alcume || "")}"></label>`,
+    f => {
+      const alcume = f.alcume.value.trim();
+      sb.from("rut_grupo_membros").update({ alcume }).match({ grupo_id:g.id, user_id:eu() }).then(() => cargarGrupos());
+      return true;
+    },
+    () => {
+      (async () => {
+        const { error } = creador
+          ? await sb.from("rut_grupos").delete().eq("id", g.id)
+          : await sb.from("rut_grupo_membros").delete().match({ grupo_id:g.id, user_id:eu() });
+        if (error) toast("Non se puido facer", error.message); else toast(creador ? "Racha borrada" : "Saíches do grupo");
+        cargarGrupos();
+      })();
+    },
+    { textoBorrar: creador ? "Borrar a racha" : "Saír do grupo", confirmar: creador ? "Borrarase a racha para todo o grupo. Seguro?" : "Deixarás de formar parte desta racha. Seguro?" });
+}
+function tarxetaGrupo(g){
+  const hk = hoxeISO(), toca = g.dias.includes(new Date().getDay());
+  const act = activosEn(g, hk), feitos = act.filter(m => marcou(g, m.user_id, hk)).length;
+  const r = rachaGrupo(g), meu = marcou(g, eu(), hk);
+  const filas = g.membros.map(m => {
+    const cel = [];
+    for (let i = 6; i >= 0; i--){
+      const d = new Date(); d.setDate(d.getDate() - i);
+      const k = isoData(d), prog = g.dias.includes(d.getDay()) && unidoEn(m) <= k, ok = marcou(g, m.user_id, k);
+      if (!prog) cel.push(`<span class="libre"></span>`);
+      else if (m.user_id === eu()) cel.push(`<button class="${ok?"ok":""} ${k===hk?"hoxe":""}" data-acc="marcaGrupo" data-id="${g.id}" data-k="${k}" aria-label="${esc(dataCurta(k))}: ${ok?"feito":"sen facer"}" aria-pressed="${ok}"></button>`);
+      else cel.push(`<span class="${ok?"ok":""} ${k===hk?"hoxe":""}" title="${esc(dataCurta(k))}"></span>`);
+    }
+    return `<div class="gfila" style="--c:${corMembro(g, m.user_id)}"><span class="gnome">${esc(m.alcume)}${m.user_id === eu() ? " (ti)" : ""}</span><div class="dias14">${cel.join("")}</div></div>`;
+  }).join("");
+  return `<section class="gcard">
+    <div class="gcab">
+      <div><b class="gtit">${esc(g.nome)}</b>
+        <div class="avatares">${act.map(m => `<span class="avatar ${marcou(g, m.user_id, hk)?"ok":""}" style="--c:${corMembro(g, m.user_id)}" title="${esc(m.alcume)}">${esc((m.alcume.trim()[0] || "?").toUpperCase())}</span>`).join("")}</div></div>
+      <div class="gracha"><span>${r}</span><small>${r===1?"día":"días"} seguidos</small></div>
+    </div>
+    <p class="pequeno">${!toca ? "Hoxe non toca." : feitos === act.length ? "Hoxe xa o fixo todo o grupo." : `Hoxe: ${feitos} de ${act.length}.`}${act.length < 2 ? " Convida a alguén para facela en compañía." : ""}</p>
+    <div class="gfila cab-dias"><span></span><div class="dias14">${[6,5,4,3,2,1,0].map(i => { const d = new Date(); d.setDate(d.getDate() - i); return `<span>${DIAS_C[d.getDay()][0]}</span>`; }).join("")}</div></div>
+    ${filas}
+    <div class="barra-accions">${toca ? `<button class="btn ${meu?"":"primario"}" data-acc="marcaGrupo" data-id="${g.id}" data-k="${hk}">${meu ? "Desmarcar hoxe" : "Feito hoxe"}</button>` : ""}<button class="btn" data-acc="convidarGrupo" data-id="${g.id}">Convidar</button><button class="btn" data-acc="opcionsGrupo" data-id="${g.id}">Máis</button></div>
+  </section>`;
+}
+function seccionCompartidas(){
+  let corpo;
+  if (!sb || !sesion) corpo = `<p class="vacio">Para facer rachas con outras persoas necesitas entrar coa túa conta.</p>`;
+  else if (UI.gruposErro === "falta-sql") corpo = `<p class="vacio">Falta preparar a base de datos para as rachas compartidas (ficheiro <b>compartir.sql</b>).</p>`;
+  else if (UI.grupos == null) corpo = `<p class="vacio">Cargando…</p>`;
+  else corpo = (UI.grupos.map(tarxetaGrupo).join("") || `<p class="vacio">Fai un hábito en compañía: crea unha racha e convida a quen queiras, ou únete cun código.</p>`)
+    + `<div class="barra-accions"><button class="btn primario" data-acc="crearGrupo">Nova racha compartida</button><button class="btn" data-acc="unirseGrupo">Unirme cun código</button></div>`;
+  return `<h3 style="margin-top:8px">Rachas compartidas</h3>${corpo}`;
+}
+
 /* ---------- ritmo: enerxía e ánimo ---------- */
 const media = (arr, k) => arr.length ? arr.reduce((s, x) => s + x[k], 0) / arr.length : null;
 const num1 = v => v.toFixed(1).replace(".", ",");
@@ -602,7 +879,7 @@ function b64aBytes(b){ const p = "=".repeat((4 - b.length % 4) % 4); const t = a
 async function activarPush(){
   if (!sb || !sesion){ toast("Necesitas entrar coa túa conta", "Os avisos coa app pechada usan a sincronización."); return; }
   if (!CONFIG.vapid){ toast("Falta a chave pública de avisos", "Énchea en CONFIG.vapid no ficheiro."); return; }
-  if (!pushPosible()){ toast("Este navegador non admite avisos coa app pechada", "No iPhone ou iPad, abre Rutinas desde a icona da pantalla de inicio."); return; }
+  if (!pushPosible()){ toast("Este navegador non admite avisos coa app pechada", "No iPhone ou iPad, abre O meu caos desde a icona da pantalla de inicio."); return; }
   const p = await Notification.requestPermission();
   if (p !== "granted"){ toast("Notificacións bloqueadas", "Permíteas nos axustes do navegador."); return; }
   try {
@@ -631,7 +908,7 @@ function pintarCabeceira(){
   const txt = { local:"Só neste dispositivo", ok:"Sincronizado", gardando:"Gardando…", erro:"Sen conexión, gardado aquí" };
   const estado = (sb && sesion) ? UI.sync : "local";
   $("#cab").innerHTML = UI.vista === "login" ? "" :
-    `<h1 class="marca">Rutinas</h1><span class="data">${esc(dataLonga(new Date()))}</span><span class="sync ${estado}"><i></i>${txt[estado]}</span>`;
+    `${logo()}<span class="data">${esc(dataLonga(new Date()))}</span><span class="sync ${estado}"><i></i>${txt[estado]}</span>`;
 }
 function pintarAbas(){
   $("#fab").hidden = UI.vista === "login";
@@ -640,7 +917,18 @@ function pintarAbas(){
   const abas = [["hoxe","Hoxe"],["semana","Semana"],["tarefas","Tarefas"],["habitos","Hábitos"],["axustes","Axustes"]];
   $("#abas").innerHTML = abas.map(([k,n]) => `<button data-acc="aba" data-id="${k}" class="${activa===k?"sel":""}" ${activa===k?'aria-current="page"':""}>${n}</button>`).join("");
 }
+const DESORDE = [[-14,-5],[9,4],[-6,7],[16,-6],[0,0],[-11,6],[13,-4],[-17,3],[8,-7],[-5,5]];
+function logo(tamano){
+  const letras = [..."O meu caos"].map((c,i) => c === " " ? `<span class="esp"> </span>` : `<span style="--r:${DESORDE[i][0]}deg;--y:${DESORDE[i][1]}px;--d:${i*45}ms">${c}</span>`).join("");
+  return `<h1 class="marca ${tamano||""} ${UI.ordenado?"orde":""}" data-acc="desordenar" aria-label="O meu caos"><span aria-hidden="true">${letras}</span></h1>`;
+}
+function ordenarLogo(){ setTimeout(() => { UI.ordenado = true; document.querySelectorAll(".marca").forEach(m => m.classList.add("orde")); }, 350); }
+function aplicarTema(){
+  const t = (E && E.axustes.tema) || "lavanda";
+  if (document.documentElement.dataset.tema !== t) document.documentElement.dataset.tema = t;
+}
 function render(){
+  aplicarTema();
   pintarCabeceira(); pintarAbas();
   const v = { hoxe:vistaHoxe, semana:vistaSemana, tarefas:vistaTarefas, habitos:vistaHabitos, axustes:vistaAxustes, revision:vistaRevision, login:vistaLogin }[UI.vista];
   $("#vista").innerHTML = v();
@@ -670,7 +958,7 @@ function vistaHoxe(){
 
   let heroe = "", extraHoxe = "", benvida = "";
   if (eHoxe && !E.actualizado && !E.axustes.benvidaVista){
-    benvida = `<div class="editando" style="margin-bottom:14px"><p><b>Benvida a Rutinas.</b> O que ves é unha semana de exemplo para que entendas como funciona. Podes adaptala ou empezar cun plan baleiro.</p><div class="fila"><button class="btn primario" data-acc="benvidaAdaptar">Adaptar o exemplo</button><button class="btn" data-acc="benvidaBaleiro">Empezar de cero</button></div></div>`;
+    benvida = `<div class="editando" style="margin-bottom:14px"><p><b>Benvida ao teu caos.</b> O que ves é unha semana de exemplo para que entendas como funciona. Podes adaptala ou empezar cun plan baleiro.</p><div class="fila"><button class="btn primario" data-acc="benvidaAdaptar">Adaptar o exemplo</button><button class="btn" data-acc="benvidaBaleiro">Empezar de cero</button></div></div>`;
   }
   if (eHoxe){
     const actual = bl.filter(b => mins(b.ini) <= m && m < mins(b.fin)).pop();
@@ -739,7 +1027,14 @@ function vistaHoxe(){
     ${deHoxe.length ? `<ul class="lista">${deHoxe.map(t => filaTarefa(t)).join("")}</ul>` : `<p class="vacio">Non tes nada pendente ${eHoxe ? "para hoxe" : "este día"}.</p>`}
     ${haiAtrasadas ? `<div class="barra-accions"><button class="btn" data-acc="atrasadasHoxe">Pasar as atrasadas a hoxe</button></div>` : ""}
     <form class="rapida" data-form="rapida"><input type="text" name="t" placeholder="Engadir tarefa ${eHoxe ? "para hoxe" : "a este día"}" aria-label="Nova tarefa"><button class="btn primario" type="submit">Engadir</button></form>
-    ${habs.length && habsVisibles ? `<h3>Hábitos ${eHoxe ? "de hoxe" : "deste día"}</h3><div class="habs-hoxe">${habs.map(h => `<button class="hab-chip ${h.rexistro[iso]?"feito":""}" style="--c:${cat(h.cat).cor}" data-acc="habitoData" data-id="${h.id}" data-k="${iso}" aria-pressed="${!!h.rexistro[iso]}">${esc(h.nome)}</button>`).join("")}</div>` : ""}
+    ${(() => {
+      const grs = eHoxe ? (UI.grupos || []).filter(g => g.dias.includes(dt.getDay())) : [];
+      if (!(habs.length && habsVisibles) && !grs.length) return "";
+      const propios = habsVisibles ? habs.map(h => `<button class="hab-chip ${h.rexistro[iso]?"feito":""}" style="--c:${cat(h.cat).cor}" data-acc="habitoData" data-id="${h.id}" data-k="${iso}" aria-pressed="${!!h.rexistro[iso]}">${esc(h.nome)}</button>`).join("") : "";
+      const comp = grs.map(g => { const act = activosEn(g, iso), f = act.filter(m => marcou(g, m.user_id, iso)).length, meu = marcou(g, eu(), iso);
+        return `<button class="hab-chip compartido ${meu?"feito":""}" data-acc="marcaGrupo" data-id="${g.id}" data-k="${iso}" aria-pressed="${meu}">${esc(g.nome)} <small>${f} de ${act.length}</small></button>`; }).join("");
+      return `<h3>Hábitos ${eHoxe ? "de hoxe" : "deste día"}</h3><div class="habs-hoxe">${propios}${comp}</div>`;
+    })()}
     <h3>${eHoxe ? "O teu día" : "Plan deste día"}</h3>
     ${ex && ex.modelo ? `<p class="pequeno" style="margin:0 0 6px">Este día segue o modelo «${esc(ex.modelo)}».</p>` : ""}
     ${bl.length ? `<ul class="lt">${lt}</ul>` : `<p class="vacio">Non hai bloques este día.</p>`}
@@ -841,7 +1136,8 @@ function vistaHabitos(){
       <div class="dias14" aria-label="Últimos 14 días">${cadros.join("")}</div>
     </div>`;
   }).join("");
-  return `<h3 style="margin-top:8px">Os teus hábitos</h3>
+  return `${seccionCompartidas()}
+    <h3>Os teus hábitos</h3>
     ${E.habitos.length ? `<p class="pequeno" style="margin:0">Toca un cadro para marcar un día pasado que esqueciches.</p>` : ""}
     ${html || `<p class="vacio">Engade un hábito pequeno e concreto, como «camiñar 20 minutos».</p>`}
     <div class="barra-accions"><button class="btn primario" data-acc="novoHabito">Engadir hábito</button></div>`;
@@ -898,6 +1194,8 @@ function vistaAxustes(){
       ? `<p>Conta: <b>${esc(sesion.user.email)}</b></p><div class="fila"><button class="btn" data-acc="sincronizar">Sincronizar agora</button><button class="btn" data-acc="sair">Saír</button></div>`
       : `<p>Estás a usar a app só neste dispositivo.</p><div class="fila"><button class="btn primario" data-acc="irLogin">Entrar ou crear conta</button></div>`;
   return `<h3 style="margin-top:8px">Conta e sincronización</h3><div class="caixa-ax">${conta}</div>
+    <h3>Cor da app</h3>
+    <div class="temas" role="group" aria-label="Cor da app">${TEMAS.map(([id,n,c]) => `<button class="tema ${a.tema===id?"sel":""}" data-acc="tema" data-id="${id}" style="--t:${c}" aria-pressed="${a.tema===id}"><i></i>${n}</button>`).join("")}</div>
     <h3>Avisos</h3>
     <div class="caixa-ax">
       <label>Avisar dos bloques
@@ -912,7 +1210,7 @@ function vistaAxustes(){
       ${pushActivo()
         ? `<p>Activados neste dispositivo.</p><div class="fila"><button class="btn" data-acc="pushOff">Desactivar neste dispositivo</button></div>`
         : `<p>Recibe os avisos de bloques, tarefas e lembranzas aínda que non teñas a app aberta.</p><div class="fila"><button class="btn primario" data-acc="pushOn">Activar neste dispositivo</button></div>`}
-      <p class="pequeno">Necesita a túa conta e a configuración de avisos en Supabase. No iPhone ou iPad, abre Rutinas desde a icona da pantalla de inicio.</p>
+      <p class="pequeno">Necesita a túa conta e a configuración de avisos en Supabase. No iPhone ou iPad, abre O meu caos desde a icona da pantalla de inicio.</p>
     </div>
     <h3>Enerxía e ánimo</h3>
     <div class="caixa-ax">
@@ -936,7 +1234,7 @@ function vistaAxustes(){
 
 function vistaLogin(){
   return `<section class="login">
-    <h1 class="marca">Rutinas</h1>
+    ${logo("grande")}
     <p>Entra para ter as túas rutinas no móbil e no ordenador.</p>
     <form data-form="login">
       <label>Correo<input type="email" name="correo" autocomplete="email" required></label>
@@ -986,12 +1284,12 @@ function actualizarReloxo(){
   $("#focobarra").style.width = `${100 - r / (UI.foco.total*60000) * 100}%`;
   $("#focoPausa").textContent = UI.foco.pausa != null ? "Continuar" : "Pausar";
   $("#pausado").textContent = UI.foco.pausa != null ? "En pausa" : "";
-  document.title = `${pad(Math.floor(s/60))}:${pad(s%60)} · Rutinas`;
+  document.title = `${pad(Math.floor(s/60))}:${pad(s%60)} · O meu caos`;
 }
 function completarFoco(completo){
   const f = UI.foco; if (!f) return;
   const min = completo ? f.total : Math.round((f.total*60000 - restante()) / 60000);
-  UI.foco = null; gardarFoco(); pintarFoco(); document.title = "Rutinas";
+  UI.foco = null; gardarFoco(); pintarFoco(); document.title = "O meu caos";
   if (min >= 1) E.foco.push({ data:hoxeISO(), min, cat:f.cat, titulo:f.titulo });
   gardar();
   if (completo){ son(); avisar("Sesión rematada", `${durTxt(min)} de concentración. Levántate, bebe auga e estira un pouco.`); }
@@ -1256,8 +1554,15 @@ function pedirContrasinalNovo(){
 
 /* ---------- accións ---------- */
 const ACC = {
-  aba: id => { UI.vista = id; if (id === "hoxe") UI.data = null; if (id !== "semana") UI.modelo = null; render(); window.scrollTo(0,0); },
+  aba: id => { if (id === "habitos" || id === "hoxe") cargarGrupos(); UI.vista = id; if (id === "hoxe") UI.data = null; if (id !== "semana") UI.modelo = null; render(); window.scrollTo(0,0); },
   estado: () => rexistrarEstado(),
+  marcaGrupo: (id, el) => marcarGrupo(id, el.dataset.k),
+  crearGrupo: () => crearGrupo(),
+  unirseGrupo: () => unirseGrupo(),
+  convidarGrupo: id => convidarGrupo(UI.grupos.find(g => g.id === id)),
+  opcionsGrupo: id => opcionsGrupo(UI.grupos.find(g => g.id === id)),
+  desordenar: () => { UI.ordenado = false; document.querySelectorAll(".marca").forEach(m => m.classList.remove("orde")); ordenarLogo(); },
+  tema: id => { E.axustes.tema = id; gardar(); },
   desbloquearAnimo: () => desbloquearAnimo(),
   pecharAnimo: () => { localStorage.removeItem(chaveAnimoLS()); chaveAnimo = null; E.estados = []; animoBloqueado = true; render(); toast("Feito", "Neste dispositivo pedirase a chave outra vez."); },
   benvidaAdaptar: () => { E.axustes.benvidaVista = true; UI.vista = "semana"; gardar(); toast("Toca un bloque para cambialo", "Ou engade os teus co botón «Engadir bloque»."); },
@@ -1346,7 +1651,7 @@ const ACC = {
     gardar();
   },
   sincronizar: async () => { marcarSync("gardando"); await baixar(); toast("Sincronizado"); },
-  sair: async () => { if (pushActivo()) await desactivarPush(); localStorage.removeItem(chaveAnimoLS()); chaveAnimo = null; await sb.auth.signOut(); sesion = null; localStorage.removeItem("rutinas:ultimoUsuario"); UI.vista = "login"; render(); },
+  sair: async () => { if (canalMarcas){ sb.removeChannel(canalMarcas); canalMarcas = null; } UI.grupos = null; if (pushActivo()) await desactivarPush(); localStorage.removeItem(chaveAnimoLS()); chaveAnimo = null; await sb.auth.signOut(); sesion = null; localStorage.removeItem("rutinas:ultimoUsuario"); UI.vista = "login"; render(); },
   irLogin: () => { localStorage.removeItem("rutinas:modo"); UI.vista = "login"; render(); },
   senConta: () => { localStorage.setItem("rutinas:modo", "local"); cargarLocal(); UI.vista = "hoxe"; render(); }
 };
@@ -1382,7 +1687,7 @@ document.addEventListener("submit", async e => {
     if (error){ $("#lerro").textContent = /invalid/i.test(error.message) ? "O correo ou o contrasinal non son correctos." : error.message; return; }
     if (!data.session){ $("#lerro").textContent = "Mandámosche un correo para confirmar a conta. Confírmaa e despois entra."; return; }
     sesion = data.session; localStorage.removeItem("rutinas:modo"); localStorage.setItem("rutinas:ultimoUsuario", sesion.user.id);
-    cargarLocal(); UI.vista = "hoxe"; render(); baixar();
+    cargarLocal(); UI.vista = "hoxe"; render(); baixar(); cargarGrupos(); revisarConvite();
   }
 });
 document.addEventListener("change", e => {
@@ -1395,7 +1700,7 @@ document.addEventListener("change", e => {
     const r = new FileReader();
     r.onload = () => {
       try { const d = JSON.parse(r.result); if (!Array.isArray(d.bloques)) throw 0; if (!confirm("Isto substitúe os teus datos actuais pola copia. Continuar?")) return; E = normalizar(d); gardar(); abrirAnimo(); toast("Copia importada"); }
-      catch { toast("Non se puido importar", "O ficheiro non é unha copia de Rutinas."); }
+      catch { toast("Non se puido importar", "O ficheiro non é unha copia de O meu caos."); }
       t.value = "";
     };
     r.readAsText(t.files[0]);
@@ -1429,8 +1734,12 @@ async function init(){
   if (recuperando && sesion) setTimeout(pedirContrasinalNovo, 300);
   if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
   const params = new URLSearchParams(location.search);
+  if (params.get("unirse")){ localStorage.setItem("rutinas:convite", params.get("unirse").toUpperCase()); history.replaceState(null, "", location.pathname); }
+  if (sesion){ cargarGrupos(); revisarConvite(); }
+  else if (localStorage.getItem("rutinas:convite") && UI.vista === "login") setTimeout(() => { const e = $("#lerro"); if (e) e.textContent = "Entra ou crea a túa conta para unirte á racha compartida."; }, 100);
   if (params.get("accion") === "estado" && UI.vista !== "login"){ history.replaceState(null, "", location.pathname); setTimeout(rexistrarEstado, 300); }
   if (E.axustes.zona !== ZONA && sesion){ E.axustes.zona = ZONA; gardar(); }
+  ordenarLogo();
   cargarFoco();
   if (UI.foco){ if (UI.foco.pausa == null && restante() <= 0) completarFoco(true); else pintarFoco(); }
   setInterval(() => {

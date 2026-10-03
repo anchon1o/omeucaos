@@ -1,8 +1,8 @@
-# Instalar Rutinas
+# Instalar O meu caos
 
 ## 1. Supabase
 1. Usa o proxecto que prefiras (as táboas levan o prefixo `rut_`, así que conviven co resto).
-2. SQL Editor → pega `supabase.sql` → Run.
+2. SQL Editor → pega `supabase.sql` → Run. Despois, nunha consulta nova, pega `compartir.sql` → Run (rachas compartidas).
 3. Authentication → URL Configuration → **Site URL**: pon a dirección de Vercel (paso 3). Así o correo de confirmación da conta leva á app.
    Se non queres confirmar por correo: Authentication → Providers → Email → desactiva «Confirm email».
 4. Project Settings → API: copia a **Project URL** e a chave **anon / publishable**.

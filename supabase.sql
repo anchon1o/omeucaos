@@ -1,4 +1,4 @@
--- Rutinas: táboas (prefixo rut_). Pega isto no SQL Editor de Supabase e executa.
+-- O meu caos: táboas (prefixo rut_). Pega isto no SQL Editor de Supabase e executa.
 -- Pódese executar varias veces sen problema.
 
 -- 1. Os teus datos

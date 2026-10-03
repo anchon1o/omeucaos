@@ -1,4 +1,4 @@
-// Rutinas: función de avisos coa app pechada (Supabase Edge Function "rut-avisos")
+// O meu caos: función de avisos coa app pechada (Supabase Edge Function "rut-avisos")
 // Segredos necesarios: VAPID_PUBLICA, VAPID_PRIVADA, AVISOS_SEGREDO (opcional: VAPID_CONTACTO)
 import { createClient } from "npm:@supabase/supabase-js@2";
 import webpush from "npm:web-push@3.6.7";

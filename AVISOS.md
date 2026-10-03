@@ -11,6 +11,6 @@
    - `AVISOS_SEGREDO` = segredo do cron
    - `VAPID_CONTACTO` = `mailto:o-teu-correo` (opcional)
 6. **Cron.** Edita `avisos-cron.sql` (proxecto e segredo) e execútao no SQL Editor.
-7. **En cada dispositivo.** Abre Rutinas (no iPhone/iPad, desde a icona da pantalla de inicio), vai a Axustes → «Avisos coa app pechada» → Activar.
+7. **En cada dispositivo.** Abre O meu caos (no iPhone/iPad, desde a icona da pantalla de inicio), vai a Axustes → «Avisos coa app pechada» → Activar.
 
 Para comprobar que funciona: crea unha tarefa para dentro de 3 minutos con aviso «Á hora», pecha a app e agarda.

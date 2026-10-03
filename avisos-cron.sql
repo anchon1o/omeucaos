@@ -1,4 +1,4 @@
--- Rutinas: executa a función de avisos cada minuto.
+-- O meu caos: executa a función de avisos cada minuto.
 -- Antes de executar, cambia TEU-PROXECTO e O_TEU_SEGREDO (o mesmo que AVISOS_SEGREDO).
 
 create extension if not exists pg_cron;

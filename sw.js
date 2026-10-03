@@ -1,5 +1,5 @@
-// Rutinas: service worker (avisos coa app pechada e funcionamento sen conexión)
-const CACHE = "rutinas-v1";
+// O meu caos: service worker (avisos coa app pechada e funcionamento sen conexión)
+const CACHE = "omeucaos-v1";
 const BASE = ["./", "./index.html", "./manifest.webmanifest", "./icona-192.png", "./apple-touch-icon.png"];
 
 self.addEventListener("install", e => {
@@ -26,8 +26,8 @@ self.addEventListener("fetch", e => {
 });
 self.addEventListener("push", e => {
   let d = {};
-  try { d = e.data.json(); } catch { d = { titulo:"Rutinas", corpo: e.data ? e.data.text() : "" }; }
-  e.waitUntil(self.registration.showNotification(d.titulo || "Rutinas", { body:d.corpo || "", tag:d.tag, data:{ url:d.url || "./" } }));
+  try { d = e.data.json(); } catch { d = { titulo:"O meu caos", corpo: e.data ? e.data.text() : "" }; }
+  e.waitUntil(self.registration.showNotification(d.titulo || "O meu caos", { body:d.corpo || "", tag:d.tag, data:{ url:d.url || "./" } }));
 });
 self.addEventListener("notificationclick", e => {
   e.notification.close();
