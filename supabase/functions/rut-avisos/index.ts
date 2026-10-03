@@ -66,6 +66,9 @@ function eventos(E: any): Evento[] {
       out.push({ chave: `e${h}${ag.iso}`, titulo: "Como estás agora?", corpo: "Rexistra a túa enerxía e o teu ánimo en dez segundos.", url: "./?accion=estado" });
   }
 
+  if (ax.pecharDia && !E.pechados?.[ag.iso] && toca(naiveDe(ag.iso, ax.pecharDia)))
+    out.push({ chave: `pechar${ag.iso}`, titulo: "Pechar o día", corpo: "Un minuto para recolocar o pendente e desconectar.", url: "./?accion=pechar" });
+
   if (ag.dow === 0 && !E.revisions?.[semanaISO(ag.iso)] && toca(naiveDe(ag.iso, "19:00")))
     out.push({ chave: `rev${ag.iso}`, titulo: "Revisión semanal", corpo: "Bo momento para pechar a semana e preparar a seguinte." });
 
@@ -96,6 +99,25 @@ Deno.serve(async (req) => {
           if (e?.statusCode === 404 || e?.statusCode === 410) await sb.from("rut_subscricions").delete().eq("endpoint", s.endpoint);
         }
       }
+    }
+  }
+
+  // Ánimos e felicitacións entre persoas dunha racha compartida
+  const { data: toques } = await sb.from("rut_toques").select("id, grupo_id, de, para, tipo").eq("enviado", false).limit(200);
+  for (const t of toques || []) {
+    await sb.from("rut_toques").update({ enviado: true }).eq("id", t.id);
+    const fila = (filas || []).find((f) => f.user_id === t.para);
+    if (fila && fila.datos?.axustes?.recibirToques === false) continue;
+    const [{ data: g }, { data: m }] = await Promise.all([
+      sb.from("rut_grupos").select("nome").eq("id", t.grupo_id).maybeSingle(),
+      sb.from("rut_grupo_membros").select("alcume").eq("grupo_id", t.grupo_id).eq("user_id", t.de).maybeSingle(),
+    ]);
+    if (!g || !m) continue;
+    const titulo = t.tipo === "bravo" ? `${m.alcume} celebra o teu «${g.nome}»` : `${m.alcume} mándache ánimo`;
+    const corpo = t.tipo === "bravo" ? "Ben feito!" : `Para «${g.nome}», cando poidas e como poidas.`;
+    for (const s of subs.filter((x) => x.user_id === t.para)) {
+      try { await webpush.sendNotification(s.sub, JSON.stringify({ titulo, corpo, tag: `toque${t.id}`, url: "./" })); enviados++; }
+      catch (e: any) { if (e?.statusCode === 404 || e?.statusCode === 410) await sb.from("rut_subscricions").delete().eq("endpoint", s.endpoint); }
     }
   }
 

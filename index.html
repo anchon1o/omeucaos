@@ -249,7 +249,8 @@ nav.abas button.sel{background:color-mix(in srgb,var(--acento) 14%,transparent);
 .avatares{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap}
 .avatar{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:.85rem;border:2px solid var(--c);color:var(--c);background:var(--superficie)}
 .avatar.ok{background:var(--c);color:#fff}
-.gfila{display:grid;grid-template-columns:minmax(0,7rem) 1fr;gap:10px;align-items:center;margin-top:6px}
+.gfila{display:grid;grid-template-columns:6rem auto 1fr;gap:10px;align-items:center;margin-top:6px}
+.gfila .dias14{flex-wrap:nowrap}
 .gfila .dias14{grid-column:auto;margin:0}
 .cab-dias .dias14 span{background:none!important;border:0;font-size:.7rem;color:var(--suave);text-align:center;line-height:18px}
 .gnome{font-size:.88rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -257,6 +258,88 @@ nav.abas button.sel{background:color-mix(in srgb,var(--acento) 14%,transparent);
 .hab-chip.compartido.feito{border-style:solid}
 .hab-chip small{opacity:.8;margin-left:4px}
 .codigo{font-family:ui-monospace,monospace;font-size:1.15rem;letter-spacing:.12em}
+.paso-num{display:flex;gap:8px;align-items:center;margin-top:6px}
+.paso-num input{text-align:center;font-size:1.3rem;font-weight:700;max-width:110px}
+.paso-num .btn{min-width:52px;font-size:1.4rem}
+.fitos{display:flex;flex-wrap:wrap;gap:8px}
+.fito{display:flex;align-items:baseline;gap:6px;background:var(--superficie);border:1px solid var(--linha);border-radius:999px;padding:6px 14px}
+.fito b{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;color:var(--acento);font-size:1.15rem}
+.fito small{color:var(--suave)}
+.confeti{position:fixed;inset:0;pointer-events:none;z-index:60;overflow:hidden}
+.confeti i{position:absolute;top:-12px;width:9px;height:14px;border-radius:2px;animation:caer 1.9s cubic-bezier(.25,.6,.4,1) forwards}
+@keyframes caer{to{transform:translate(var(--x),105vh) rotate(var(--r));opacity:.9}}
+.pasos{list-style:none;padding:0;margin:6px 0 0}
+.pasos li{display:flex;align-items:center;gap:8px;justify-content:space-between;border-bottom:1px solid var(--linha);padding:4px 0}
+.paso{display:flex;gap:10px;align-items:center;margin:0;color:var(--tinta);font-size:1rem}
+.paso input{width:20px;height:20px}
+.paso input:checked+span{text-decoration:line-through;color:var(--suave)}
+.pechar-fila{padding:8px 0;border-bottom:1px solid var(--linha)}
+.pechar-fila>span{display:block;margin-bottom:4px}
+.cant-pechar{display:flex;gap:6px;align-items:center;color:var(--tinta);font-size:.95rem;margin:4px 8px 4px 0}
+.opcions .cant-pechar input{position:static;opacity:1;pointer-events:auto;width:80px;min-height:36px;padding:4px 8px}
+.diario{list-style:none;padding:0;margin:0}
+.diario li{padding:10px 0;border-bottom:1px solid var(--linha);cursor:pointer}
+.diario small{display:block;color:var(--suave)}
+.segmentos{display:inline-flex;background:var(--superficie);border:1px solid var(--linha);border-radius:999px;padding:3px;margin:8px 0 2px}
+.segmentos button{border:0;background:none;border-radius:999px;padding:7px 16px;cursor:pointer;color:var(--suave)}
+.segmentos button.sel{background:var(--acento);color:var(--superficie);font-weight:700}
+.grade{position:relative;margin-top:4px}
+.gh{position:absolute;left:0;right:0;border-top:1px dashed var(--linha)}
+.gh span{position:absolute;top:-.65em;left:0;font-size:.75rem;color:var(--suave);background:var(--fondo);padding-right:4px;font-variant-numeric:tabular-nums}
+.gb{position:absolute;display:flex;border-radius:10px;background:color-mix(in srgb,var(--c) 16%,var(--superficie));border-left:5px solid var(--c);overflow:hidden;box-shadow:0 1px 0 color-mix(in srgb,var(--c) 30%,transparent)}
+.gb.arrastrando{box-shadow:0 8px 22px -6px color-mix(in srgb,var(--c) 60%,transparent);z-index:3;opacity:.95}
+.gb-mover{flex:none;width:28px;border:0;background:none;color:var(--c);font-size:1.1rem;cursor:grab;touch-action:none;padding:0}
+.gb-corpo{flex:1;min-width:0;border:0;background:none;text-align:left;padding:4px 6px 10px 0;cursor:pointer;color:var(--tinta);line-height:1.2;display:flex;flex-direction:column;justify-content:flex-start}
+.gb.curto .gb-corpo{padding:2px 6px 2px 0;justify-content:center}
+.gb.curto .gb-corpo small{display:none}
+.gb.curto .gb-estirar::after{display:none}
+.gb:not(.curto) .gb-mover{align-self:flex-start;padding-top:6px}
+.gb-corpo b{display:block;font-size:.92rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gb-corpo small{display:block;color:var(--suave);font-size:.78rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gb-estirar{position:absolute;left:0;right:0;bottom:0;height:12px;cursor:ns-resize;touch-action:none}
+.gb-estirar::after{content:"";position:absolute;left:50%;bottom:4px;width:28px;height:3px;margin-left:-14px;border-radius:2px;background:var(--c);opacity:.6}
+.mes-cab,.mes{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.mes-cab span{text-align:center;font-size:.8rem;color:var(--suave);padding:4px 0}
+.mc{min-height:62px;border:1px solid var(--linha);background:var(--superficie);border-radius:10px;padding:4px;display:flex;flex-direction:column;align-items:flex-start;gap:2px;cursor:pointer;text-align:left;overflow:hidden}
+.mc.baleira{border:0;background:none;cursor:default}
+.mc.pasado{opacity:.55}
+.mc.hoxe{border-color:var(--acento);box-shadow:0 0 0 2px var(--acento) inset}
+.mc.modelo{background:color-mix(in srgb,var(--acento) 12%,var(--superficie))}
+.mc-n{font-weight:700;font-size:.9rem}
+.mc-mod{font-size:.66rem;line-height:1.1;color:var(--acento);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mc-mod.cambio{color:var(--suave)}
+.mc-p{display:flex;gap:2px;flex-wrap:wrap;margin-top:auto;font-size:.7rem;color:var(--suave)}
+.mc-p i{width:7px;height:7px;border-radius:50%}
+#impresion{display:none}
+@media print{
+  @page{size:A4 landscape;margin:9mm}
+  body>*:not(#impresion){display:none!important}
+  body{background:#fff!important;color:#000}
+  #impresion{display:block;font-family:"Atkinson Hyperlegible",system-ui,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #impresion h1{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:20pt;margin:0 0 4mm}
+  .icols{display:grid;grid-template-columns:repeat(7,1fr);gap:2mm}
+  .icn{font-weight:700;font-size:10pt;margin-bottom:1mm}
+  .icc{position:relative;border-top:.3mm solid #ccc}
+  .ih{position:absolute;left:0;right:0;border-top:.2mm dashed #ddd}
+  .ih span{font-size:6pt;color:#999}
+  .ib{position:absolute;left:0;right:0;background:color-mix(in srgb,var(--c) 22%,#fff);border-left:1.2mm solid var(--c);border-radius:1.5mm;padding:.6mm 1mm;overflow:hidden;font-size:7pt;line-height:1.15}
+  .ib b{display:block}
+  .ib span{color:#555;font-size:6pt}
+  .ilenda{display:flex;gap:5mm;margin-top:4mm;font-size:8pt}
+  .ilenda i{display:inline-block;width:3mm;height:3mm;border-radius:50%;margin-right:1.5mm;vertical-align:-.3mm}
+}
+.gfila .toque{justify-self:start;border:1px solid color-mix(in srgb,var(--c) 50%,transparent);background:color-mix(in srgb,var(--c) 10%,var(--superficie));color:var(--c);border-radius:999px;font-size:.75rem;padding:2px 9px;cursor:pointer;width:auto!important;height:auto!important;font-weight:700}
+.gfila .toque:disabled{opacity:.55;cursor:default}
+.items{list-style:none;padding:0;margin:10px 0 0}
+.items li{display:flex;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid var(--linha)}
+.items .itxt{flex:1}
+.items li.feito .itxt{text-decoration:line-through;color:var(--suave)}
+.items small{font-size:.78rem;color:var(--suave)}
+.mic{min-width:46px;display:grid;place-items:center}
+.mic.gravando{background:var(--perigo);border-color:var(--perigo);color:#fff}
+@media (prefers-reduced-motion:no-preference){.mic.gravando{animation:latexo 1.2s ease-in-out infinite}@keyframes latexo{50%{box-shadow:0 0 0 7px color-mix(in srgb,var(--perigo) 25%,transparent)}}}
+.caixa-ax input[readonly]{font-size:.85rem}
+a.btn{display:inline-flex;align-items:center;text-decoration:none;color:inherit}
 .login{max-width:420px;margin:12vh auto 0}
 .login .marca{font-size:2.6rem}
 @media (min-width:760px){.col-barra{height:220px}}
@@ -278,8 +361,8 @@ nav.abas button.sel{background:color-mix(in srgb,var(--acento) 14%,transparent);
    Pega aquí a URL e a chave anon do teu proxecto de Supabase.
    Se as deixas baleiras, a app funciona só neste dispositivo. */
 const CONFIG = {
-  url: "",
-  chave: "",
+  url: "https://pmvbllviitutbnoqpnrs.supabase.co",
+  chave: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBtdmJsbHZpaXR1dGJub3FwbnJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4MTE3NTAsImV4cCI6MjEwNTM4Nzc1MH0.5WMnLv9oY3PXXLjCrxukt6qu2xkNwOvrkbcxYqUrdgo",
   vapid: ""   // chave pública VAPID para os avisos coa app pechada (opcional)
 };
 const TABOA = "rut_estado";
@@ -390,7 +473,7 @@ function estadoInicial(){
       { id:uid(), nome:"Camiñar ou moverse", cat:"exercicio", dias:[0,1,2,3,4,5,6], rexistro:{} },
       { id:uid(), nome:"Pantallas fóra ás 23:00", cat:"descanso", dias:[0,1,2,3,4,5,6], rexistro:{} }
     ],
-    excepcions:{}, foco:[], revisions:{}, plantillas:[], estados:[],
+    excepcions:{}, foco:[], revisions:{}, plantillas:[], estados:[], fitos:[], pechados:{}, diario:[],
     axustes:{ avisoBloque:5, notificacions:false, focoMin:25, lembrarEstado:[], zona:ZONA, tema:"lavanda" }
   };
 }
@@ -407,8 +490,11 @@ function normalizar(d){
     foco: Array.isArray(d.foco) ? d.foco : [],
     revisions: d.revisions && typeof d.revisions === "object" ? d.revisions : {},
     plantillas: Array.isArray(d.plantillas) ? d.plantillas : [],
+    fitos: Array.isArray(d.fitos) ? d.fitos : [],
+    pechados: d.pechados && typeof d.pechados === "object" ? d.pechados : {},
     animo: d.animo && d.animo.sal ? d.animo : null,
     estados: d.animo && d.animo.sal ? [] : (Array.isArray(d.estados) ? d.estados : []),
+    diario: d.animo && d.animo.sal ? [] : (Array.isArray(d.diario) ? d.diario : []),
     axustes: { ...base.axustes, ...(d.axustes || {}) }
   };
   n.v = 3;
@@ -418,6 +504,7 @@ function normalizar(d){
   n.estados = n.estados.filter(x => x.data >= sumarDias(hoxeISO(), -365));
   const limite = sumarDias(hoxeISO(), -60);
   Object.keys(n.excepcions).forEach(k => { if (k < limite) delete n.excepcions[k]; });
+  Object.keys(n.pechados).forEach(k => { if (k < limite) delete n.pechados[k]; });
   const limiteFoco = sumarDias(hoxeISO(), -180);
   n.foco = n.foco.filter(f => f.data >= limiteFoco);
   return n;
@@ -433,7 +520,7 @@ function cargarLocal(){
   abrirAnimo();
 }
 /* O que se garda: se o ánimo está cifrado, os rexistros en claro non saen nunca da memoria */
-function persistible(){ if (!E.animo) return E; const { estados, ...resto } = E; return resto; }
+function persistible(){ if (!E.animo) return E; const { estados, diario, ...resto } = E; return resto; }
 function gardarLocal(){ try { localStorage.setItem(chaveLocal(), JSON.stringify(persistible())); } catch {} }
 function gardar(){
   E.actualizado = new Date().toISOString();
@@ -513,6 +600,10 @@ function revisarAvisos(){
     const recente = E.estados.some(x => x.data === hk && m - mins(x.hora) >= 0 && m - mins(x.hora) < 90);
     if (m >= i && m < i + 3 && !recente && !avisados.has(k)){ avisados.add(k); avisar("Como estás agora?", "Rexistra a túa enerxía e o teu ánimo en dez segundos."); }
   });
+  if (E.axustes.pecharDia && !E.pechados[hk]){
+    const i = mins(E.axustes.pecharDia), k = "pechar" + hk;
+    if (m >= i && m < i + 3 && !avisados.has(k)){ avisados.add(k); avisar("Pechar o día", "Un minuto para recolocar o pendente e desconectar."); }
+  }
   if (ag.getDay() === 0 && !E.revisions[semanaISO(ag)]){
     const k = "rev" + hk;
     if (m >= 1140 && m < 1143 && !avisados.has(k)){ avisados.add(k); avisar("Revisión semanal", "Bo momento para pechar a semana e preparar a seguinte."); }
@@ -530,12 +621,35 @@ function revisarAvisos(){
 }
 
 /* ---------- cálculos ---------- */
+const valorH = (h, k) => h.meta ? (Number(h.rexistro[k]) || 0) : (h.rexistro[k] ? 1 : 0);
+const feitoH = (h, k) => h.meta ? valorH(h, k) >= h.meta : !!h.rexistro[k];
+const etiquetaCant = (h, k) => h.meta ? `${valorH(h, k)} de ${h.meta}${h.unidade ? " " + h.unidade : ""}` : "";
+const FITOS = [7, 21, 30, 50, 100, 200, 365];
+function comprobarFito(nome, id, n){
+  if (!FITOS.includes(n)) return;
+  const k = id + ":" + n;
+  if (E.fitos.some(f => f.k === k && diasDesde(f.data) > -n)) return;
+  E.fitos.push({ k, id, nome, dias:n, data:hoxeISO() });
+  celebrar(`${n} días seguidos`, `«${nome}». Que constancia!`);
+}
+function celebrar(titulo, texto){
+  son(); toast(titulo, texto);
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const cores = E.categorias.map(c => c.cor), cx = document.createElement("div");
+  cx.className = "confeti"; cx.setAttribute("aria-hidden", "true");
+  for (let i = 0; i < 46; i++){
+    const p = document.createElement("i");
+    p.style.cssText = `left:${Math.random()*100}%;background:${cores[i % cores.length]};animation-delay:${Math.random()*0.35}s;--x:${(Math.random()-0.5)*160}px;--r:${Math.random()*720-360}deg`;
+    cx.appendChild(p);
+  }
+  document.body.appendChild(cx); setTimeout(() => cx.remove(), 2400);
+}
 function racha(h){
   let n = 0; const d = new Date(), hk = isoData(d);
   for (let i = 0; i < 400; i++){
     const k = isoData(d);
     if (h.dias.includes(d.getDay())){
-      if (h.rexistro[k]) n++;
+      if (feitoH(h, k)) n++;
       else if (k !== hk) break;
     }
     d.setDate(d.getDate() - 1);
@@ -547,7 +661,7 @@ function cumprimento(habitos, dias){
   for (let i = 0; i < dias; i++){
     const d = new Date(); d.setDate(d.getDate() - i);
     const k = isoData(d);
-    habitos.forEach(h => { if (h.dias.includes(d.getDay())){ prog++; if (h.rexistro[k]) ok++; } });
+    habitos.forEach(h => { if (h.dias.includes(d.getDay())){ prog++; if (feitoH(h, k)) ok++; } });
   }
   return prog ? Math.round(ok / prog * 100) : null;
 }
@@ -576,7 +690,7 @@ async function derivarChave(frase, sal){
 }
 async function cifrarEstados(){
   const iv = crypto.getRandomValues(new Uint8Array(12));
-  const ct = await crypto.subtle.encrypt({ name:"AES-GCM", iv }, chaveAnimo, te.encode(JSON.stringify(E.estados)));
+  const ct = await crypto.subtle.encrypt({ name:"AES-GCM", iv }, chaveAnimo, te.encode(JSON.stringify({ estados:E.estados, diario:E.diario })));
   E.animo = { sal:E.animo.sal, iv:b64(iv), datos:b64(ct) };
 }
 async function descifrarEstados(k){
@@ -584,21 +698,25 @@ async function descifrarEstados(k){
   const pt = await crypto.subtle.decrypt({ name:"AES-GCM", iv:deb64(E.animo.iv) }, k, deb64(E.animo.datos));
   return JSON.parse(td.decode(pt));
 }
+function aplicarPrivado(d){
+  if (Array.isArray(d)){ E.estados = d; E.diario = E.diario || []; }
+  else { E.estados = (d && d.estados) || []; E.diario = (d && d.diario) || []; }
+}
 async function abrirAnimo(){
   if (!E || !E.animo){ animoBloqueado = false; chaveAnimo = null; return; }
   try {
     const r = localStorage.getItem(chaveAnimoLS());
     if (!r) throw 0;
     const k = await crypto.subtle.importKey("raw", deb64(r), "AES-GCM", true, ["encrypt","decrypt"]);
-    E.estados = await descifrarEstados(k);
+    aplicarPrivado(await descifrarEstados(k));
     chaveAnimo = k; animoBloqueado = false;
-  } catch { chaveAnimo = null; E.estados = []; animoBloqueado = true; }
+  } catch { chaveAnimo = null; E.estados = []; E.diario = []; animoBloqueado = true; }
   if (UI.vista !== "login") render();
 }
 async function lembrarChaveNeste(k){ localStorage.setItem(chaveAnimoLS(), b64(await crypto.subtle.exportKey("raw", k))); }
 function configurarAnimo(despois){
-  abrirModal("Protexe o teu rexistro de ánimo", `
-    <p>A túa enerxía e o teu ánimo gárdanse <b>cifrados cunha chave que só sabes ti</b>. Ninguén máis pode lelos, tampouco quen administra a app.</p>
+  abrirModal("Protexe o teu espazo privado", `
+    <p>A túa enerxía, o teu ánimo e o teu diario gárdanse <b>cifrados cunha chave que só sabes ti</b>. Ninguén máis pode lelos, tampouco quen administra a app.</p>
     <p class="pequeno">Pedirase só unha vez en cada dispositivo. Se a esqueces, pérdese o historial de ánimo (o resto da app non se toca).</p>
     <label>Inventa unha chave<input type="password" name="c1" minlength="6" autocomplete="new-password" required></label>
     <label>Repítea<input type="password" name="c2" minlength="6" autocomplete="new-password" required></label>`,
@@ -625,7 +743,7 @@ function desbloquearAnimo(despois){
       (async () => {
         try {
           const k = await derivarChave(f.c.value, deb64(E.animo.sal));
-          E.estados = await descifrarEstados(k);
+          aplicarPrivado(await descifrarEstados(k));
           chaveAnimo = k; animoBloqueado = false;
           await lembrarChaveNeste(k);
           $("#modal").close(); render();
@@ -634,7 +752,7 @@ function desbloquearAnimo(despois){
       })();
       return false;
     },
-    () => { E.animo = null; E.estados = []; chaveAnimo = null; animoBloqueado = false; localStorage.removeItem(chaveAnimoLS()); gardar(); setTimeout(() => configurarAnimo(despois), 200); },
+    () => { E.animo = null; E.estados = []; E.diario = []; chaveAnimo = null; animoBloqueado = false; localStorage.removeItem(chaveAnimoLS()); gardar(); setTimeout(() => configurarAnimo(despois), 200); },
     { textoGardar:"Abrir", textoBorrar:"Esquecín a chave", confirmar:"Borrarase o historial de enerxía e ánimo e crearás unha chave nova. O resto da app non se toca. Continuar?" });
 }
 
@@ -669,37 +787,53 @@ async function cargarGrupos(){
   if (error){ UI.grupos = []; UI.gruposErro = /does not exist|schema cache/i.test(error.message) ? "falta-sql" : error.message; render(); return; }
   UI.gruposErro = null;
   const ids = gs.map(g => g.id);
-  let ms = [], mk = [];
+  let ms = [], mk = [], it = [], tq = [];
   if (ids.length){
-    const [r1, r2] = await Promise.all([
+    const listaIds = gs.filter(g => g.tipo === "lista").map(g => g.id);
+    const [r1, r2, r3, r4] = await Promise.all([
       sb.from("rut_grupo_membros").select("*").in("grupo_id", ids),
-      sb.from("rut_grupo_marcas").select("grupo_id,user_id,data").in("grupo_id", ids).gte("data", sumarDias(hoxeISO(), -400))
+      sb.from("rut_grupo_marcas").select("grupo_id,user_id,data").in("grupo_id", ids).gte("data", sumarDias(hoxeISO(), -400)),
+      listaIds.length ? sb.from("rut_lista_items").select("*").in("grupo_id", listaIds) : Promise.resolve({ data:[] }),
+      sb.from("rut_toques").select("grupo_id,para").eq("de", eu()).eq("data", hoxeISO())
     ]);
-    ms = r1.data || []; mk = r2.data || [];
+    ms = r1.data || []; mk = r2.data || []; it = r3.data || []; tq = r4.data || [];
   }
-  UI.grupos = gs.map(g => ({ ...g,
+  UI.toquesHoxe = new Set(tq.map(x => x.grupo_id + "|" + x.para));
+  UI.grupos = gs.map(g => ({ ...g, tipo: g.tipo || "racha",
+    items: it.filter(x => x.grupo_id === g.id).sort((a,b) => (a.feito - b.feito) || a.creado.localeCompare(b.creado)),
     membros: ms.filter(m => m.grupo_id === g.id).sort((a,b) => a.unido.localeCompare(b.unido)),
     marcas: new Set(mk.filter(x => x.grupo_id === g.id).map(x => x.user_id + "|" + x.data)) }))
     .sort((a,b) => a.creado.localeCompare(b.creado));
   subscribirMarcas();
   const escribindo = document.activeElement && /INPUT|TEXTAREA/.test(document.activeElement.tagName);
-  if (["habitos","hoxe"].includes(UI.vista) && !$("#modal").open && !escribindo) render();
+  if (["habitos","hoxe","tarefas"].includes(UI.vista) && !$("#modal").open && !escribindo) render();
 }
+const rachasG = () => (UI.grupos || []).filter(g => g.tipo !== "lista");
+const listasG = () => (UI.grupos || []).filter(g => g.tipo === "lista");
 function subscribirMarcas(){
   if (canalMarcas || !sb || !sesion) return;
-  canalMarcas = sb.channel("rut-marcas").on("postgres_changes", { event:"*", schema:"public", table:"rut_grupo_marcas" }, p => {
+  const recargar = () => { clearTimeout(tGrupos); tGrupos = setTimeout(cargarGrupos, 400); };
+  canalMarcas = sb.channel("rut-compartido")
+  .on("postgres_changes", { event:"*", schema:"public", table:"rut_lista_items" }, recargar)
+  .on("postgres_changes", { event:"INSERT", schema:"public", table:"rut_toques" }, p => {
+    if (!p.new || p.new.para !== eu() || E.axustes.recibirToques === false) return;
+    const g = (UI.grupos || []).find(x => x.id === p.new.grupo_id), m = g && g.membros.find(x => x.user_id === p.new.de);
+    if (!g || !m) return;
+    toast(p.new.tipo === "bravo" ? `${m.alcume} celebra o teu «${g.nome}»` : `${m.alcume} mándache ánimo`, p.new.tipo === "bravo" ? "Ben feito!" : `Para «${g.nome}», cando poidas e como poidas.`);
+  })
+  .on("postgres_changes", { event:"*", schema:"public", table:"rut_grupo_marcas" }, p => {
     const r = (p.new && p.new.user_id) ? p.new : p.old;
     if (!r || r.user_id === eu()) return;
     clearTimeout(tGrupos);
     tGrupos = setTimeout(async () => {
-      const antes = (UI.grupos || []).map(g => [g.id, rachaGrupo(g)]);
       await cargarGrupos();
       if (p.eventType !== "INSERT" || p.new.data !== hoxeISO()) return;
       const g = (UI.grupos || []).find(x => x.id === p.new.grupo_id);
       const m = g && g.membros.find(x => x.user_id === p.new.user_id);
       if (!g || !m) return;
       const todos = activosEn(g, hoxeISO()).every(x => marcou(g, x.user_id, hoxeISO()));
-      avisar(`${m.alcume} xa fixo «${g.nome}»`, todos ? `Todo o grupo o fixo hoxe. Racha do grupo: ${rachaGrupo(g)} días.` : (marcou(g, eu(), hoxeISO()) ? "" : "Agora tócache a ti."));
+      if (todos) avisar(`Todo o grupo fixo «${g.nome}»`, `Racha do grupo: ${rachaGrupo(g)} días.`);
+      else if (marcou(g, eu(), hoxeISO())) toast(`${m.alcume} tamén fixo «${g.nome}»`);
     }, 500);
   }).subscribe();
 }
@@ -717,7 +851,11 @@ async function marcarGrupo(gid, k){
   if (error){ toast("Non se puido marcar", error.message); cargarGrupos(); return; }
   if (k === hoxeISO()){
     const act = activosEn(g, k);
-    if (act.length > 1 && act.every(m => marcou(g, m.user_id, k))) { son(); toast("Todo o grupo o fixo hoxe", `Racha do grupo: ${rachaGrupo(g)} ${rachaGrupo(g)===1?"día":"días"}.`); }
+    if (act.every(m => marcou(g, m.user_id, k))){
+      const n = rachaGrupo(g);
+      if (FITOS.includes(n)) { comprobarFito(g.nome, g.id, n); gardar(); }
+      else if (act.length > 1) { son(); toast("Todo o grupo o fixo hoxe", `Racha do grupo: ${n} ${n===1?"día":"días"}.`); }
+    }
     else if (act.length > 1) toast("Marcado", `Faltan ${act.filter(m => !marcou(g, m.user_id, k)).length} para completar o día.`);
   }
 }
@@ -736,7 +874,7 @@ function crearGrupo(){
       if (!dias.length) return "Escolle polo menos un día.";
       const nome = f.nome.value.trim(), alcume = f.alcume.value.trim();
       (async () => {
-        const { data, error } = await sb.rpc("rut_crear_grupo", { p_nome:nome, p_dias:dias, p_alcume:alcume });
+        const { data, error } = await sb.rpc("rut_crear_grupo", { p_nome:nome, p_dias:dias, p_alcume:alcume, p_tipo:"racha" });
         if (error){ toast("Non se puido crear", error.message); return; }
         E.axustes.alcume = alcume; gardar();
         await cargarGrupos();
@@ -748,10 +886,10 @@ function crearGrupo(){
 }
 function unirseGrupo(codigo){
   if (!sb || !sesion){ toast("Necesitas entrar coa túa conta", "Despois poderás unirte á racha."); return; }
-  abrirModal("Unirme a unha racha", `
+  abrirModal("Unirme cun código", `
     <label>Código<input type="text" name="codigo" maxlength="10" required value="${esc(codigo || "")}" autocapitalize="characters" style="text-transform:uppercase;letter-spacing:.12em"></label>
     <label>O teu nome no grupo<input type="text" name="alcume" maxlength="30" required value="${esc(alcumeInicial())}"></label>
-    <p class="pequeno">As outras persoas do grupo verán este nome e os días que marques neste hábito. Nada máis da túa app.</p>`,
+    <p class="pequeno">As outras persoas do grupo verán este nome e o que marques nesa racha ou lista. Nada máis da túa app.</p>`,
     f => {
       const cod = f.codigo.value.trim().toUpperCase(), alcume = f.alcume.value.trim();
       (async () => {
@@ -761,14 +899,14 @@ function unirseGrupo(codigo){
         E.axustes.alcume = alcume;
         $("#modal").close(); gardar();
         toast("Dentro!", `Xa formas parte de «${data.nome}».`);
-        UI.vista = "habitos"; await cargarGrupos(); render();
+        UI.vista = data.tipo === "lista" ? "tarefas" : "habitos"; await cargarGrupos(); render();
       })();
       return false;
     }, null, { textoGardar:"Unirme" });
 }
 async function convidarGrupo(g){
   const url = `${location.origin}${location.pathname}?unirse=${g.codigo}`;
-  const texto = `Fai comigo a racha «${g.nome}» en O meu caos. Código: ${g.codigo}`;
+  const texto = g.tipo === "lista" ? `Únete á lista «${g.nome}» en O meu caos. Código: ${g.codigo}` : `Fai comigo a racha «${g.nome}» en O meu caos. Código: ${g.codigo}`;
   abrirModal("Convidar", `
     <p>Manda esta ligazón ás persoas coas que queres facer «${esc(g.nome)}»:</p>
     <input type="text" readonly value="${esc(url)}" onclick="this.select()">
@@ -801,7 +939,7 @@ function opcionsGrupo(g){
         cargarGrupos();
       })();
     },
-    { textoBorrar: creador ? "Borrar a racha" : "Saír do grupo", confirmar: creador ? "Borrarase a racha para todo o grupo. Seguro?" : "Deixarás de formar parte desta racha. Seguro?" });
+    { textoBorrar: creador ? (g.tipo === "lista" ? "Borrar a lista" : "Borrar a racha") : "Saír do grupo", confirmar: creador ? `Borrarase ${g.tipo === "lista" ? "a lista" : "a racha"} para todo o grupo. Seguro?` : "Deixarás de formar parte deste grupo. Seguro?" });
 }
 function tarxetaGrupo(g){
   const hk = hoxeISO(), toca = g.dias.includes(new Date().getDay());
@@ -816,7 +954,10 @@ function tarxetaGrupo(g){
       else if (m.user_id === eu()) cel.push(`<button class="${ok?"ok":""} ${k===hk?"hoxe":""}" data-acc="marcaGrupo" data-id="${g.id}" data-k="${k}" aria-label="${esc(dataCurta(k))}: ${ok?"feito":"sen facer"}" aria-pressed="${ok}"></button>`);
       else cel.push(`<span class="${ok?"ok":""} ${k===hk?"hoxe":""}" title="${esc(dataCurta(k))}"></span>`);
     }
-    return `<div class="gfila" style="--c:${corMembro(g, m.user_id)}"><span class="gnome">${esc(m.alcume)}${m.user_id === eu() ? " (ti)" : ""}</span><div class="dias14">${cel.join("")}</div></div>`;
+    const enviado = UI.toquesHoxe && UI.toquesHoxe.has(g.id + "|" + m.user_id);
+    const toque = m.user_id !== eu() && g.dias.includes(new Date().getDay())
+      ? `<button class="toque" data-acc="toque" data-id="${g.id}" data-k="${m.user_id}" ${enviado ? "disabled" : ""} aria-label="${marcou(g, m.user_id, hk) ? "Felicitar" : "Mandar ánimo"} a ${esc(m.alcume)}">${enviado ? "Enviado" : (marcou(g, m.user_id, hk) ? "Bravo" : "Ánimo")}</button>` : "";
+    return `<div class="gfila" style="--c:${corMembro(g, m.user_id)}"><span class="gnome">${esc(m.alcume)}${m.user_id === eu() ? " (ti)" : ""}</span><div class="dias14">${cel.join("")}</div>${toque}</div>`;
   }).join("");
   return `<section class="gcard">
     <div class="gcab">
@@ -830,12 +971,81 @@ function tarxetaGrupo(g){
     <div class="barra-accions">${toca ? `<button class="btn ${meu?"":"primario"}" data-acc="marcaGrupo" data-id="${g.id}" data-k="${hk}">${meu ? "Desmarcar hoxe" : "Feito hoxe"}</button>` : ""}<button class="btn" data-acc="convidarGrupo" data-id="${g.id}">Convidar</button><button class="btn" data-acc="opcionsGrupo" data-id="${g.id}">Máis</button></div>
   </section>`;
 }
+async function mandarToque(gid, para){
+  const g = UI.grupos.find(x => x.id === gid);
+  const tipo = marcou(g, para, hoxeISO()) ? "bravo" : "animo";
+  UI.toquesHoxe.add(gid + "|" + para); render();
+  const { error } = await sb.from("rut_toques").insert({ grupo_id:gid, de:eu(), para, tipo });
+  if (error && !/duplicate|unique/i.test(error.message)){ UI.toquesHoxe.delete(gid + "|" + para); render(); toast("Non se puido enviar", error.message); return; }
+  const m = g.membros.find(x => x.user_id === para);
+  toast(tipo === "bravo" ? "Felicitación enviada" : "Ánimo enviado", `A ${m ? m.alcume : "esa persoa"} chegaralle unha mensaxe amable.`);
+}
+function crearLista(){
+  if (!sb || !sesion){ toast("Necesitas entrar coa túa conta"); return; }
+  abrirModal("Nova lista compartida", `
+    <label>Nome da lista<input type="text" name="nome" maxlength="80" required placeholder="Compra do piso, ensaio do sábado, viaxe…"></label>
+    <label>O teu nome na lista<input type="text" name="alcume" maxlength="30" required value="${esc(alcumeInicial())}"></label>`,
+    f => {
+      const nome = f.nome.value.trim(), alcume = f.alcume.value.trim();
+      (async () => {
+        const { data, error } = await sb.rpc("rut_crear_grupo", { p_nome:nome, p_dias:[0,1,2,3,4,5,6], p_alcume:alcume, p_tipo:"lista" });
+        if (error){ toast("Non se puido crear", error.message); return; }
+        E.axustes.alcume = alcume; gardar(); await cargarGrupos();
+        const g = UI.grupos.find(x => x.id === data.id); if (g) setTimeout(() => convidarGrupo(g), 300);
+      })();
+      return true;
+    }, null, { textoGardar:"Crear" });
+}
+async function engadirItem(gid, texto){
+  const g = UI.grupos.find(x => x.id === gid); if (!g || !texto) return;
+  const temp = { id:"tmp" + uid(), grupo_id:gid, texto, feito:false, creado:new Date().toISOString(), creado_por:eu() };
+  g.items.push(temp); render(); setTimeout(() => { const i = document.querySelector(`[data-form="item"][data-id="${gid}"] input`); if (i) i.focus(); }, 0);
+  const { error } = await sb.from("rut_lista_items").insert({ grupo_id:gid, texto, creado_por:eu() });
+  if (error) toast("Non se puido engadir", error.message);
+  cargarGrupos();
+}
+async function marcarItem(id){
+  const g = UI.grupos.find(x => x.items.some(i => i.id === id)), it = g.items.find(i => i.id === id);
+  it.feito = !it.feito; it.feito_por = it.feito ? eu() : null; render();
+  const { error } = await sb.from("rut_lista_items").update({ feito:it.feito, feito_por:it.feito_por }).eq("id", id);
+  if (error){ toast("Non se puido gardar", error.message); cargarGrupos(); }
+}
+async function limparLista(gid){
+  const g = UI.grupos.find(x => x.id === gid);
+  g.items = g.items.filter(i => !i.feito); render();
+  const { error } = await sb.from("rut_lista_items").delete().eq("grupo_id", gid).eq("feito", true);
+  if (error) toast("Non se puido limpar", error.message);
+  cargarGrupos();
+}
+function tarxetaLista(g){
+  const pend = g.items.filter(i => !i.feito).length;
+  return `<section class="gcard">
+    <div class="gcab"><div><b class="gtit">${esc(g.nome)}</b>
+      <div class="avatares">${g.membros.map(m => `<span class="avatar ok" style="--c:${corMembro(g, m.user_id)}" title="${esc(m.alcume)}">${esc((m.alcume.trim()[0] || "?").toUpperCase())}</span>`).join("")}</div></div>
+      <div class="gracha"><span>${pend}</span><small>pendentes</small></div></div>
+    <ul class="items">${g.items.map(i => `<li class="${i.feito?"feito":""}">
+      <button class="check ${i.feito?"feito":""}" style="--c:${i.feito_por ? corMembro(g, i.feito_por) : "var(--acento)"}" data-acc="marcarItem" data-id="${i.id}" aria-label="${i.feito?"Desmarcar":"Marcar"}: ${esc(i.texto)}"></button>
+      <span class="itxt">${esc(i.texto)}</span>${i.feito && i.feito_por ? `<small>${esc((g.membros.find(m => m.user_id === i.feito_por) || {}).alcume || "")}</small>` : ""}</li>`).join("") || `<li class="vacio">A lista está baleira.</li>`}</ul>
+    <form class="rapida" data-form="item" data-id="${g.id}"><input type="text" name="t" maxlength="200" placeholder="Engadir á lista" aria-label="Novo elemento para ${esc(g.nome)}"><button class="btn primario" type="submit">Engadir</button></form>
+    <div class="barra-accions">${g.items.some(i => i.feito) ? `<button class="btn" data-acc="limparLista" data-id="${g.id}">Quitar os feitos</button>` : ""}<button class="btn" data-acc="convidarGrupo" data-id="${g.id}">Convidar</button><button class="btn" data-acc="opcionsGrupo" data-id="${g.id}">Máis</button></div>
+  </section>`;
+}
+function seccionListas(){
+  if (!sb || !sesion) return "";
+  if (UI.gruposErro === "falta-sql") return "";
+  const ls = listasG();
+  return `<h3 style="margin-top:8px">Listas compartidas</h3>
+    ${UI.grupos == null ? `<p class="vacio">Cargando…</p>` : ls.map(tarxetaLista).join("") || `<p class="vacio">Listas para facer con outras persoas: a compra do piso, o que levar a un ensaio, unha viaxe…</p>`}
+    <div class="barra-accions"><button class="btn" data-acc="crearLista">Nova lista compartida</button>${ls.length ? "" : `<button class="btn" data-acc="unirseGrupo">Unirme cun código</button>`}</div>`;
+}
+const urlICS = () => `${CONFIG.url}/functions/v1/rut-calendario?t=${E.axustes.icsToken}`;
+function novoTokenICS(){ const b = crypto.getRandomValues(new Uint8Array(24)); E.axustes.icsToken = b64(b).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); E.axustes.zona = ZONA; gardar(); }
 function seccionCompartidas(){
   let corpo;
   if (!sb || !sesion) corpo = `<p class="vacio">Para facer rachas con outras persoas necesitas entrar coa túa conta.</p>`;
   else if (UI.gruposErro === "falta-sql") corpo = `<p class="vacio">Falta preparar a base de datos para as rachas compartidas (ficheiro <b>compartir.sql</b>).</p>`;
   else if (UI.grupos == null) corpo = `<p class="vacio">Cargando…</p>`;
-  else corpo = (UI.grupos.map(tarxetaGrupo).join("") || `<p class="vacio">Fai un hábito en compañía: crea unha racha e convida a quen queiras, ou únete cun código.</p>`)
+  else corpo = (rachasG().map(tarxetaGrupo).join("") || `<p class="vacio">Fai un hábito en compañía: crea unha racha e convida a quen queiras, ou únete cun código.</p>`)
     + `<div class="barra-accions"><button class="btn primario" data-acc="crearGrupo">Nova racha compartida</button><button class="btn" data-acc="unirseGrupo">Unirme cun código</button></div>`;
   return `<h3 style="margin-top:8px">Rachas compartidas</h3>${corpo}`;
 }
@@ -943,7 +1153,7 @@ function filaTarefa(t, accions){
     <div class="corpo">
       <div data-acc="editarTarefa" data-id="${t.id}">
         <div class="tit ${t.prio==="alta"&&!t.feita?"prio-alta":""}">${esc(t.titulo)}</div>
-        <div class="meta">${t.data ? `<span class="${atrasada?"atrasada":""}">${atrasada?"Atrasada: ":""}${esc(dataCurta(t.data))}${t.hora?" ás "+t.hora:""}</span>` : ""}${t.cat ? `<span><span class="punto"></span> ${esc(c.nome)}</span>` : ""}${t.repetir && rep ? `<span>${esc(rep[1])}</span>` : ""}${t.prio==="alta"?"<span>Prioridade alta</span>":""}</div>
+        <div class="meta">${t.data ? `<span class="${atrasada?"atrasada":""}">${atrasada?"Atrasada: ":""}${esc(dataCurta(t.data))}${t.hora?" ás "+t.hora:""}</span>` : ""}${t.cat ? `<span><span class="punto"></span> ${esc(c.nome)}</span>` : ""}${t.repetir && rep ? `<span>${esc(rep[1])}</span>` : ""}${(t.pasos||[]).length ? `<span>${t.pasos.filter(x => x.feito).length} de ${t.pasos.length} pasos</span>` : ""}${t.prio==="alta"?"<span>Prioridade alta</span>":""}</div>
       </div>
       ${accions ? `<div class="mini">${accions}</div>` : ""}
     </div></li>`;
@@ -987,6 +1197,8 @@ function vistaHoxe(){
     const fm = minutosFoco(hk);
     const manha = bloquesDaData(sumarDias(hk, 1))[0];
     if (fm) extraHoxe += `<p class="anticipo">Hoxe levas ${durTxt(fm)} de concentración.</p>`;
+    if (new Date().getHours() >= 20 && !E.pechados[hk])
+      extraHoxe += `<div class="nota-caixa"><p>Antes de durmir: recoloca o pendente e garda unha cousa boa do día.</p><div class="fila"><button class="btn primario" data-acc="pecharDia">Pechar o día</button></div></div>`;
     const ult = E.estados.filter(x => x.data === hk).slice(-1)[0];
     if (animoBloqueado) extraHoxe += `<div class="nota-caixa estado-caixa"><p>O teu rexistro de ánimo está pechado neste dispositivo.</p><div class="fila"><button class="btn" data-acc="desbloquearAnimo">Abrilo</button></div></div>`;
     else extraHoxe += `<div class="nota-caixa estado-caixa"><p>${ult ? `Ás ${ult.hora}: enerxía ${NIV_E[ult.enerxia-1].toLowerCase()}, ánimo ${NIV_A[ult.animo-1].toLowerCase()}.` : "Como estás agora?"}</p><div class="fila"><button class="btn" data-acc="estado">${ult ? "Rexistrar de novo" : "Rexistrar enerxía e ánimo"}</button></div></div>`;
@@ -1028,9 +1240,9 @@ function vistaHoxe(){
     ${haiAtrasadas ? `<div class="barra-accions"><button class="btn" data-acc="atrasadasHoxe">Pasar as atrasadas a hoxe</button></div>` : ""}
     <form class="rapida" data-form="rapida"><input type="text" name="t" placeholder="Engadir tarefa ${eHoxe ? "para hoxe" : "a este día"}" aria-label="Nova tarefa"><button class="btn primario" type="submit">Engadir</button></form>
     ${(() => {
-      const grs = eHoxe ? (UI.grupos || []).filter(g => g.dias.includes(dt.getDay())) : [];
+      const grs = eHoxe ? rachasG().filter(g => g.dias.includes(dt.getDay())) : [];
       if (!(habs.length && habsVisibles) && !grs.length) return "";
-      const propios = habsVisibles ? habs.map(h => `<button class="hab-chip ${h.rexistro[iso]?"feito":""}" style="--c:${cat(h.cat).cor}" data-acc="habitoData" data-id="${h.id}" data-k="${iso}" aria-pressed="${!!h.rexistro[iso]}">${esc(h.nome)}</button>`).join("") : "";
+      const propios = habsVisibles ? habs.map(h => `<button class="hab-chip ${feitoH(h,iso)?"feito":""}" style="--c:${cat(h.cat).cor}" data-acc="habitoData" data-id="${h.id}" data-k="${iso}" data-modo="mais" aria-pressed="${feitoH(h,iso)}">${esc(h.nome)}${h.meta ? ` <small>${etiquetaCant(h, iso)}</small>` : ""}</button>`).join("") : "";
       const comp = grs.map(g => { const act = activosEn(g, iso), f = act.filter(m => marcou(g, m.user_id, iso)).length, meu = marcou(g, eu(), iso);
         return `<button class="hab-chip compartido ${meu?"feito":""}" data-acc="marcaGrupo" data-id="${g.id}" data-k="${iso}" aria-pressed="${meu}">${esc(g.nome)} <small>${f} de ${act.length}</small></button>`; }).join("");
       return `<h3>Hábitos ${eHoxe ? "de hoxe" : "deste día"}</h3><div class="habs-hoxe">${propios}${comp}</div>`;
@@ -1044,6 +1256,7 @@ function vistaHoxe(){
 }
 
 function vistaSemana(){
+  if (!UI.modelo && UI.semanaModo === "mes") return selectorSemana() + vistaMes();
   const sel = UI.dia, hoxe = new Date().getDay();
   const cols = ORDE.map(d => {
     const barras = bloquesDoDia(d).map(b => {
@@ -1059,19 +1272,176 @@ function vistaSemana(){
   const bl = bloquesDoDia(sel);
   const cabeceira = modelo
     ? `<div class="editando"><p>Estás editando o modelo <b>«${esc(modelo.nome)}»</b>. Os cambios non afectan á túa semana tipo.</p><div class="fila"><button class="btn primario" data-acc="rematarModelo">Rematar edición</button></div></div>`
-    : `<h3 style="margin-top:8px">A túa semana tipo</h3><p class="pequeno" style="margin:0">É o plan que se repite cada semana. Os cambios dun día concreto fanse desde Hoxe.</p>`;
+    : `${selectorSemana()}<h3 style="margin-top:8px">A túa semana tipo</h3><p class="pequeno" style="margin:0">É o plan que se repite cada semana. Os cambios dun día concreto fanse desde Hoxe.</p>`;
   return `${cabeceira}
     <div class="semana">${cols}</div>
     <div class="escala"><span>6:00</span><span>12:00</span><span>18:00</span><span>24:00</span></div>
     <div class="horas" aria-label="Horas á semana por categoría">${horas}</div>
     <h3>${DIAS[sel]}</h3>
-    ${bl.length ? `<ul class="lt">${bl.map(b => `<li data-acc="editarBloqueTipo" data-id="${b.id}" style="--c:${cat(b.cat).cor}"><span class="h">${b.ini}</span><span class="t">${esc(b.titulo)}<small>ata as ${b.fin}, ${esc(cat(b.cat).nome.toLowerCase())}${b.dias.length>1?`, tamén ${b.dias.filter(x=>x!==sel).sort((x,y)=>ORDE.indexOf(x)-ORDE.indexOf(y)).map(x=>DIAS_C[x]).join(" ")}`:""}</small></span></li>`).join("")}</ul>` : `<p class="vacio">Este día está baleiro. Engade un bloque para empezar.</p>`}
-    <div class="barra-accions"><button class="btn primario" data-acc="novoBloque">Engadir bloque</button>${bl.length?`<button class="btn" data-acc="copiarDia">Copiar este día a…</button>`:""}</div>
+    ${bl.length ? `<p class="pequeno" style="margin:0 0 8px">Arrastra a asa ⠿ para mover un bloque e o bordo de abaixo para cambiar a súa duración. Toca o bloque para editalo.</p>${diaGrade(sel)}` : `<p class="vacio">Este día está baleiro. Engade un bloque para empezar.</p>`}
+    <div class="barra-accions"><button class="btn primario" data-acc="novoBloque">Engadir bloque</button>${bl.length?`<button class="btn" data-acc="copiarDia">Copiar este día a…</button>`:""}${modelo ? "" : `<button class="btn" data-acc="imprimir">Imprimir a semana</button>`}</div>
     ${modelo ? "" : seccionModelos()}
     ${modelo ? "" : `<h3>Revisión semanal</h3>
     <p class="vacio">Mira como foi a semana, recoloca o que quedou pendente e escolle as túas prioridades.</p>
     <div class="barra-accions"><button class="btn" data-acc="aba" data-id="revision">Abrir a revisión</button></div>`}`;
 }
+const hhmm = m => `${pad(Math.floor(m/60))}:${pad(m%60)}`;
+function selectorSemana(){
+  const m = UI.semanaModo === "mes" ? "mes" : "tipo";
+  return `<div class="segmentos" role="group" aria-label="Vista"><button data-acc="semanaModo" data-id="tipo" class="${m==="tipo"?"sel":""}" aria-pressed="${m==="tipo"}">Semana tipo</button><button data-acc="semanaModo" data-id="mes" class="${m==="mes"?"sel":""}" aria-pressed="${m==="mes"}">Mes</button></div>`;
+}
+/* Grade dun día con bloques que se poden arrastrar e estirar */
+const PXM = 0.9;
+function diaGrade(d){
+  const bl = bloquesDoDia(d);
+  const ini = Math.min(420, ...bl.map(b => Math.floor(mins(b.ini) / 60) * 60));
+  const fin = Math.max(1380, ...bl.map(b => Math.ceil(mins(b.fin) / 60) * 60));
+  const carrís = [], pos = new Map();
+  bl.forEach(b => { let c = carrís.findIndex(f => f <= mins(b.ini)); if (c < 0){ c = carrís.length; carrís.push(0); } carrís[c] = mins(b.fin); pos.set(b.id, c); });
+  const n = Math.max(1, carrís.length);
+  let liñas = "";
+  for (let h = ini; h <= fin; h += 60) liñas += `<div class="gh" style="top:${(h - ini) * PXM}px"><span>${pad(h / 60)}:00</span></div>`;
+  const bloques = bl.map(b => {
+    const c = pos.get(b.id), i = mins(b.ini), f = mins(b.fin);
+    return `<div class="gb ${(f - i) * PXM < 44 ? "curto" : ""}" data-id="${b.id}" style="--c:${cat(b.cat).cor};top:${(i - ini) * PXM}px;height:${Math.max(22, (f - i) * PXM)}px;left:calc(3.2rem + (100% - 3.2rem) * ${c / n});width:calc((100% - 3.2rem) / ${n} - 4px)">
+      <button class="gb-mover" aria-label="Mover ${esc(b.titulo)}">⠿</button>
+      <button class="gb-corpo" data-acc="editarBloqueTipo" data-id="${b.id}"><b>${esc(b.titulo)}</b><small>${b.ini}–${b.fin}${b.dias.length > 1 ? `, tamén ${b.dias.filter(x => x !== d).sort((x,y) => ORDE.indexOf(x) - ORDE.indexOf(y)).map(x => DIAS_C[x]).join(" ")}` : ""}</small></button>
+      <div class="gb-estirar" aria-hidden="true"></div>
+    </div>`;
+  }).join("");
+  return `<div class="grade" data-ini="${ini}" style="height:${(fin - ini) * PXM + 8}px">${liñas}${bloques}</div>`;
+}
+let arrastre = null;
+document.addEventListener("pointerdown", e => {
+  const asa = e.target.closest(".gb-mover, .gb-estirar"); if (!asa) return;
+  const gb = asa.closest(".gb"), b = fonteTipo().bloques.find(x => x.id === gb.dataset.id); if (!b) return;
+  e.preventDefault(); try { asa.setPointerCapture(e.pointerId); } catch {}
+  arrastre = { gb, b, modo: asa.classList.contains("gb-mover") ? "mover" : "estirar", y0:e.clientY, ini:mins(b.ini), fin:mins(b.fin), base:Number(gb.parentElement.dataset.ini) };
+  gb.classList.add("arrastrando");
+});
+document.addEventListener("pointermove", e => {
+  const a = arrastre; if (!a) return;
+  const dm = Math.round((e.clientY - a.y0) / PXM / 15) * 15;
+  let i = a.ini, f = a.fin;
+  if (a.modo === "mover"){ i += dm; f += dm; if (i < 0){ f -= i; i = 0; } if (f > 1439){ i -= f - 1439; f = 1439; } }
+  else f = Math.max(i + 15, Math.min(1439, f + dm));
+  a.ni = i; a.nf = f;
+  a.gb.style.top = `${(i - a.base) * PXM}px`; a.gb.style.height = `${Math.max(22, (f - i) * PXM)}px`;
+  a.gb.querySelector("small").textContent = `${hhmm(i)}–${hhmm(f)}`;
+});
+function soltarArrastre(gardarCambios){
+  const a = arrastre; if (!a) return; arrastre = null;
+  a.gb.classList.remove("arrastrando");
+  if (gardarCambios && a.ni != null && (a.ni !== a.ini || a.nf !== a.fin)){
+    a.b.ini = hhmm(a.ni); a.b.fin = hhmm(a.nf); gardar();
+    if (a.b.dias.length > 1) toast("Bloque cambiado", "Tamén nos outros días onde se repite.");
+  } else render();
+}
+document.addEventListener("pointerup", () => soltarArrastre(true));
+document.addEventListener("pointercancel", () => soltarArrastre(false));
+
+/* Vista de mes */
+function vistaMes(){
+  const base = UI.mes || hoxeISO().slice(0, 7), [y, mo] = base.split("-").map(Number);
+  const primeiro = new Date(y, mo - 1, 1), desfase = (primeiro.getDay() + 6) % 7, dias = new Date(y, mo, 0).getDate(), hk = hoxeISO();
+  let celas = "";
+  for (let i = 0; i < desfase; i++) celas += `<span class="mc baleira"></span>`;
+  for (let n = 1; n <= dias; n++){
+    const iso = `${y}-${pad(mo)}-${pad(n)}`, ex = E.excepcions[iso];
+    const tar = E.tarefas.filter(t => t.data === iso && !t.feita);
+    const puntos = tar.slice(0, 4).map(t => `<i style="background:${t.cat ? cat(t.cat).cor : "var(--suave)"}"></i>`).join("");
+    const cambio = ex && ((ex.canceladas||[]).length || Object.keys(ex.mod||{}).length || (ex.extra||[]).length);
+    celas += `<button class="mc ${iso===hk?"hoxe":""} ${iso<hk?"pasado":""} ${ex && ex.modelo?"modelo":""}" data-acc="irData" data-k="${iso}" aria-label="${n} de ${MESES[mo-1]}${tar.length?`, ${tar.length} tarefas`:""}${ex && ex.modelo?`, modelo ${esc(ex.modelo)}`:""}">
+      <span class="mc-n">${n}</span>${ex && ex.modelo ? `<span class="mc-mod">${esc(ex.modelo)}</span>` : (cambio ? `<span class="mc-mod cambio">cambios</span>` : "")}<span class="mc-p">${puntos}${tar.length > 4 ? "+" : ""}</span></button>`;
+  }
+  const doMes = tarefasOrdenadas(E.tarefas.filter(t => t.data && t.data.startsWith(base) && !t.feita && t.data >= hk));
+  return `<div class="navdia"><button class="btn" data-acc="moverMes" data-id="-1" aria-label="Mes anterior">‹</button><span class="etq">${MESES[mo-1].replace(/^./, c => c.toUpperCase())} ${y}</span><button class="btn" data-acc="moverMes" data-id="1" aria-label="Mes seguinte">›</button></div>
+    <div class="mes-cab">${["L","M","M","X","V","S","D"].map(x => `<span>${x}</span>`).join("")}</div>
+    <div class="mes">${celas}</div>
+    <p class="pequeno">Toca un día para velo ou cambialo. Os puntos son tarefas; a etiqueta, un modelo de semana aplicado.</p>
+    <h3>Que vén este mes</h3>
+    ${doMes.length ? `<ul class="lista">${doMes.map(t => filaTarefa(t)).join("")}</ul>` : `<p class="vacio">Non tes tarefas con data o que queda de mes.</p>`}
+    <div class="barra-accions"><button class="btn" data-acc="oTeuMes" data-id="${base}">Ver o resumo deste mes</button></div>`;
+}
+
+/* O teu mes: resumo e imaxe para gardar */
+function datosMes(base){
+  const [y, mo] = base.split("-").map(Number), dias = new Date(y, mo, 0).getDate(), hk = hoxeISO();
+  const datas = []; for (let n = 1; n <= dias; n++){ const iso = `${y}-${pad(mo)}-${pad(n)}`; if (iso <= hk) datas.push(iso); }
+  const porCat = {};
+  datas.forEach(iso => bloquesDaData(iso).forEach(b => { porCat[b.cat] = (porCat[b.cat] || 0) + Math.max(0, mins(b.fin) - mins(b.ini)); }));
+  const feitas = E.tarefas.filter(t => t.feita && t.feitaEn && t.feitaEn.startsWith(base)).length;
+  let prog = 0, ok = 0, mellor = { n:0, nome:"" };
+  E.habitos.forEach(h => {
+    let run = 0;
+    datas.forEach(iso => { if (!h.dias.includes(new Date(iso+"T00:00").getDay())) return; prog++; if (feitoH(h, iso)){ ok++; run++; if (run > mellor.n) mellor = { n:run, nome:h.nome }; } else run = 0; });
+  });
+  const foco = E.foco.filter(f => f.data.startsWith(base)).reduce((s, f) => s + f.min, 0);
+  const est = (!animoBloqueado ? E.estados : []).filter(x => x.data.startsWith(base));
+  const fitos = E.fitos.filter(f => f.data.startsWith(base));
+  const diasCompletos = datas.filter(iso => { const hs = E.habitos.filter(h => h.dias.includes(new Date(iso+"T00:00").getDay())); return hs.length && hs.every(h => feitoH(h, iso)); }).length;
+  return { y, mo, porCat, feitas, pc: prog ? Math.round(ok / prog * 100) : null, mellor, foco, enerxia: est.length ? media(est, "enerxia") : null, animo: est.length ? media(est, "animo") : null, fitos, diasCompletos, ndias: datas.length };
+}
+function oTeuMes(base){
+  base = base || hoxeISO().slice(0, 7);
+  const d = datosMes(base), nomeMes = `${MESES[d.mo-1]} de ${d.y}`;
+  const cats = Object.entries(d.porCat).sort((a,b) => b[1] - a[1]), max = Math.max(1, ...cats.map(x => x[1]));
+  abrirModal(`O teu ${MESES[d.mo-1]}`, `
+    <p class="resumo">${d.feitas ? `Completaches <b>${d.feitas}</b> ${d.feitas===1?"tarefa":"tarefas"}` : "Este mes aínda non marcaches tarefas"}${d.pc !== null ? `, cumpriches o <b>${d.pc} %</b> dos hábitos` : ""}${d.foco ? ` e concentrácheste <b>${durTxt(d.foco)}</b>` : ""}.</p>
+    ${d.mellor.n ? `<p>A túa mellor racha: <b>${d.mellor.n} días</b> con «${esc(d.mellor.nome)}».</p>` : ""}
+    ${d.diasCompletos ? `<p>${d.diasCompletos} ${d.diasCompletos===1?"día":"días"} fixeches todos os teus hábitos.</p>` : ""}
+    ${d.enerxia ? `<p>Enerxía media ${num1(d.enerxia)} e ánimo medio ${num1(d.animo)} sobre 5.</p>` : ""}
+    ${d.fitos.length ? `<p>Fitos: ${d.fitos.map(f => `${f.dias} días de «${esc(f.nome)}»`).join(", ")}.</p>` : ""}
+    ${cats.length ? `<div class="grupo">Onde foi o teu tempo planificado</div>${cats.map(([c, mn]) => `<div class="barcat" style="--c:${cat(c).cor}"><span>${esc(cat(c).nome)}</span><div class="progreso"><i style="width:${mn/max*100}%"></i></div><span>${horasTxt(mn)}</span></div>`).join("")}` : ""}`,
+    () => { imaxeMes(d, nomeMes); return false; }, null, { textoGardar:"Gardar como imaxe" });
+}
+async function imaxeMes(d, nomeMes){
+  try { await document.fonts.ready; } catch {}
+  const W = 1080, H = 1350, c = document.createElement("canvas"); c.width = W; c.height = H;
+  const x = c.getContext("2d"), st = getComputedStyle(document.documentElement);
+  const acento = st.getPropertyValue("--acento").trim() || "#6D4AFF", fondo = st.getPropertyValue("--fondo").trim() || "#F3F0FF", tinta = st.getPropertyValue("--tinta").trim() || "#1D2B2F", suave = st.getPropertyValue("--suave").trim() || "#5F6F73";
+  const DISP = '"Bricolage Grotesque", system-ui, sans-serif', TXT = '"Atkinson Hyperlegible", system-ui, sans-serif';
+  x.fillStyle = fondo; x.fillRect(0, 0, W, H);
+  x.fillStyle = acento; x.beginPath(); x.arc(W - 120, 110, 260, 0, Math.PI * 2); x.globalAlpha = .12; x.fill(); x.globalAlpha = 1;
+  x.fillStyle = acento; x.font = `800 54px ${DISP}`; x.fillText("O meu caos", 80, 130);
+  x.fillStyle = tinta; x.font = `800 96px ${DISP}`; x.fillText(nomeMes.replace(/^./, m => m.toUpperCase()), 80, 250);
+  const datos = [[d.feitas, d.feitas === 1 ? "tarefa feita" : "tarefas feitas"], [d.pc !== null ? d.pc + " %" : "–", "dos hábitos"], [d.foco ? horasTxt(d.foco) : "0 h", "de concentración"], [d.mellor.n ? d.mellor.n + " días" : "–", "mellor racha"]];
+  datos.forEach(([v, l], i) => {
+    const cx = 80 + (i % 2) * 470, cy = 400 + Math.floor(i / 2) * 200;
+    x.fillStyle = acento; x.font = `800 92px ${DISP}`; x.fillText(String(v), cx, cy);
+    x.fillStyle = suave; x.font = `400 36px ${TXT}`; x.fillText(l, cx, cy + 52);
+  });
+  const cats = Object.entries(d.porCat).sort((a,b) => b[1] - a[1]).slice(0, 6), max = Math.max(1, ...cats.map(z => z[1]));
+  x.fillStyle = tinta; x.font = `700 40px ${TXT}`; x.fillText("O teu tempo", 80, 780);
+  cats.forEach(([ci, mn], i) => {
+    const y0 = 830 + i * 64, k = cat(ci);
+    x.fillStyle = tinta; x.font = `400 32px ${TXT}`; x.fillText(k.nome, 80, y0 + 28);
+    x.fillStyle = k.cor; x.globalAlpha = .18; x.fillRect(330, y0 + 4, 560, 30); x.globalAlpha = 1; x.fillRect(330, y0 + 4, 560 * mn / max, 30);
+    x.fillStyle = suave; x.fillText(horasTxt(mn), 910, y0 + 28);
+  });
+  if (d.mellor.n){ x.fillStyle = suave; x.font = `400 30px ${TXT}`; x.fillText(`Mellor racha: «${d.mellor.nome}»`.slice(0, 52), 80, 1300); }
+  c.toBlob(async blob => {
+    const nome = `o-meu-caos-${d.y}-${pad(d.mo)}.png`, ficheiro = new File([blob], nome, { type:"image/png" });
+    if (navigator.canShare && navigator.canShare({ files:[ficheiro] })){ try { await navigator.share({ files:[ficheiro], title:"O meu caos" }); return; } catch (e){ if (e.name === "AbortError") return; } }
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = nome; a.click();
+  }, "image/png");
+}
+
+/* Imprimir a semana tipo */
+function imprimirSemana(){
+  const bl = E.bloques;
+  const ini = Math.min(420, ...bl.map(b => Math.floor(mins(b.ini) / 60) * 60));
+  const fin = Math.max(1320, ...bl.map(b => Math.ceil(mins(b.fin) / 60) * 60));
+  const alto = 165, esc_ = alto / (fin - ini);
+  let horas = ""; for (let h = ini; h <= fin; h += 60) horas += `<div class="ih" style="top:${(h-ini)*esc_}mm"><span>${pad(h/60)}:00</span></div>`;
+  const cols = ORDE.map(d => `<div class="ic"><div class="icn">${DIAS[d]}</div><div class="icc" style="height:${alto}mm">${horas}${bloquesDoDia(d).map(b => `<div class="ib" style="top:${(mins(b.ini)-ini)*esc_}mm;height:${(mins(b.fin)-mins(b.ini))*esc_}mm;--c:${cat(b.cat).cor}"><b>${esc(b.titulo)}</b><span>${b.ini}–${b.fin}</span></div>`).join("")}</div></div>`).join("");
+  const usadas = E.categorias.filter(c => bl.some(b => b.cat === c.id));
+  let z = document.getElementById("impresion");
+  if (!z){ z = document.createElement("div"); z.id = "impresion"; document.body.appendChild(z); }
+  z.innerHTML = `<h1>A miña semana</h1><div class="icols">${cols}</div><div class="ilenda">${usadas.map(c => `<span><i style="background:${c.cor}"></i>${esc(c.nome)}</span>`).join("")}</div>`;
+  window.print();
+}
+
 function rangoTxt(a, z){
   const f = iso => { const d = new Date(iso+"T00:00"); return `${d.getDate()} de ${MESES[d.getMonth()]}`; };
   return a === z ? `o ${f(a)}` : `do ${f(a)} ao ${f(z)}`;
@@ -1112,7 +1482,7 @@ function vistaTarefas(){
     const enCaixa = cls === "caixa";
     return `<div class="grupo ${cls||""}">${n}</div>${enCaixa ? `<p class="pequeno" style="margin:0">Dálle data a cada cousa ou bórraa.</p>` : ""}<ul class="lista">${g.map(t => filaTarefa(t, (enCaixa || n === "Atrasadas") && !t.feita ? accionsMover(t) : "")).join("")}</ul>`;
   }).join("");
-  return `<div class="filtros" role="group" aria-label="Filtrar tarefas">${[["pend","Pendentes"],["feitas","Feitas"],["todas","Todas"]].map(([k,n])=>`<button data-acc="filtro" data-id="${k}" class="${f===k?"sel":""}" aria-pressed="${f===k}">${n}</button>`).join("")}</div>
+  return `${seccionListas()}${sb && sesion && UI.gruposErro !== "falta-sql" ? `<h3>As túas tarefas</h3>` : ""}<div class="filtros" role="group" aria-label="Filtrar tarefas">${[["pend","Pendentes"],["feitas","Feitas"],["todas","Todas"]].map(([k,n])=>`<button data-acc="filtro" data-id="${k}" class="${f===k?"sel":""}" aria-pressed="${f===k}">${n}</button>`).join("")}</div>
     ${html || `<p class="vacio">${f==="feitas"?"Aínda non marcaches ningunha tarefa como feita.":"Non tes tarefas pendentes. Engade a primeira."}</p>`}
     <div class="barra-accions"><button class="btn primario" data-acc="novaTarefa">Engadir tarefa</button>${E.tarefas.some(t=>t.feita)?`<button class="btn" data-acc="limparFeitas">Borrar as feitas</button>`:""}</div>`;
 }
@@ -1126,13 +1496,13 @@ function vistaHabitos(){
       const d = new Date(); d.setDate(d.getDate() - i);
       const k = isoData(d);
       if (!h.dias.includes(d.getDay())) cadros.push(`<span class="libre" title="${esc(dataCurta(k))}: non toca"></span>`);
-      else cadros.push(`<button class="${h.rexistro[k]?"ok":""} ${k===hk?"hoxe":""}" data-acc="habitoData" data-id="${h.id}" data-k="${k}" aria-label="${esc(dataCurta(k))}: ${h.rexistro[k]?"feito":"sen facer"}" aria-pressed="${!!h.rexistro[k]}"></button>`);
+      else cadros.push(`<button class="${feitoH(h,k)?"ok":""} ${k===hk?"hoxe":""}" data-acc="habitoData" data-id="${h.id}" data-k="${k}" aria-label="${esc(dataCurta(k))}: ${feitoH(h,k)?"feito":"sen facer"}" aria-pressed="${feitoH(h,k)}"></button>`);
     }
     const hoxeProg = h.dias.includes(new Date().getDay());
     return `<div class="hab" style="--c:${c.cor}">
-      ${hoxeProg ? `<button class="check ${h.rexistro[hk]?"feito":""}" data-acc="habitoData" data-id="${h.id}" data-k="${hk}" aria-label="Feito hoxe: ${esc(h.nome)}"></button>` : `<span style="width:28px"></span>`}
+      ${hoxeProg ? `<button class="check ${feitoH(h,hk)?"feito":""}" data-acc="habitoData" data-id="${h.id}" data-k="${hk}" data-modo="${h.meta?"cantidade":""}" aria-label="Feito hoxe: ${esc(h.nome)}"></button>` : `<span style="width:28px"></span>`}
       <span class="nome" data-acc="editarHabito" data-id="${h.id}">${esc(h.nome)}</span>
-      <span class="info">${r ? `Racha de ${r} ${r===1?"día":"días"}` : "Sen racha aínda"}${p30 !== null ? `, ${p30} % nos últimos 30 días` : ""}${hoxeProg?"":". Hoxe non toca"}${h.dias.length<7?`. Días: ${ORDE.filter(x=>h.dias.includes(x)).map(x=>DIAS_C[x]).join(" ")}`:""}</span>
+      <span class="info">${h.meta && hoxeProg ? `Hoxe: ${etiquetaCant(h, hk)}. ` : ""}${r ? `Racha de ${r} ${r===1?"día":"días"}` : "Sen racha aínda"}${p30 !== null ? `, ${p30} % nos últimos 30 días` : ""}${hoxeProg?"":". Hoxe non toca"}${h.dias.length<7?`. Días: ${ORDE.filter(x=>h.dias.includes(x)).map(x=>DIAS_C[x]).join(" ")}`:""}</span>
       <div class="dias14" aria-label="Últimos 14 días">${cadros.join("")}</div>
     </div>`;
   }).join("");
@@ -1140,7 +1510,8 @@ function vistaHabitos(){
     <h3>Os teus hábitos</h3>
     ${E.habitos.length ? `<p class="pequeno" style="margin:0">Toca un cadro para marcar un día pasado que esqueciches.</p>` : ""}
     ${html || `<p class="vacio">Engade un hábito pequeno e concreto, como «camiñar 20 minutos».</p>`}
-    <div class="barra-accions"><button class="btn primario" data-acc="novoHabito">Engadir hábito</button></div>`;
+    <div class="barra-accions"><button class="btn primario" data-acc="novoHabito">Engadir hábito</button></div>
+    ${E.fitos.length ? `<h3>Fitos conseguidos</h3><div class="fitos">${E.fitos.slice().reverse().map(f => `<span class="fito"><b>${f.dias}</b> ${esc(f.nome)}<small>${esc(dataCurta(f.data))}</small></span>`).join("")}</div>` : ""}`;
 }
 
 function vistaRevision(){
@@ -1173,6 +1544,10 @@ function vistaRevision(){
         <div class="grupo">Segundo o que estabas facendo</div>${filasRitmo(r.porCat)}
         <div class="grupo">Por día da semana</div>${filasRitmo(r.porDia)}`;
     })()}
+    <h3>O teu diario</h3>
+    ${animoBloqueado ? `<p class="vacio">O teu diario está pechado neste dispositivo.</p><div class="barra-accions"><button class="btn" data-acc="desbloquearAnimo">Abrilo</button></div>`
+      : (E.diario.length ? `<ul class="diario">${E.diario.slice(-10).reverse().map(x => `<li data-acc="diario" data-k="${x.data}"><small>${esc(dataCurta(x.data))}</small>${esc(x.texto)}</li>`).join("")}</ul>` : `<p class="vacio">Aínda non escribiches nada. Unha liña ao día abonda.</p>`)}
+    <div class="barra-accions"><button class="btn" data-acc="diario">Escribir a liña de hoxe</button><button class="btn" data-acc="oTeuMes">Ver o teu mes</button></div>
     <h3>O que quedou pendente</h3>
     ${atrasadas.length ? `<p class="pequeno" style="margin:0">Decide para cando, sen culpa: recolocar tamén é planificar.</p><ul class="lista">${atrasadas.map(t => filaTarefa(t, accionsMover(t) + `<button class="btn perigo" data-acc="borrarTarefa" data-id="${t.id}">Borrar</button>`)).join("")}</ul>` : `<p class="vacio">Non tes nada atrasado.</p>`}
     ${proximas.length ? `<h3>O que vén</h3><ul class="lista">${proximas.map(t => filaTarefa(t)).join("")}</ul>` : ""}
@@ -1219,6 +1594,23 @@ function vistaAxustes(){
       <p>Lembrarme rexistrar como estou:</p>
       <div class="opcions">${LEMBRAR.map(([h,n]) => `<label><input type="checkbox" data-lembrar="${h}" ${(a.lembrarEstado||[]).includes(h)?"checked":""}><span>${n}</span></label>`).join("")}</div>
       <p class="pequeno">Se xa rexistraches algo na última hora e media, non te avisa.</p>
+    </div>
+    <h3>Ver no calendario do móbil</h3>
+    <div class="caixa-ax">
+      ${!sb || !sesion ? `<p>Necesitas entrar coa túa conta.</p>` : !a.icsToken
+        ? `<p>Os teus bloques e tarefas aparecerán no calendario do móbil (Google, Apple, Outlook) e actualízanse sós.</p><div class="fila"><button class="btn primario" data-acc="icsOn">Crear a ligazón do calendario</button></div>`
+        : `<p>Copia esta ligazón e engádea como calendario subscrito:</p><input type="text" readonly value="${esc(urlICS())}" onclick="this.select()">
+           <div class="fila"><button class="btn primario" data-acc="icsCopiar">Copiar</button>${/iPhone|iPad|Mac/.test(navigator.userAgent) ? `<a class="btn" href="${esc(urlICS().replace(/^https:/, "webcal:"))}">Abrir no Calendario</a>` : ""}<button class="btn" data-acc="icsNova">Cambiar a ligazón</button><button class="btn perigo" data-acc="icsOff">Desactivar</button></div>
+           <p class="pequeno"><b>iPhone/iPad:</b> Axustes → Calendario → Contas → Engadir conta → Outra → Engadir calendario subscrito. <b>Google Calendar</b> (no ordenador): Outros calendarios → + → Desde URL. Quen teña a ligazón pode ver o teu horario: non a compartas.</p>`}
+    </div>
+    <h3>Rachas compartidas</h3>
+    <div class="caixa-ax">
+      <label class="paso" style="margin:0"><input type="checkbox" data-bool="recibirToques" ${a.recibirToques === false ? "" : "checked"}><span>Recibir ánimos e felicitacións doutras persoas</span></label>
+    </div>
+    <h3>Pechar o día</h3>
+    <div class="caixa-ax">
+      <label>Lembrarme pechar o día
+        <select data-axuste-texto="pecharDia">${[["","Non"],["21:00","Ás 21:00"],["21:30","Ás 21:30"],["22:00","Ás 22:00"],["22:30","Ás 22:30"],["23:00","Ás 23:00"]].map(([v,n]) => `<option value="${v}" ${(a.pecharDia||"")===v?"selected":""}>${n}</option>`).join("")}</select></label>
     </div>
     <h3>Concentración</h3>
     <div class="caixa-ax">
@@ -1400,15 +1792,32 @@ function editarTarefa(t, base = {}){
     <label>Categoría<select name="cat">${optsCat(t.cat, true)}</select></label></div>
     <div class="duas"><label>Repetir<select name="repetir">${REPETIR.map(([v,n])=>`<option value="${v}" ${(t.repetir||"")===v?"selected":""}>${n}</option>`).join("")}</select></label>
     <label>Aviso<select name="aviso">${[["","Sen aviso"],["0","Á hora"],["15","15 min antes"],["60","1 hora antes"],["1440","O día anterior"],["10080","Unha semana antes"]].map(([v,n])=>`<option value="${v}" ${String(t.aviso)===v?"selected":""}>${n}</option>`).join("")}</select></label></div>
+    <label>Pasos (opcional)</label>
+    <ul class="pasos" id="pasosLista"></ul>
+    <div class="rapida" style="margin-top:6px"><input type="text" id="pasoNovo" placeholder="Engadir un paso pequeno" aria-label="Novo paso"><button type="button" class="btn" id="pasoEngadir">Engadir</button></div>
     <label>Notas<textarea name="notas">${esc(t.notas)}</textarea></label>`,
     f => {
       if (f.repetir.value && !f.data.value) return "Para repetir unha tarefa, ponlle unha data de inicio.";
+      t.pasos = f._pasos;
       Object.assign(t, { titulo:f.titulo.value.trim(), data:f.data.value, hora:f.hora.value, prio:f.prio.value, cat:f.cat.value, repetir:f.repetir.value, aviso:f.aviso.value === "" ? "" : Number(f.aviso.value), notas:f.notas.value.trim() });
       if (t.data) t.caixa = false;
       if (novo) E.tarefas.push(t);
       gardar(); return true;
     },
-    novo ? null : () => { E.tarefas = E.tarefas.filter(x => x.id !== t.id); gardar(); });
+    novo ? null : () => { E.tarefas = E.tarefas.filter(x => x.id !== t.id); gardar(); },
+    { trasAbrir: f => {
+      f._pasos = (t.pasos || []).map(x => ({ ...x }));
+      const lista = f.querySelector("#pasosLista"), inp = f.querySelector("#pasoNovo");
+      const pintar = () => {
+        lista.innerHTML = f._pasos.map((x, i) => `<li><label class="paso"><input type="checkbox" data-i="${i}" ${x.feito?"checked":""}><span>${esc(x.texto)}</span></label><button type="button" class="btn ligazon" data-quitar="${i}" aria-label="Quitar paso">Quitar</button></li>`).join("");
+        lista.querySelectorAll("input[data-i]").forEach(c => c.onchange = () => { f._pasos[c.dataset.i].feito = c.checked; });
+        lista.querySelectorAll("[data-quitar]").forEach(b => b.onclick = () => { f._pasos.splice(Number(b.dataset.quitar), 1); pintar(); });
+      };
+      const engadir = () => { const v = inp.value.trim(); if (!v) return; f._pasos.push({ id:uid(), texto:v, feito:false }); inp.value = ""; pintar(); inp.focus(); };
+      f.querySelector("#pasoEngadir").onclick = engadir;
+      inp.onkeydown = e => { if (e.key === "Enter"){ e.preventDefault(); engadir(); } };
+      pintar();
+    } });
 }
 function editarHabito(h){
   const novo = !h;
@@ -1416,15 +1825,32 @@ function editarHabito(h){
   abrirModal(novo ? "Novo hábito" : "Editar hábito", `
     <label>Hábito<input type="text" name="nome" value="${esc(h.nome)}" required placeholder="Por exemplo, ler 10 páxinas"></label>
     <label>Categoría<select name="cat">${optsCat(h.cat)}</select></label>
-    <label>Que días toca</label>${selDias(h.dias)}`,
+    <label>Que días toca</label>${selDias(h.dias)}
+    <div class="duas"><label>Meta diaria (opcional)<input type="number" name="meta" min="1" max="999" value="${h.meta || ""}" placeholder="Por exemplo, 8"></label>
+    <label>Unidade<input type="text" name="unidade" maxlength="20" value="${esc(h.unidade || "")}" placeholder="vasos, páxinas, min"></label></div>
+    <p class="pequeno">Se pos unha meta, contas cantidades (8 vasos de auga, 20 páxinas…) en vez de marcar só feito.</p>`,
     f => {
       const dias = diasForm(f);
       if (!dias.length) return "Escolle polo menos un día.";
-      Object.assign(h, { nome:f.nome.value.trim(), cat:f.cat.value, dias });
+      const meta = Number(f.meta.value) || 0;
+      if (!!meta !== !!h.meta) Object.keys(h.rexistro).forEach(k => { h.rexistro[k] = meta ? meta : true; });
+      Object.assign(h, { nome:f.nome.value.trim(), cat:f.cat.value, dias, meta: meta || null, unidade: f.unidade.value.trim() });
       if (novo) E.habitos.push(h);
       gardar(); return true;
     },
     novo ? null : () => { E.habitos = E.habitos.filter(x => x.id !== h.id); gardar(); });
+}
+function cantidadeHabito(h, k){
+  abrirModal(h.nome, `
+    <label>Canto levas ${k === hoxeISO() ? "hoxe" : dataCurta(k).toLowerCase()}?</label>
+    <div class="paso-num"><button type="button" class="btn" data-n="-1" aria-label="Menos">−</button><input type="number" name="v" min="0" value="${valorH(h, k)}" aria-label="Cantidade"><button type="button" class="btn" data-n="1" aria-label="Máis">+</button></div>
+    <p class="pequeno">Meta: ${h.meta}${h.unidade ? " " + esc(h.unidade) : ""}.</p>`,
+    f => {
+      const v = Math.max(0, Number(f.v.value) || 0);
+      if (v) h.rexistro[k] = v; else delete h.rexistro[k];
+      if (k === hoxeISO() && feitoH(h, k)) comprobarFito(h.nome, h.id, racha(h));
+      gardar(); return true;
+    }, null, { trasAbrir: f => f.querySelectorAll("[data-n]").forEach(b => b.onclick = () => { f.v.value = Math.max(0, (Number(f.v.value) || 0) + Number(b.dataset.n)); }) });
 }
 function copiarDia(){
   const orixe = UI.dia;
@@ -1441,7 +1867,9 @@ function copiarDia(){
 }
 function capturar(){
   abrirModal("Apuntar algo", `
-    <label>Que tes na cabeza?<input type="text" name="texto" required placeholder="Unha tarefa, unha idea, algo que te preocupa"></label>
+    <label for="capTexto">Que tes na cabeza?</label>
+    <div class="rapida" style="margin-top:4px"><input type="text" id="capTexto" name="texto" required placeholder="Unha tarefa, unha idea, algo que te preocupa">${voz() ? `<button type="button" class="btn mic" id="capMic" aria-label="Ditar por voz">${ICONA_MIC}</button>` : ""}</div>
+    <p class="pequeno" id="capVoz" aria-live="polite"></p>
     <label>Onde o gardo</label>
     <div class="opcions">
       <label><input type="radio" name="onde" value="caixa" checked><span>Caixa de entrada</span></label>
@@ -1454,7 +1882,26 @@ function capturar(){
       if (!texto) return "Escribe algo.";
       E.tarefas.push({ id:uid(), titulo:texto, cat:"", data: onde === "caixa" ? "" : sumarDias(hoxeISO(), Number(onde)), hora:"", prio:"media", aviso:"", repetir:"", feita:false, notas:"", caixa: onde === "caixa" });
       gardar(); toast("Apuntado", onde === "caixa" ? "Está na caixa de entrada." : ""); return true;
-    }, null, { textoGardar:"Apuntar" });
+    }, null, { textoGardar:"Apuntar", trasAbrir: f => { const b = f.querySelector("#capMic"); if (b) b.onclick = () => ditar(f.texto, f.querySelector("#capVoz"), b); if (capturar.voz && b) setTimeout(() => b.click(), 350); capturar.voz = false; } });
+}
+const ICONA_MIC = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>`;
+const voz = () => window.SpeechRecognition || window.webkitSpeechRecognition;
+let recoñecemento = null;
+function ditar(campo, info, boton, idioma){
+  const SR = voz(); if (!SR) return;
+  if (recoñecemento){ recoñecemento.stop(); return; }
+  const r = new SR(); recoñecemento = r;
+  r.lang = idioma || "gl-ES"; r.interimResults = true; r.continuous = false;
+  const base = campo.value ? campo.value.trim() + " " : "";
+  boton.classList.add("gravando"); info.textContent = "Escoitando… fala cando queiras.";
+  r.onresult = e => { campo.value = base + [...e.results].map(x => x[0].transcript).join(""); };
+  r.onerror = e => {
+    recoñecemento = null; boton.classList.remove("gravando");
+    if ((e.error === "language-not-supported" || e.error === "bad-grammar") && r.lang === "gl-ES") return ditar(campo, info, boton, "es-ES");
+    info.textContent = e.error === "not-allowed" ? "Permite o micrófono nos axustes do navegador." : e.error === "no-speech" ? "Non se oíu nada. Proba outra vez." : "Non se puido ditar. Podes usar o micrófono do teclado.";
+  };
+  r.onend = () => { recoñecemento = null; boton.classList.remove("gravando"); if (info.textContent.startsWith("Escoitando")) info.textContent = campo.value ? "Revisa o texto e preme Apuntar." : ""; };
+  try { r.start(); } catch { recoñecemento = null; boton.classList.remove("gravando"); }
 }
 function prepararFoco(idBloque){
   const b = idBloque ? bloquesDaData(hoxeISO()).find(x => x.id === idBloque) : null;
@@ -1475,6 +1922,58 @@ function prepararFoco(idBloque){
     }, null, { textoGardar:"Comezar" });
 }
 
+/* Executa algo que precisa a chave privada (ánimo e diario) */
+function conChavePrivada(fn){ if (chaveAnimo) return fn(); if (E.animo) return desbloquearAnimo(fn); return configurarAnimo(fn); }
+async function gardarDiario(iso, texto){
+  E.diario = E.diario.filter(x => x.data !== iso);
+  if (texto) E.diario.push({ data:iso, texto });
+  E.diario.sort((a,b) => a.data.localeCompare(b.data));
+  await cifrarEstados(); gardar();
+}
+function escribirDiario(iso){
+  iso = iso || hoxeISO();
+  conChavePrivada(() => {
+    const actual = (E.diario.find(x => x.data === iso) || {}).texto || "";
+    abrirModal(iso === hoxeISO() ? "Unha liña de hoxe" : `Diario: ${dataCurta(iso).toLowerCase()}`, `
+      <label>Que queres lembrar deste día?<textarea name="texto" maxlength="400" placeholder="Unha cousa boa, algo que aprendiches, como te sentiches…">${esc(actual)}</textarea></label>
+      <p class="pequeno">Gárdase cifrado: só ti podes lelo.</p>`,
+      f => { gardarDiario(iso, f.texto.value.trim()).then(() => toast("Gardado no diario")); return true; });
+  });
+}
+function pecharDia(){
+  const hk = hoxeISO(), dw = new Date().getDay();
+  const pend = E.tarefas.filter(t => !t.feita && t.data && diasDesde(t.data) <= 0);
+  const habs = E.habitos.filter(h => h.dias.includes(dw));
+  abrirModal("Pechar o día", `
+    ${pend.length ? `<p><b>O que quedou pendente</b></p>${pend.map(t => `<div class="pechar-fila"><span>${esc(t.titulo)}</span><div class="opcions">
+      <label><input type="radio" name="t_${t.id}" value="feita"><span>Feita</span></label>
+      <label><input type="radio" name="t_${t.id}" value="manha" checked><span>Mañá</span></label>
+      <label><input type="radio" name="t_${t.id}" value="deixar"><span>Deixar</span></label></div></div>`).join("")}` : `<p>Non quedou nada pendente. Ben!</p>`}
+    ${habs.length ? `<p style="margin-top:14px"><b>Hábitos de hoxe</b></p><div class="opcions">${habs.map(h => h.meta
+      ? `<label class="cant-pechar">${esc(h.nome)} <input type="number" name="h_${h.id}" min="0" value="${valorH(h, hk)}" style="width:80px"> / ${h.meta}</label>`
+      : `<label><input type="checkbox" name="h_${h.id}" ${feitoH(h, hk)?"checked":""}><span>${esc(h.nome)}</span></label>`).join("")}</div>` : ""}
+    <label style="margin-top:14px">Unha cousa boa de hoxe (opcional, vai ao teu diario cifrado)<textarea name="boa" maxlength="400">${esc(((E.diario || []).find(x => x.data === hk) || {}).texto || "")}</textarea></label>`,
+    f => {
+      let feitas = 0, mover = 0;
+      pend.forEach(t => {
+        const v = valorRadio(f, "t_" + t.id);
+        if (v === "feita"){ t.feita = true; t.feitaEn = hk; feitas++; }
+        if (v === "manha"){ t.data = sumarDias(hk, 1); mover++; }
+      });
+      habs.forEach(h => {
+        const el = f.elements["h_" + h.id];
+        if (h.meta){ const v = Math.max(0, Number(el.value) || 0); if (v) h.rexistro[hk] = v; else delete h.rexistro[hk]; }
+        else if (el.checked) h.rexistro[hk] = true; else delete h.rexistro[hk];
+        if (feitoH(h, hk)) comprobarFito(h.nome, h.id, racha(h));
+      });
+      E.pechados[hk] = true;
+      const boa = f.boa.value.trim();
+      gardar();
+      if (boa) conChavePrivada(() => gardarDiario(hk, boa));
+      toast("Día pechado", mover ? `${mover} ${mover===1?"cousa pasa":"cousas pasan"} a mañá. Descansa.` : "Descansa.");
+      return true;
+    }, null, { textoGardar:"Pechar o día" });
+}
 function rexistrarEstado(){
   if (!chaveAnimo){ if (E.animo) return desbloquearAnimo(rexistrarEstado); return configurarAnimo(rexistrarEstado); }
   const escala = (nome, niveis) => `<div class="opcions escala5">${niveis.map((n,i) => `<label><input type="radio" name="${nome}" value="${i+1}" ${i===2?"checked":""}><span>${n}</span></label>`).join("")}</div>`;
@@ -1554,8 +2053,23 @@ function pedirContrasinalNovo(){
 
 /* ---------- accións ---------- */
 const ACC = {
-  aba: id => { if (id === "habitos" || id === "hoxe") cargarGrupos(); UI.vista = id; if (id === "hoxe") UI.data = null; if (id !== "semana") UI.modelo = null; render(); window.scrollTo(0,0); },
+  aba: id => { if (["habitos","hoxe","tarefas"].includes(id)) cargarGrupos(); UI.vista = id; if (id === "hoxe") UI.data = null; if (id !== "semana") UI.modelo = null; render(); window.scrollTo(0,0); },
   estado: () => rexistrarEstado(),
+  oTeuMes: id => oTeuMes(id),
+  icsOn: () => novoTokenICS(),
+  icsNova: () => { if (confirm("A ligazón anterior deixará de funcionar. Continuar?")) { novoTokenICS(); toast("Ligazón nova creada", "Actualízaa no teu calendario."); } },
+  icsOff: () => { if (confirm("O calendario do móbil deixará de recibir os teus bloques. Continuar?")) { delete E.axustes.icsToken; gardar(); } },
+  icsCopiar: async () => { try { await navigator.clipboard.writeText(urlICS()); toast("Ligazón copiada"); } catch { toast("Selecciona e copia a ligazón a man"); } },
+  toque: (id, el) => mandarToque(id, el.dataset.k),
+  crearLista: () => crearLista(),
+  marcarItem: id => marcarItem(id),
+  limparLista: id => limparLista(id),
+  semanaModo: id => { UI.semanaModo = id; render(); },
+  moverMes: id => { const [y, m] = (UI.mes || hoxeISO().slice(0,7)).split("-").map(Number); const d = new Date(y, m - 1 + Number(id), 1); UI.mes = `${d.getFullYear()}-${pad(d.getMonth()+1)}`; render(); },
+  irData: (id, el) => { UI.vista = "hoxe"; UI.data = el.dataset.k === hoxeISO() ? null : el.dataset.k; render(); window.scrollTo(0,0); },
+  imprimir: () => imprimirSemana(),
+  pecharDia: () => pecharDia(),
+  diario: (id, el) => escribirDiario(el && el.dataset.k),
   marcaGrupo: (id, el) => marcarGrupo(id, el.dataset.k),
   crearGrupo: () => crearGrupo(),
   unirseGrupo: () => unirseGrupo(),
@@ -1564,7 +2078,7 @@ const ACC = {
   desordenar: () => { UI.ordenado = false; document.querySelectorAll(".marca").forEach(m => m.classList.remove("orde")); ordenarLogo(); },
   tema: id => { E.axustes.tema = id; gardar(); },
   desbloquearAnimo: () => desbloquearAnimo(),
-  pecharAnimo: () => { localStorage.removeItem(chaveAnimoLS()); chaveAnimo = null; E.estados = []; animoBloqueado = true; render(); toast("Feito", "Neste dispositivo pedirase a chave outra vez."); },
+  pecharAnimo: () => { localStorage.removeItem(chaveAnimoLS()); chaveAnimo = null; E.estados = []; E.diario = []; animoBloqueado = true; render(); toast("Feito", "Neste dispositivo pedirase a chave outra vez."); },
   benvidaAdaptar: () => { E.axustes.benvidaVista = true; UI.vista = "semana"; gardar(); toast("Toca un bloque para cambialo", "Ou engade os teus co botón «Engadir bloque»."); },
   benvidaBaleiro: () => { E.bloques = []; E.tarefas = []; E.habitos = []; E.axustes.benvidaVista = true; UI.vista = "semana"; gardar(); },
   recuperar: async () => {
@@ -1622,7 +2136,15 @@ const ACC = {
   limparFeitas: () => { if (confirm("Borrar todas as tarefas feitas?")){ E.tarefas = E.tarefas.filter(t => !t.feita); gardar(); } },
   editarHabito: id => editarHabito(E.habitos.find(h => h.id === id)),
   novoHabito: () => editarHabito(null),
-  habitoData: (id, el) => { const h = E.habitos.find(x => x.id === id), k = el.dataset.k; if (h.rexistro[k]) delete h.rexistro[k]; else h.rexistro[k] = true; gardar(); },
+  habitoData: (id, el) => {
+    const h = E.habitos.find(x => x.id === id), k = el.dataset.k, modo = el.dataset.modo;
+    if (h.meta && modo === "cantidade") return cantidadeHabito(h, k);
+    if (h.meta && modo === "mais") h.rexistro[k] = valorH(h, k) + 1;
+    else if (h.meta) { if (feitoH(h, k)) delete h.rexistro[k]; else h.rexistro[k] = h.meta; }
+    else if (h.rexistro[k]) delete h.rexistro[k]; else h.rexistro[k] = true;
+    if (k === hoxeISO() && feitoH(h, k)) comprobarFito(h.nome, h.id, racha(h));
+    gardar();
+  },
   capturar: () => capturar(),
   foco: id => prepararFoco(id),
   focoPausa: () => { const f = UI.foco; if (f.pausa == null) f.pausa = restante(); else { f.fin = Date.now() + f.pausa; f.pausa = null; } gardarFoco(); actualizarReloxo(); },
@@ -1671,6 +2193,11 @@ document.addEventListener("submit", async e => {
     E.tarefas.push({ id:uid(), titulo:t, cat:"", data:UI.data || hoxeISO(), hora:"", prio:"media", aviso:"", repetir:"", feita:false, notas:"" });
     gardar(); setTimeout(() => $('[data-form="rapida"] input')?.focus(), 0);
   }
+  if (f.dataset.form === "item"){
+    e.preventDefault();
+    const t = f.t.value.trim(); if (!t) return;
+    engadirItem(f.dataset.id, t);
+  }
   if (f.dataset.form === "revision"){
     e.preventDefault();
     E.revisions[semanaISO(new Date())] = { data:hoxeISO(), ben:f.ben.value.trim(), custou:f.custou.value.trim(), prioridades:f.prioridades.value.trim() };
@@ -1693,6 +2220,8 @@ document.addEventListener("submit", async e => {
 document.addEventListener("change", e => {
   const t = e.target;
   if (t.dataset.axuste){ E.axustes[t.dataset.axuste] = Number(t.value); gardar(); }
+  if (t.dataset.bool){ E.axustes[t.dataset.bool] = t.checked; gardar(); }
+  if (t.dataset.axusteTexto){ E.axustes[t.dataset.axusteTexto] = t.value; E.axustes.zona = ZONA; gardar(); }
   if (t.dataset.lembrar){ const l = new Set(E.axustes.lembrarEstado || []); if (t.checked) l.add(t.dataset.lembrar); else l.delete(t.dataset.lembrar); E.axustes.lembrarEstado = [...l]; E.axustes.zona = ZONA; gardar(); }
   if (t.dataset.catNome){ const c = E.categorias.find(x => x.id === t.dataset.catNome); c.nome = t.value.trim() || c.nome; gardar(); }
   if (t.dataset.catCor){ const c = E.categorias.find(x => x.id === t.dataset.catCor); c.cor = t.value; gardar(); }
@@ -1737,6 +2266,11 @@ async function init(){
   if (params.get("unirse")){ localStorage.setItem("rutinas:convite", params.get("unirse").toUpperCase()); history.replaceState(null, "", location.pathname); }
   if (sesion){ cargarGrupos(); revisarConvite(); }
   else if (localStorage.getItem("rutinas:convite") && UI.vista === "login") setTimeout(() => { const e = $("#lerro"); if (e) e.textContent = "Entra ou crea a túa conta para unirte á racha compartida."; }, 100);
+  const accion = params.get("accion");
+  if (accion && accion !== "estado" && UI.vista !== "login"){
+    history.replaceState(null, "", location.pathname);
+    setTimeout(() => { if (accion === "apuntar"){ capturar.voz = false; capturar(); } else if (accion === "voz"){ capturar.voz = true; capturar(); } else if (accion === "foco") prepararFoco(); else if (accion === "pechar") pecharDia(); }, 350);
+  }
   if (params.get("accion") === "estado" && UI.vista !== "login"){ history.replaceState(null, "", location.pathname); setTimeout(rexistrarEstado, 300); }
   if (E.axustes.zona !== ZONA && sesion){ E.axustes.zona = ZONA; gardar(); }
   ordenarLogo();

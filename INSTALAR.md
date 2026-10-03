@@ -2,7 +2,7 @@
 
 ## 1. Supabase
 1. Usa o proxecto que prefiras (as táboas levan o prefixo `rut_`, así que conviven co resto).
-2. SQL Editor → pega `supabase.sql` → Run. Despois, nunha consulta nova, pega `compartir.sql` → Run (rachas compartidas).
+2. SQL Editor → pega `supabase.sql` → Run. Despois, nunha consulta nova, `compartir.sql` → Run, e noutra, `mellores.sql` → Run (rachas, listas e ánimos compartidos).
 3. Authentication → URL Configuration → **Site URL**: pon a dirección de Vercel (paso 3). Así o correo de confirmación da conta leva á app.
    Se non queres confirmar por correo: Authentication → Providers → Email → desactiva «Confirm email».
 4. Project Settings → API: copia a **Project URL** e a chave **anon / publishable**.
@@ -29,3 +29,9 @@ const CONFIG = {
 
 ## 5. Avisos coa app pechada (opcional)
 Cando xa funcione todo, segue `AVISOS.md`.
+
+## 6. Calendario do móbil (opcional)
+1. Supabase → Edge Functions → Deploy a new function → Via Editor. Nome: `rut-calendario`.
+2. Pega o contido de `supabase/functions/rut-calendario/index.ts` e desprégaa.
+3. Nos axustes da función, desactiva a verificación JWT.
+4. Na app: Axustes → «Ver no calendario do móbil» → Crear a ligazón.

@@ -18,5 +18,51 @@
       "type": "image/png",
       "purpose": "any maskable"
     }
+  ],
+  "shortcuts": [
+    {
+      "name": "Apuntar algo",
+      "short_name": "Apuntar",
+      "url": "./?accion=apuntar",
+      "icons": [
+        {
+          "src": "icona-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Ditar por voz",
+      "short_name": "Ditar",
+      "url": "./?accion=voz",
+      "icons": [
+        {
+          "src": "icona-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Concentrarme",
+      "short_name": "Concentrarme",
+      "url": "./?accion=foco",
+      "icons": [
+        {
+          "src": "icona-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Como estou",
+      "short_name": "Como estou",
+      "url": "./?accion=estado",
+      "icons": [
+        {
+          "src": "icona-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
   ]
 }
