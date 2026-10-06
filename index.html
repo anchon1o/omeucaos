@@ -22,7 +22,7 @@
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
 *,*::before,*::after{box-sizing:inherit}
 html{height:100%}
-body{margin:0;background:var(--fondo);color:var(--tinta);font:17px/1.5 "Atkinson Hyperlegible",system-ui,-apple-system,sans-serif;min-height:100%;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--fondo);color:var(--tinta);font:1.0625rem/1.5 "Atkinson Hyperlegible",system-ui,-apple-system,sans-serif;min-height:100%;-webkit-text-size-adjust:100%}
 button,input,select,textarea{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--acento);outline-offset:2px}
 [hidden]{display:none!important}
@@ -340,6 +340,43 @@ nav.abas button.sel{background:color-mix(in srgb,var(--acento) 14%,transparent);
 @media (prefers-reduced-motion:no-preference){.mic.gravando{animation:latexo 1.2s ease-in-out infinite}@keyframes latexo{50%{box-shadow:0 0 0 7px color-mix(in srgb,var(--perigo) 25%,transparent)}}}
 .caixa-ax input[readonly]{font-size:.85rem}
 a.btn{display:inline-flex;align-items:center;text-decoration:none;color:inherit}
+/* Que nada saia do ancho do móbil (iOS) */
+body{overflow-x:hidden}
+label,.duas>*,.rapida>*{min-width:0}
+input,select,textarea{max-width:100%;min-width:0}
+input[type=date],input[type=time]{-webkit-appearance:none;appearance:none;display:block;width:100%;min-width:0;line-height:1.3}
+input[type=date]::-webkit-date-and-time-value,input[type=time]::-webkit-date-and-time-value{text-align:left}
+.duas{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.caixa-ax input[readonly]{font-size:16px}
+dialog{max-width:calc(100vw - 16px)}
+/* Horario semanal */
+.sh-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:10px -18px 0;padding:0 18px 6px;scroll-snap-type:x proximity;overscroll-behavior-x:contain}
+.sh{display:flex;gap:6px;width:max-content;padding-top:30px;position:relative}
+.sh-horas{position:sticky;left:0;z-index:2;width:30px;flex:none;background:var(--fondo);margin-top:0}
+.sh-horas span{position:absolute;right:4px;transform:translateY(-50%);font-size:.72rem;color:var(--suave);font-variant-numeric:tabular-nums}
+.sc{width:112px;flex:none;scroll-snap-align:start;position:relative}
+.sc-n{position:absolute;top:-30px;left:0;right:0;height:26px;border:0;border-radius:8px;background:none;font-weight:700;font-size:.86rem;cursor:pointer;color:var(--tinta)}
+.sc.hoxe .sc-n{color:var(--acento)}
+.sc.sel .sc-n{background:var(--acento);color:var(--superficie)}
+.sc-c{position:relative;border-radius:10px;background:color-mix(in srgb,var(--superficie) 70%,transparent);border:1px solid var(--linha)}
+.sc.sel .sc-c{border-color:color-mix(in srgb,var(--acento) 50%,transparent)}
+.sc-c>i{position:absolute;left:0;right:0;border-top:1px dashed color-mix(in srgb,var(--linha) 80%,transparent)}
+.sb{position:absolute;border:0;border-left:4px solid var(--c);border-radius:4px 8px 8px 4px;background:color-mix(in srgb,var(--c) 20%,var(--superficie));padding:3px 5px;text-align:left;cursor:pointer;overflow:hidden;color:var(--tinta);line-height:1.15;display:flex;flex-direction:column;gap:1px}
+.sb b{font-size:.76rem;font-weight:700;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;word-break:break-word}
+.sb small{font-size:.68rem;color:var(--suave);white-space:nowrap}
+.sb.mini{padding:0 4px;justify-content:center}
+.sb.mini b{-webkit-line-clamp:1;font-size:.7rem}
+.por-actividade{margin-top:10px;border:0;padding:0}
+.por-actividade summary{color:var(--acento);font-weight:700;font-size:.95rem;padding:6px 0}
+#arranque{position:fixed;inset:0;z-index:200;background:#6D4AFF;display:grid;place-items:center;transition:opacity .4s ease}
+#arranque svg{width:min(78vw,520px);height:auto;overflow:visible}
+#arrFio{fill:none;stroke:#fff;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+#arrPunto{fill:#FFC94D;transform-box:fill-box;transform-origin:center;transform:scale(0);transition:transform .45s cubic-bezier(.3,1.7,.5,1)}
+#arranque.punto #arrPunto{transform:scale(1)}
+#arranque.saindo{opacity:0}
+.letras{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.letras button{line-height:1.2;border:1.5px solid var(--linha);background:var(--superficie);border-radius:999px;padding:7px 14px;cursor:pointer;color:var(--tinta)}
+.letras button.sel{border-color:var(--acento);box-shadow:0 0 0 2px var(--acento) inset;color:var(--acento);font-weight:700}
 .login{max-width:420px;margin:12vh auto 0}
 .login .marca{font-size:2.6rem}
 @media (min-width:760px){.col-barra{height:220px}}
@@ -347,6 +384,12 @@ a.btn{display:inline-flex;align-items:center;text-decoration:none;color:inherit}
 </style>
 </head>
 <body>
+<div id="arranque" aria-hidden="true" hidden>
+  <svg viewBox="8 22 84 56" preserveAspectRatio="xMidYMid meet">
+    <path id="arrFio" d="M30.1 51.9 L30.5 51.5 L30.9 51.2 L31.3 50.9 L31.7 50.6 L32.1 50.3 L32.5 50.0 L32.9 49.7 L33.3 49.4 L33.7 49.0 L34.0 48.7 L34.4 48.3 L34.7 48.0 L35.1 47.6 L35.4 47.2 L35.6 46.8 L35.8 46.3 L36.0 45.9 L36.1 45.4 L36.1 44.9 L36.0 44.4 L36.0 43.9 L35.9 43.4 L35.7 42.9 L35.6 42.5 L35.4 42.0 L35.2 41.5 L34.9 41.1 L34.7 40.7 L34.4 40.3 L34.1 39.9 L33.7 39.5 L33.3 39.2 L32.9 39.0 L32.4 38.8 L32.0 38.7 L31.5 38.5 L31.0 38.5 L30.5 38.4 L30.0 38.4 L29.5 38.4 L29.0 38.4 L28.5 38.5 L28.0 38.5 L27.5 38.6 L27.0 38.7 L26.5 38.8 L26.0 39.0 L25.6 39.1 L25.1 39.3 L24.7 39.6 L24.2 39.8 L23.8 40.1 L23.5 40.5 L23.1 40.8 L22.8 41.2 L22.5 41.6 L22.2 42.0 L21.9 42.4 L21.6 42.8 L21.3 43.2 L21.1 43.7 L20.8 44.1 L20.6 44.5 L20.4 45.0 L20.2 45.4 L20.0 45.9 L19.8 46.4 L19.6 46.8 L19.5 47.3 L19.3 47.8 L19.2 48.3 L19.1 48.8 L19.1 49.3 L19.0 49.8 L19.0 50.3 L19.1 50.8 L19.1 51.3 L19.2 51.8 L19.3 52.2 L19.4 52.7 L19.6 53.2 L19.7 53.7 L19.9 54.2 L20.1 54.6 L20.3 55.1 L20.5 55.5 L20.8 56.0 L21.0 56.4 L21.3 56.8 L21.5 57.3 L21.8 57.7 L22.1 58.1 L22.4 58.5 L22.8 58.8 L23.1 59.2 L23.5 59.5 L23.8 59.9 L24.2 60.2 L24.7 60.4 L25.1 60.7 L25.5 60.9 L26.0 61.1 L26.5 61.3 L26.9 61.4 L27.4 61.6 L27.9 61.7 L28.4 61.9 L28.9 62.0 L29.4 62.1 L29.9 62.1 L30.4 62.2 L30.9 62.2 L31.4 62.3 L31.9 62.3 L32.4 62.3 L32.9 62.3 L33.4 62.3 L33.9 62.2 L34.3 62.1 L34.8 62.0 L35.3 61.9 L35.8 61.7 L36.2 61.5 L36.7 61.3 L37.1 61.0 L37.5 60.7 L37.9 60.5 L38.3 60.1 L38.7 59.8 L39.1 59.5 L39.4 59.1 L39.8 58.8 L40.1 58.4 L40.4 58.0 L40.7 57.6 L41.0 57.2 L41.2 56.7 L41.5 56.3 L41.7 55.8 L41.9 55.4 L42.0 54.9 L42.1 54.4 L42.2 53.9 L42.3 53.4 L42.3 52.9 L42.3 52.4 L42.3 51.9 L42.2 51.4 L42.2 50.9 L42.1 50.4 L42.0 49.9 L41.9 49.4 L41.8 49.0 L41.7 48.5 L41.5 48.0 L41.4 47.5 L41.2 47.1 L41.0 46.6 L40.8 46.2 L40.5 45.7 L40.2 45.3 L39.9 44.9 L39.6 44.6 L39.2 44.2 L38.8 43.9 L38.4 43.7 L37.9 43.4 L37.5 43.2 L37.0 43.0 L36.6 42.8 L36.1 42.6 L35.6 42.4 L35.2 42.3 L34.7 42.2 L34.2 42.1 L33.7 42.0 L33.2 41.9 L32.7 41.9 L32.2 41.9 L31.7 41.9 L31.2 42.0 L30.7 42.1 L30.3 42.3 L29.9 42.6 L29.5 42.9 L29.1 43.2 L28.7 43.6 L28.4 43.9 L28.1 44.3 L27.8 44.7 L27.5 45.1 L27.2 45.6 L27.0 46.0 L26.8 46.4 L26.6 46.9 L26.4 47.4 L26.2 47.8 L26.1 48.3 L26.0 48.8 L26.0 49.3 L26.0 49.8 L26.1 50.3 L26.2 50.8 L26.3 51.3 L26.5 51.8 L26.6 52.2 L26.8 52.7 L27.0 53.2 L27.3 53.6 L27.5 54.0 L27.8 54.5 L28.0 54.9 L28.3 55.3 L28.6 55.7 L29.0 56.1 L29.3 56.4 L29.7 56.7 L30.1 57.0 L30.5 57.3 L31.0 57.5 L31.4 57.7 L31.9 57.9 L32.4 58.1 L32.8 58.2 L33.3 58.3 L33.8 58.4 L34.3 58.5 L34.8 58.5 L35.3 58.6 L35.8 58.6 L36.3 58.6 L36.8 58.5 L37.3 58.5 L37.8 58.4 L38.3 58.3 L38.7 58.1 L39.2 57.9 L39.6 57.6 L40.1 57.4 L40.5 57.1 L40.9 56.8 L41.2 56.4 L41.6 56.1 L41.9 55.7 L42.3 55.4 L42.6 55.0 L42.9 54.6 L43.2 54.2 L43.5 53.8 L43.7 53.3 L44.0 52.9 L44.2 52.5 L44.4 52.0 L44.6 51.5 L44.7 51.1 L44.9 50.6 L45.0 50.1 L45.0 49.6 L45.1 49.1 L45.1 48.6 L45.1 48.1 L45.1 47.6 L45.0 47.1 L45.0 46.6 L44.9 46.1 L44.9 45.6 L44.8 45.1 L44.7 44.6 L44.6 44.1 L44.5 43.6 L44.3 43.1 L44.2 42.7 L44.1 42.2 L43.9 41.7 L43.7 41.2 L43.5 40.8 L43.3 40.3 L43.1 39.9 L42.9 39.4 L42.7 39.0 L42.4 38.6 L42.1 38.2 L41.8 37.8 L41.4 37.4 L41.1 37.1 L40.7 36.7 L40.3 36.4 L39.9 36.2 L39.5 35.9 L39.0 35.7 L38.6 35.4 L38.1 35.2 L37.6 35.0 L37.2 34.9 L36.7 34.7 L36.2 34.6 L35.7 34.5 L35.2 34.3 L34.8 34.2 L34.3 34.2 L33.8 34.1 L33.3 34.1 L32.8 34.0 L32.3 34.0 L31.8 34.0 L31.3 34.0 L30.8 34.1 L30.3 34.1 L29.8 34.1 L29.3 34.2 L28.8 34.3 L28.3 34.4 L27.8 34.5 L27.3 34.6 L26.8 34.7 L26.3 34.8 L25.9 35.0 L25.4 35.1 L24.9 35.3 L24.4 35.5 L24.0 35.6 L23.5 35.8 L23.1 36.0 L22.6 36.3 L22.2 36.5 L21.7 36.8 L21.3 37.0 L20.9 37.3 L20.5 37.6 L20.1 37.9 L19.7 38.3 L19.4 38.6 L19.0 39.0 L18.7 39.3 L18.4 39.7 L18.0 40.1 L17.7 40.5 L17.4 40.9 L17.2 41.3 L16.9 41.7 L16.6 42.2 L16.4 42.6 L16.1 43.0 L15.9 43.5 L15.6 43.9 L15.4 44.4 L15.2 44.8 L15.0 45.3 L14.9 45.7 L14.7 46.2 L14.5 46.7 L14.4 47.2 L14.3 47.7 L14.2 48.1 L14.1 48.6 L14.1 49.1 L14.0 49.6 L14.0 50.1 L14.0 50.6 L14.1 51.1 L14.1 51.6 L14.2 52.1 L14.3 52.6 L14.4 53.1 L14.6 53.6 L14.7 54.1 L14.9 54.5 L15.0 55.0 L15.2 55.5 L15.4 55.9 L15.6 56.4 L15.8 56.9 L16.0 57.3 L16.3 57.8 L16.5 58.2 L16.7 58.6 L17.0 59.1 L17.2 59.5 L17.5 59.9 L17.8 60.3 L18.1 60.7 L18.4 61.2 L18.7 61.5 L19.0 61.9 L19.3 62.3 L19.7 62.7 L20.0 63.0 L20.4 63.4 L20.8 63.7 L21.2 64.0 L21.6 64.3 L22.0 64.5 L22.5 64.8 L22.9 65.0 L23.4 65.2 L23.8 65.4 L24.3 65.6 L24.7 65.8 L25.2 66.0 L25.7 66.1 L26.2 66.3 L26.6 66.4 L27.1 66.5 L27.6 66.6 L28.1 66.7 L28.6 66.8 L29.1 66.9 L29.6 66.9 L30.1 67.0 L30.6 67.0 L31.1 67.0 L31.6 67.0 L32.1 67.0 L32.6 66.9 L33.1 66.9 L33.6 66.8 L34.1 66.7 L34.6 66.6 L35.1 66.5 L35.5 66.4 L36.0 66.2 L36.5 66.1 L37.0 65.9 L37.4 65.7 L37.9 65.5 L38.4 65.3 L38.8 65.1 L39.3 64.9 L39.7 64.7 L40.2 64.5 L40.6 64.2 L41.0 64.0 L41.5 63.7 L41.9 63.5 L42.3 63.2 L42.7 62.9 L43.2 62.6 L43.6 62.3 L43.9 62.0 L44.3 61.7 L44.7 61.4 L45.0 61.0 L45.4 60.6 L45.7 60.2 L46.0 59.8 L46.2 59.4 L46.5 59.0 L46.7 58.5 L47.0 58.1 L47.2 57.6 L47.4 57.2 L47.6 56.7 L47.8 56.3 L48.0 55.8 L48.2 55.3 L48.3 54.9 L48.5 54.4 L48.7 53.9 L48.8 53.5 L49.0 53.0 L49.1 52.5 L49.3 52.0 L49.3 51.5 L49.4 51.0 L49.5 50.5 L49.5 50.0 L49.5 49.5 L49.5 49.0 L49.5 48.5 L49.5 48.0 L49.5 47.5 L49.5 47.0 L49.6 46.5 L49.7 46.0 L49.8 45.6 L50.0 45.1 L50.2 44.6 L50.5 44.2 L50.8 43.8 L51.1 43.4 L51.4 43.1 L51.8 42.7 L52.1 42.4 L52.5 42.1 L52.9 41.8 L53.4 41.5 L53.8 41.3 L54.3 41.1 L54.8 41.1 L55.3 41.1 L55.8 41.1 L56.2 41.3 L56.7 41.5 L57.1 41.7 L57.5 42.0 L57.9 42.3 L58.3 42.6 L58.7 43.0 L59.0 43.4 L59.3 43.8 L59.6 44.2 L59.8 44.6 L60.0 45.1 L60.1 45.6 L60.2 46.1 L60.2 46.6 L60.3 47.0 L60.3 47.6 L60.2 48.1 L60.2 48.5 L60.1 49.0 L60.1 49.5 L60.0 50.0 L59.9 50.5 L59.8 51.0 L59.7 51.5 L59.5 52.0 L59.3 52.4 L59.0 52.8 L58.7 53.2 L58.3 53.5 L57.8 53.7 L57.4 53.8 L56.9 53.8 L56.4 53.8 L55.9 53.7 L55.4 53.6 L54.9 53.5 L54.5 53.3 L54.1 53.0 L53.9 52.6 L53.7 52.1 L53.7 51.6 L53.7 51.1 L53.8 50.6 L53.8 50.1 L54.0 49.6 L54.1 49.2 L54.4 48.7 L54.7 48.4 L55.1 48.0 L55.5 47.8 L56.0 47.7 L56.5 47.6 L57.0 47.6 L57.5 47.6 L58.0 47.6 L58.5 47.6 L59.0 47.6 L59.4 47.7 L59.9 47.7 L60.4 47.8 L60.9 47.9 L61.4 47.9 L61.9 48.0 L62.4 48.1 L62.9 48.2 L63.4 48.3 L63.9 48.4 L64.4 48.5 L64.9 48.7 L65.3 48.8 L65.8 48.9 L66.3 49.1 L66.8 49.2 L67.3 49.4 L67.7 49.5 L68.2 49.6 L68.7 49.8 L69.2 49.9 L69.7 49.9 L70.2 50.0 L70.7 50.1 L71.2 50.1 L71.7 50.1 L72.2 50.1 L72.7 50.1 L73.2 50.1 L73.7 50.1 L74.2 50.1 L74.7 50.1 L75.2 50.1 L75.7 50.0 L76.2 50.0 L76.7 50.0 L77.2 50.0 L77.7 50.0 L78.2 50.0 L78.7 50.0 L79.2 50.0 L79.7 50.0 L80.2 50.0 L80.7 50.0 L81.2 50.0 L81.7 50.0 L82.2 50.0 L82.7 50.0 L83.2 50.0 L83.7 50.0 L83.8 50.0"/>
+    <circle id="arrPunto" cx="83.8" cy="50" r="5.2"/>
+  </svg>
+</div>
 <header class="cab" id="cab"></header>
 <main id="vista"></main>
 <button class="fab" id="fab" data-acc="capturar" aria-label="Apuntar algo" hidden>+</button>
@@ -363,7 +406,7 @@ a.btn{display:inline-flex;align-items:center;text-decoration:none;color:inherit}
 const CONFIG = {
   url: "https://pmvbllviitutbnoqpnrs.supabase.co",
   chave: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBtdmJsbHZpaXR1dGJub3FwbnJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk4MTE3NTAsImV4cCI6MjEwNTM4Nzc1MH0.5WMnLv9oY3PXXLjCrxukt6qu2xkNwOvrkbcxYqUrdgo",
-  vapid: "BB4KHMQzPCgLLb_XYdVSsM4ZzqDBEBpjQMjjf3Kco29Lr7PdPu3Rvhxmpcdz2i4v7ctETTGvHJqC23k7vr8EgqQ"   // chave pública VAPID para os avisos coa app pechada (opcional)
+  vapid: ""   // chave pública VAPID para os avisos coa app pechada (opcional)
 };
 const TABOA = "rut_estado";
 /* ========================================================= */
@@ -1138,10 +1181,17 @@ function aplicarTema(){
   if (document.documentElement.dataset.tema !== t) document.documentElement.dataset.tema = t;
 }
 function render(){
+  const sw = document.getElementById("horarioSemana");
+  if (sw) UI.shScroll = sw.scrollLeft;
   aplicarTema();
   pintarCabeceira(); pintarAbas();
   const v = { hoxe:vistaHoxe, semana:vistaSemana, tarefas:vistaTarefas, habitos:vistaHabitos, axustes:vistaAxustes, revision:vistaRevision, login:vistaLogin }[UI.vista];
   $("#vista").innerHTML = v();
+  const sw2 = document.getElementById("horarioSemana");
+  if (sw2){
+    if (UI.shScroll != null) sw2.scrollLeft = UI.shScroll;
+    else { const c = sw2.querySelector(".sc.hoxe"); if (c) sw2.scrollLeft = Math.max(0, c.offsetLeft - 48); }
+  }
 }
 
 function filaTarefa(t, accions){
@@ -1258,13 +1308,6 @@ function vistaHoxe(){
 function vistaSemana(){
   if (!UI.modelo && UI.semanaModo === "mes") return selectorSemana() + vistaMes();
   const sel = UI.dia, hoxe = new Date().getDay();
-  const cols = ORDE.map(d => {
-    const barras = bloquesDoDia(d).map(b => {
-      const a = Math.max(mins(b.ini), 360), z = Math.min(mins(b.fin), 1440);
-      return z > a ? `<i style="top:${(a-360)/10.8}%;height:${(z-a)/10.8}%;background:${cat(b.cat).cor}"></i>` : "";
-    }).join("");
-    return `<button class="col ${d===sel?"sel":""} ${d===hoxe?"hoxe":""}" data-acc="dia" data-id="${d}" aria-label="${DIAS[d]}"><span class="col-n">${DIAS_C[d]}</span><span class="col-barra">${barras}</span></button>`;
-  }).join("");
   const tot = {};
   const modelo = UI.modelo ? fonteTipo() : null;
   fonteTipo().bloques.forEach(b => { tot[b.cat] = (tot[b.cat] || 0) + Math.max(0, mins(b.fin) - mins(b.ini)) * b.dias.length; });
@@ -1274,18 +1317,57 @@ function vistaSemana(){
     ? `<div class="editando"><p>Estás editando o modelo <b>«${esc(modelo.nome)}»</b>. Os cambios non afectan á túa semana tipo.</p><div class="fila"><button class="btn primario" data-acc="rematarModelo">Rematar edición</button></div></div>`
     : `${selectorSemana()}<h3 style="margin-top:8px">A túa semana tipo</h3><p class="pequeno" style="margin:0">É o plan que se repite cada semana. Os cambios dun día concreto fanse desde Hoxe.</p>`;
   return `${cabeceira}
-    <div class="semana">${cols}</div>
-    <div class="escala"><span>6:00</span><span>12:00</span><span>18:00</span><span>24:00</span></div>
+    ${horarioSemana(sel, hoxe)}
     <div class="horas" aria-label="Horas á semana por categoría">${horas}</div>
+    ${resumoActividades()}
     <h3>${DIAS[sel]}</h3>
-    ${bl.length ? `<p class="pequeno" style="margin:0 0 8px">Arrastra a asa ⠿ para mover un bloque e o bordo de abaixo para cambiar a súa duración. Toca o bloque para editalo.</p>${diaGrade(sel)}` : `<p class="vacio">Este día está baleiro. Engade un bloque para empezar.</p>`}
-    <div class="barra-accions"><button class="btn primario" data-acc="novoBloque">Engadir bloque</button>${bl.length?`<button class="btn" data-acc="copiarDia">Copiar este día a…</button>`:""}${modelo ? "" : `<button class="btn" data-acc="imprimir">Imprimir a semana</button>`}</div>
+    ${!bl.length ? `<p class="vacio">Este día está baleiro. Engade un bloque para empezar.</p>`
+      : UI.arrastrar ? `<p class="pequeno" style="margin:0 0 8px">Arrastra a asa ⠿ para mover un bloque e o bordo de abaixo para cambiar a súa duración.</p>${diaGrade(sel)}`
+      : `<ul class="lt">${bl.map(b => `<li data-acc="editarBloqueTipo" data-id="${b.id}" style="--c:${cat(b.cat).cor}"><span class="h">${b.ini}</span><span class="t">${esc(b.titulo)}<small>ata as ${b.fin}, ${esc(cat(b.cat).nome.toLowerCase())}${b.dias.length>1?`, tamén ${b.dias.filter(x=>x!==sel).sort((x,y)=>ORDE.indexOf(x)-ORDE.indexOf(y)).map(x=>DIAS_C[x]).join(" ")}`:""}</small></span></li>`).join("")}</ul>`}
+    <div class="barra-accions"><button class="btn primario" data-acc="novoBloque">Engadir bloque</button>${bl.length ? `<button class="btn" data-acc="modoArrastrar">${UI.arrastrar ? "Rematar de axustar" : "Axustar horas arrastrando"}</button>` : ""}${bl.length?`<button class="btn" data-acc="copiarDia">Copiar este día a…</button>`:""}${modelo ? "" : `<button class="btn" data-acc="imprimir">Imprimir a semana</button>`}</div>
     ${modelo ? "" : seccionModelos()}
     ${modelo ? "" : `<h3>Revisión semanal</h3>
     <p class="vacio">Mira como foi a semana, recoloca o que quedou pendente e escolle as túas prioridades.</p>
     <div class="barra-accions"><button class="btn" data-acc="aba" data-id="revision">Abrir a revisión</button></div>`}`;
 }
 const hhmm = m => `${pad(Math.floor(m/60))}:${pad(m%60)}`;
+/* Horario da semana: columnas anchas, desprazamento horizontal no móbil */
+const PXS = 0.62;
+function horarioSemana(sel, hoxe){
+  const todos = fonteTipo().bloques;
+  const ini = Math.min(420, ...todos.map(b => Math.floor(mins(b.ini) / 60) * 60));
+  const fin = Math.max(1380, ...todos.map(b => Math.ceil(mins(b.fin) / 60) * 60));
+  const alto = (fin - ini) * PXS;
+  let horas = "";
+  for (let h = ini; h <= fin; h += 60) horas += `<span style="top:${(h - ini) * PXS}px">${pad(h / 60)}</span>`;
+  let liñas = "";
+  for (let h = ini; h <= fin; h += 60) liñas += `<i style="top:${(h - ini) * PXS}px"></i>`;
+  const cols = ORDE.map(d => {
+    const bl = bloquesDoDia(d), carrís = [], pos = new Map();
+    bl.forEach(b => { let c = carrís.findIndex(f => f <= mins(b.ini)); if (c < 0){ c = carrís.length; carrís.push(0); } carrís[c] = mins(b.fin); pos.set(b.id, c); });
+    const n = Math.max(1, carrís.length);
+    const bloques = bl.map(b => {
+      const i = mins(b.ini), f = mins(b.fin), h = (f - i) * PXS, c = pos.get(b.id);
+      return `<button class="sb ${h < 30 ? "mini" : ""}" data-acc="editarBloqueTipo" data-id="${b.id}" style="--c:${cat(b.cat).cor};top:${(i - ini) * PXS}px;height:${Math.max(14, h - 2)}px;left:calc(${c * 100 / n}% + 2px);width:calc(${100 / n}% - 4px)" aria-label="${esc(b.titulo)}, de ${b.ini} a ${b.fin}">${h >= 16 ? `<b>${esc(b.titulo)}</b>` : ""}${h >= 44 ? `<small>${b.ini}–${b.fin}</small>` : ""}</button>`;
+    }).join("");
+    return `<div class="sc ${d === sel ? "sel" : ""} ${d === hoxe ? "hoxe" : ""}"><button class="sc-n" data-acc="dia" data-id="${d}" aria-pressed="${d === sel}">${DIAS[d]}</button><div class="sc-c" style="height:${alto}px">${liñas}${bloques}</div></div>`;
+  }).join("");
+  return `<div class="sh-wrap" id="horarioSemana"><div class="sh"><div class="sh-horas" style="height:${alto}px">${horas}</div>${cols}</div></div>
+    <p class="pequeno" style="margin:4px 0 0">Desliza cara aos lados para ver toda a semana. Toca un bloque para editalo ou o nome dun día para velo en lista.</p>`;
+}
+function resumoActividades(){
+  const g = {};
+  fonteTipo().bloques.forEach(b => {
+    const k = b.titulo.trim().toLowerCase(); if (!k) return;
+    g[k] = g[k] || { nome:b.titulo.trim(), cat:b.cat, min:0, bloques:0 };
+    g[k].min += Math.max(0, mins(b.fin) - mins(b.ini)) * b.dias.length; g[k].bloques++;
+  });
+  const l = Object.values(g).sort((a,b) => b.min - a.min);
+  if (!l.length) return "";
+  return `<details class="por-actividade"><summary>Horas á semana por actividade</summary>
+    ${l.map(x => `<div class="barcat" style="--c:${cat(x.cat).cor}"><span>${esc(x.nome)}</span><div class="progreso"><i style="width:${x.min / l[0].min * 100}%"></i></div><span>${horasTxt(x.min)}</span></div>`).join("")}
+    <p class="pequeno">Os bloques co mesmo nome cóntanse xuntos, aínda que sexan a horas distintas cada día.</p></details>`;
+}
 function selectorSemana(){
   const m = UI.semanaModo === "mes" ? "mes" : "tipo";
   return `<div class="segmentos" role="group" aria-label="Vista"><button data-acc="semanaModo" data-id="tipo" class="${m==="tipo"?"sel":""}" aria-pressed="${m==="tipo"}">Semana tipo</button><button data-acc="semanaModo" data-id="mes" class="${m==="mes"?"sel":""}" aria-pressed="${m==="mes"}">Mes</button></div>`;
@@ -1571,6 +1653,9 @@ function vistaAxustes(){
   return `<h3 style="margin-top:8px">Conta e sincronización</h3><div class="caixa-ax">${conta}</div>
     <h3>Cor da app</h3>
     <div class="temas" role="group" aria-label="Cor da app">${TEMAS.map(([id,n,c]) => `<button class="tema ${a.tema===id?"sel":""}" data-acc="tema" data-id="${id}" style="--t:${c}" aria-pressed="${a.tema===id}"><i></i>${n}</button>`).join("")}</div>
+    <h3>Tamaño da letra</h3>
+    <div class="letras" role="group" aria-label="Tamaño da letra">${LETRAS.map(([id, n, f]) => { let v = "normal"; try { v = localStorage.getItem("rutinas:letra") || "normal"; } catch {} return `<button data-acc="letra" data-id="${id}" class="${v===id?"sel":""}" aria-pressed="${v===id}" style="font-size:${Math.round(15*f)}px">${n}</button>`; }).join("")}</div>
+    <p class="pequeno" style="margin:4px 0 0">Gárdase só neste dispositivo, así podes ter letra grande no móbil e normal no ordenador.</p>
     <h3>Avisos</h3>
     <div class="caixa-ax">
       <label>Avisar dos bloques
@@ -1741,7 +1826,9 @@ function editarBloque(id, iso){
       <label><input type="radio" name="alcance" value="sempre"><span>Todas as semanas</span></label></div>` : "";
   abrirModal(novo ? "Novo bloque" : "Editar bloque", `
     ${alcance}
-    <label>Que vas facer<input type="text" name="titulo" value="${esc(b.titulo)}" required></label>
+    <label>Que vas facer<input type="text" name="titulo" value="${esc(b.titulo)}" required list="nomesBloques" autocomplete="off"></label>
+    <datalist id="nomesBloques">${[...new Set(E.bloques.concat(...E.plantillas.map(p => p.bloques)).map(x => x.titulo.trim()).filter(Boolean))].map(t => `<option value="${esc(t)}">`).join("")}</datalist>
+    <p class="pequeno" style="margin:4px 0 0">Usa o mesmo nome noutros bloques e as horas cóntanse xuntas.</p>
     <label>Categoría<select name="cat">${optsCat(b.cat)}</select></label>
     <div class="duas"><label>Comeza<input type="time" name="ini" value="${b.ini}" required></label><label>Remata<input type="time" name="fin" value="${b.fin}" required></label></div>
     <div id="camposDias"><label>Días</label>${selDias(b.dias || [diaSemana])}</div>
@@ -2065,6 +2152,8 @@ const ACC = {
   marcarItem: id => marcarItem(id),
   limparLista: id => limparLista(id),
   semanaModo: id => { UI.semanaModo = id; render(); },
+  letra: id => { try { localStorage.setItem("rutinas:letra", id); } catch {} aplicarLetra(); render(); },
+  modoArrastrar: () => { UI.arrastrar = !UI.arrastrar; render(); },
   moverMes: id => { const [y, m] = (UI.mes || hoxeISO().slice(0,7)).split("-").map(Number); const d = new Date(y, m - 1 + Number(id), 1); UI.mes = `${d.getFullYear()}-${pad(d.getMonth()+1)}`; render(); },
   irData: (id, el) => { UI.vista = "hoxe"; UI.data = el.dataset.k === hoxeISO() ? null : el.dataset.k; render(); window.scrollTo(0,0); },
   imprimir: () => imprimirSemana(),
@@ -2209,7 +2298,7 @@ document.addEventListener("submit", async e => {
     const correo = f.correo.value.trim(), clave = f.clave.value;
     $("#lerro").textContent = "";
     const { data, error } = rexistro
-      ? await sb.auth.signUp({ email:correo, password:clave, options:{ emailRedirectTo: location.origin + location.pathname } })
+      ? await sb.auth.signUp({ email:correo, password:clave, options:{ emailRedirectTo: location.origin + location.pathname, data:{ app:"O meu caos" } } })
       : await sb.auth.signInWithPassword({ email:correo, password:clave });
     if (error){ $("#lerro").textContent = /invalid/i.test(error.message) ? "O correo ou o contrasinal non son correctos." : error.message; return; }
     if (!data.session){ $("#lerro").textContent = "Mandámosche un correo para confirmar a conta. Confírmaa e despois entra."; return; }
@@ -2249,7 +2338,33 @@ function migrarNomeAntigo(){
     }
   } catch {}
 }
+function arranque(){
+  const a = document.getElementById("arranque");
+  let visto = false; try { visto = sessionStorage.getItem("rutinas:arranque"); } catch {}
+  if (!a || visto || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  try { sessionStorage.setItem("rutinas:arranque", "1"); } catch {}
+  const fio = document.getElementById("arrFio"), L = fio.getTotalLength();
+  a.hidden = false;
+  fio.style.strokeDasharray = L; fio.style.strokeDashoffset = L;
+  const pechar = () => { a.classList.add("saindo"); setTimeout(() => a.remove(), 450); };
+  a.addEventListener("click", pechar, { once:true });
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    fio.style.transition = "stroke-dashoffset 1.25s cubic-bezier(.45,.05,.3,1)";
+    fio.style.strokeDashoffset = 0;
+    setTimeout(() => a.classList.add("punto"), 1150);
+    setTimeout(pechar, 2100);
+  }));
+}
+/* ---- 9. Tamaño da letra (por dispositivo) ---- */
+const LETRAS = [["pequena","Pequena",0.9],["normal","Normal",1],["grande","Grande",1.12],["moigrande","Moi grande",1.25]];
+function aplicarLetra(){
+  let v = "normal"; try { v = localStorage.getItem("rutinas:letra") || "normal"; } catch {}
+  const f = (LETRAS.find(x => x[0] === v) || LETRAS[1])[2];
+  document.documentElement.style.fontSize = (16 * f) + "px";
+}
 async function init(){
+  aplicarLetra();
+  arranque();
   migrarNomeAntigo();
   if (sb){
     try { const { data } = await sb.auth.getSession(); sesion = data.session; } catch {}
@@ -2259,6 +2374,8 @@ async function init(){
   else if (!sb || localStorage.getItem("rutinas:modo") === "local"){ cargarLocal(); UI.vista = "hoxe"; render(); }
   else { cargarLocal(); UI.vista = "login"; render(); }
   if (sesion) localStorage.setItem("rutinas:ultimoUsuario", sesion.user.id);
+  // Marca a conta coa app de orixe (para os correos), só se aínda non ten ningunha
+  if (sesion && !(sesion.user.user_metadata || {}).app) sb.auth.updateUser({ data:{ app:"O meu caos" } }).catch(() => {});
   if (sb){ sb.auth.onAuthStateChange((ev) => { if (ev === "PASSWORD_RECOVERY") setTimeout(pedirContrasinalNovo, 300); }); }
   if (recuperando && sesion) setTimeout(pedirContrasinalNovo, 300);
   if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
